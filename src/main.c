@@ -44,7 +44,7 @@ void main()
 
   /* main loop */
   while(1) {
-		/* test comment */
+
 	  poll_input();
 
 	  switch(GAME_FLOW_STATE)
