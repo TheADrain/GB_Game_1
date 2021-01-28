@@ -1,0 +1,54 @@
+- Bank Switching Note -
+	- Finally seems to be working... Some notes
+		- Use the extern keyword in the header file when declaring rom data
+		- in the bank_n.h include all the asset header files
+		- in the bank_n.c include all the c files
+		- in the main rom code include the bank_h.h file and you should be able to access vars without
+			having compile issues, but they should be compiled to the correct data bank
+
+
+TODO:
+- consider uploading the template project to github
+- then maybe implementing the same template project in RGBASM assembler?
+
+- Toolchain (once we've figured out how to load levels and actually started building levels to play,
+	don't do this until we have an actual game in the making)
+	- need something to compile all the level data into large blobs
+	- compile all level info into a huge table in MAP_DATA_1 bank
+		- we need to be able to access the width/height/etc details of every map from one pointer+offset
+	- then compile all the levels into files for each bank
+		- EG: bank 1 = level data array + maps 1-5, bank 2 = maps 6-10, etc etc (assuming 5 maps per bank)
+			- might need to make sure bank 1 has enough space for the level data array but it shouldn't be a big prob
+
+- System stuff
+	- implement the GBDK compatible version of the GBT music player and test it works with banking properly
+		and that it doesn't fuck up the game switching banks to get music data
+	- you'll have to find the old GBDK compatible version of GBT player as the newer version only
+		supports RGBS which is untested with GBDK
+
+- Input
+	- 
+
+- Title/Splash screen
+
+- Level Loading Flow
+	- display a screen showing the level number 
+	- start the game once it's been done
+
+	- get level dimensions without defines as they'll need to go into a level data structure
+	- put these structures into an array somewhere (by hand? ugh... maybe write a tool?)
+	- load levels using this array of level data:
+		- LEVEL_DATA struct { width, height, rom_bank, &level_map, &collision_map, &things_map }
+
+- Game Flow
+	- create a structure for the player data (x, y , sub_x, sub_y, speed)
+		- sortas done, arguable if this needs to be a STRUCT or just globals
+
+- Game Camera
+	- game camera should follow the player X/Y position but be bound by the VRAM screen size for now 
+		- done but needs some additional features:
+			- get level size from the level data incase we want smaller (or in future larger) areas
+
+
+- Player Object
+	- Basic player movement (left/right/a to jump)
