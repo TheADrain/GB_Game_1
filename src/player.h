@@ -27,7 +27,29 @@
 
 #define TILE_SIZE 8U
 
-#define GRAVITY_CONSTANT 1
+#define RISING_GRAVITY_CONSTANT 4
+#define FALLING_GRAVITY_CONSTANT 1
+#define PLAYER_JUMP_INERTIA 72
+#define PLAYER_TERMINAL_VEL 28
+
+#define SUBPIXELS 16
+#define SUBPIX_SHIFT 4
+
+#define PLAYER_ACCEL_X 2
+#define PLAYER_MAX_SPEED_H 18
+#define PLAYER_DECEL_X 8
+
+/* how long after falling can we still jump */
+#define JUMP_GRACE_BUFFER 6
+/* how many frames before landing should we accept jump input? */
+#define REJUMP_BUFFER 8
+
+extern UINT8 jump_buffer;
+extern UINT8 jump_last_pressed;
+
+extern UINT8 player_fell;
+
+extern INT8 player_speed_x;
 
 extern INT8 player_move_x; /* temp movement vector for collision calculations */
 extern INT8 player_move_y;
@@ -35,6 +57,8 @@ extern INT8 player_move_y;
 extern UINT8 player_grounded;
 extern INT8 player_intertia_y;
 
+extern UINT16 player_position_x; /* the players position in sub-pixel world-space */
+extern UINT16 player_position_y;
 extern UINT16 player_world_x; /* the players position in world-space */
 extern UINT16 player_world_y;
 

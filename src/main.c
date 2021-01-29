@@ -19,6 +19,9 @@ UINT8 CUR_LEVEL = 0U;
 UINT8 CUR_LEVEL_BANK = BANK_MAPDATA_01;
 UINT8 CUR_MAP_WIDTH = 32;
 UINT8 CUR_MAP_HEIGHT = 32;
+
+
+
 unsigned char* level_tilemap_data;
 unsigned char* level_collision_data;
 
@@ -198,14 +201,15 @@ void load_current_level()
 	level_collision_data = levels[CUR_LEVEL].CollisionMap;
 	CUR_MAP_WIDTH = levels[CUR_LEVEL].Width;*/
 
-	level_tilemap_data = (unsigned char*)&map01_widetest;
-	level_collision_data = (unsigned char*)&map01_widetestc;
-	CUR_MAP_WIDTH = map01_widetestWidth;
+	level_tilemap_data = (unsigned char*)&map01_tilemap;
+	level_collision_data = (unsigned char*)&map01_collision;
+	CUR_MAP_WIDTH = map01Width;
+	CUR_MAP_HEIGHT = map01Height;
 
 	UINT8 i = 0;
-	for(i = 0; i < 32; i++)
+	for(i = 0; i < CUR_MAP_HEIGHT; i++)
 	{
-		set_bkg_tiles(0, i, 32, 1, level_tilemap_data+(96*i));
+		set_bkg_tiles(0, i, BKG_WIDTH, 1, level_tilemap_data+(CUR_MAP_WIDTH*i));
 	}
 
 	//set_bkg_tiles(0, 0, levels[CUR_LEVEL].Width, levels[CUR_LEVEL].Height, level_tilemap_data);

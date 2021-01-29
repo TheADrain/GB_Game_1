@@ -2,14 +2,23 @@
 #include "main.h"
 #include "levels.h"
 
+UINT16 player_position_x = 48*SUBPIXELS;
+UINT16 player_position_y = 64*SUBPIXELS;
+
 UINT16 player_world_x = 48;
-UINT16 player_world_y = 198;
+UINT16 player_world_y = 64;
 
 INT8 player_move_x = 0;
 INT8 player_move_y = 0;
 
 INT8 player_intertia_y = 0;
 UINT8 player_grounded = 0U;
+
+UINT8 jump_buffer = 0U;
+UINT8 jump_last_pressed = 0U;
+UINT8 player_fell = 0U;
+
+INT8 player_speed_x = 0;
 
 UINT8 player_scr_x = 0U;
 UINT8 player_scr_y = 0U;
@@ -22,8 +31,6 @@ UINT8 player_sub_y = 0U;
 
 extern UINT8 player_sprite_num = 0U;		/* which sprite number the player occupies, should always be 0 */
 extern UINT8 player_sprite_tile = 0U; /* the tile data for player graphic */
-
-const UINT8 player_speed = 1U;
 
 UINT8 u8Temp1 = 0U;
 UINT8 u8Temp2 = 0U;
@@ -44,39 +51,92 @@ void init_game_camera()
 
 void update_player() 
 {
-	player_move_x = 0;
-	player_move_y = 0;
-
-	
-	/*if(JOY_DOWN(BTN_UP))
-	{
-		player_move_y -= player_speed;
-	}
-	else if(JOY_DOWN(BTN_DOWN))
-	{
-		player_move_y += player_speed;
-	}*/
-	
-
 	/* find movement vector */
 	if(JOY_DOWN(BTN_LEFT))
 	{
-		player_move_x = -player_speed;
+		player_speed_x -= PLAYER_ACCEL_X;
+		if(player_speed_x < -PLAYER_MAX_SPEED_H)
+		{
+			player_speed_x = -PLAYER_MAX_SPEED_H;
+		}
 	}
 	else if(JOY_DOWN(BTN_RIGHT))
 	{
-		player_move_x = player_speed;
+		player_speed_x += PLAYER_ACCEL_X;
+		if(player_speed_x > PLAYER_MAX_SPEED_H)
+		{
+			player_speed_x = PLAYER_MAX_SPEED_H;
+		}
 	}
+	else
+	{
+		if(player_speed_x > 0)
+		{
+			player_speed_x -= PLAYER_DECEL_X;
+			if(player_speed_x < 0)
+			{
+				player_speed_x = 0;
+			}
+		}
+		else if(player_speed_x < 0)
+		{
+			player_speed_x += PLAYER_DECEL_X;
+			if(player_speed_x > 0)
+			{
+				player_speed_x = 0;
+			}
+		}
+	}
+
+	player_move_x += player_speed_x;
 	
 	if(player_grounded == NOT_GROUNDED)
 	{
-		//player_intertia_y += GRAVITY_CONSTANT; /* gravity */
-		if(player_intertia_y > 2)
+		/* gravity */
+		if(player_intertia_y < 0)
 		{
-			player_intertia_y = 2;
+			player_intertia_y += RISING_GRAVITY_CONSTANT;
+		}
+		else
+		{
+			player_intertia_y += FALLING_GRAVITY_CONSTANT;
+
+			if(player_intertia_y > PLAYER_TERMINAL_VEL)
+			{
+				player_intertia_y = PLAYER_TERMINAL_VEL;
+			}
 		}
 		
-		player_move_y = player_intertia_y;
+		player_move_y += player_intertia_y;
+
+		/* test to see if we need to jump late */
+		if(jump_buffer > 0)
+		{
+			jump_buffer--;
+			if(JOY_PRESSED(BTN_A))
+			{
+				player_intertia_y = -PLAYER_JUMP_INERTIA;
+				player_move_y += player_intertia_y;
+				player_grounded = 0U;
+			}
+		}
+
+		/* test to see if jump was pressed early */
+		if(jump_last_pressed == 0)
+		{
+			if(JOY_PRESSED(BTN_A))
+			{
+				jump_last_pressed = 1;
+			}
+		}
+		else
+		{
+			jump_last_pressed++;
+			if(jump_last_pressed > REJUMP_BUFFER)
+			{
+				jump_last_pressed = 0U;
+			}
+		}
 	}
 	else
 	{
@@ -86,17 +146,23 @@ void update_player()
 		{
 			if(JOY_PRESSED(BTN_A))
 			{
-				player_intertia_y = -7;
-				player_move_y = player_intertia_y;
+				player_intertia_y = -PLAYER_JUMP_INERTIA;
+				player_move_y += player_intertia_y;
 				player_grounded = 0U;
 			}
 		}
 	}
 
-	player_world_x += player_move_x;
-	//HandleCollisionHorizontal();
-	player_world_y += player_move_y;
-	//HandleCollisionVertical();
+	/* resolve horizontal collision first */
+	player_world_x += player_move_x / SUBPIXELS;
+	HandleCollisionHorizontal();
+
+	player_world_y += player_move_y / SUBPIXELS;
+	HandleCollisionVertical();
+
+	/* subtract whole pixels from the move vector only after collision has been handled */
+	player_move_x = player_move_x % SUBPIXELS;
+	player_move_y = player_move_y % SUBPIXELS;
 }
 
 void HandleCollisionHorizontal()
@@ -189,6 +255,7 @@ void HandleCollisionVertical()
 		if(collision_grid_test_result == COLLISION_FOUND)
 		{
 			player_world_y += (TILE_SIZE - (player_world_y % TILE_SIZE));
+			player_intertia_y = 0;
 			return;
 		}
 
@@ -200,6 +267,7 @@ void HandleCollisionVertical()
 		if(collision_grid_test_result == COLLISION_FOUND)
 		{
 			player_world_y += (TILE_SIZE - (player_world_y % TILE_SIZE));
+			player_intertia_y = 0;
 			return;
 		}
 	}
@@ -214,6 +282,9 @@ void HandleCollisionVertical()
 		{
 			/* zero out the motion for now, in future we'll want a motion-aware calculation */
 			player_grounded = GROUNDED;
+			player_intertia_y = 0;
+			player_fell = 0U;
+			jump_buffer = 0U;
 			player_world_y -= (((player_world_y + PLAYER_HEIGHT) % TILE_SIZE));
 			return;
 		}
@@ -227,6 +298,9 @@ void HandleCollisionVertical()
 		{
 			/* zero out the motion for now, in future we'll want a motion-aware calculation */
 			player_grounded = GROUNDED;
+			player_intertia_y = 0;
+			player_fell = 0U;
+			jump_buffer = 0U;
 			player_world_y -= (((player_world_y + PLAYER_HEIGHT) % TILE_SIZE));
 			return;
 		}
@@ -251,6 +325,7 @@ void TestGrounded()
 		{
 			/* we are no longer grounded */
 			player_grounded = NOT_GROUNDED;
+			jump_buffer = JUMP_GRACE_BUFFER;
 		}
 	}
 }
@@ -297,13 +372,13 @@ void TestCollisionAtGridPosition()
 INT16 tempx;/* is there a way to handle this with 8 bit? */
 INT16 tempy;
 INT16 rightBound;
-INT16 rightTileEdge = 32;
+INT16 rightTileEdge = BKG_WIDTH;
 INT8 cameraDelta = 0;
 void update_camera() 
 {
 	tempx = player_world_x - CAMERA_OFFSET_X;
 	tempy = player_world_y - CAMERA_OFFSET_Y;
-	rightBound = (96 * TILE_SIZE);
+	rightBound = (CUR_MAP_WIDTH * TILE_SIZE) - SCREEN_WIDTH;
 
 	cameraDelta += (tempx - camera_x);
 	/* clamp to the level width bounds */
@@ -332,10 +407,9 @@ void update_camera()
 
 			UINT8 i = 0;
 			UINT16 scx = (tempx >> 3);
-			for(i = 0; i < 32; i++)
+			for(i = 0; i < CUR_MAP_HEIGHT; i++)
 			{
-			// todo: fix this calculation... it gets weird after the screen wraps
-				set_bkg_tiles((scx+21)%32, i, 1, 1, level_tilemap_data+(i*96)+scx+21);
+				set_bkg_tiles((scx+24)%BKG_WIDTH, i, 1, 1, level_tilemap_data+(i*CUR_MAP_WIDTH)+scx+24);
 			}
 		}
 	}
@@ -348,9 +422,9 @@ void update_camera()
 
 			UINT8 i = 0;
 			UINT8 scx = (tempx >> 3);
-			for(i = 0; i < 32; i++)
+			for(i = 0; i < CUR_MAP_HEIGHT; i++)
 			{
-				set_bkg_tiles((scx-2), i, 1, 1, level_tilemap_data+(96*i)+(scx-2));
+				set_bkg_tiles((scx-4)%BKG_WIDTH, i, 1, 1, level_tilemap_data+(i*CUR_MAP_WIDTH)+(scx-4));
 			}
 		}
 	}

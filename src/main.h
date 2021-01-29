@@ -13,6 +13,9 @@
 /* GAME FLOW VARS */
 extern UINT8 GAME_FLOW_STATE;
 
+#define BKG_WIDTH 32
+#define BKG_HEIGHT 32
+
 /* ---------------------GLOBAL VARS-------------------------- */
 
 /* INPUT VARS */

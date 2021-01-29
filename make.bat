@@ -14,6 +14,7 @@ REM you'll need to add any c file not explicitly included in main here
 ..\..\bin\lcc -c -o bin/utils_1.o src/utils_1.c
 ..\..\bin\lcc -c -o bin/player.o src/player.c
 ..\..\bin\lcc -c -o bin/levels.o src/levels.c
+..\..\bin\lcc -c -o bin/scrolling.o src/scrolling.c
 REM compile the bank file objects
 ..\..\bin\lcc -Wf-bo1 -c -o bin/bank_1.o src/bank_1.c
 ..\..\bin\lcc -Wf-bo2 -c -o bin/bank_2.o src/bank_2.c
