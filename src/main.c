@@ -5,6 +5,7 @@
 #include "input.h"
 #include "utils_1.h"
 #include "player.h"
+#include "scrolling.h"
 
 /* ---------------------GLOBAL VARS-------------------------- */
 
@@ -192,9 +193,22 @@ void load_current_level()
 	set_bkg_data(0x00, tower_tiledataLength, tower_tiledata);
 	/* Initialize the title map data */
 	SWITCH_ROM_MBC1(levels[CUR_LEVEL].RomBank);
-	level_tilemap_data = levels[CUR_LEVEL].MapTileData;
+
+	/*level_tilemap_data = levels[CUR_LEVEL].MapTileData;
 	level_collision_data = levels[CUR_LEVEL].CollisionMap;
-	set_bkg_tiles(0, 0, levels[CUR_LEVEL].Width, levels[CUR_LEVEL].Height, level_tilemap_data);
+	CUR_MAP_WIDTH = levels[CUR_LEVEL].Width;*/
+
+	level_tilemap_data = (unsigned char*)&map01_widetest;
+	level_collision_data = (unsigned char*)&map01_widetestc;
+	CUR_MAP_WIDTH = map01_widetestWidth;
+
+	UINT8 i = 0;
+	for(i = 0; i < 32; i++)
+	{
+		set_bkg_tiles(0, i, 32, 1, level_tilemap_data+(96*i));
+	}
+
+	//set_bkg_tiles(0, 0, levels[CUR_LEVEL].Width, levels[CUR_LEVEL].Height, level_tilemap_data);
 
 	SHOW_BKG;
 	SHOW_SPRITES;
@@ -212,7 +226,8 @@ void DoGraphicsUpdate()
 	disable_interrupts();
 
 	move_bkg(camera_x, camera_y);
-	move_sprite(player_sprite_num, player_world_x - SCX_REG, player_world_y - SCY_REG);
+	/* sprites are rendered at the position -8 in x and -16 in y so that 0,0 equates to off-screen */
+	move_sprite(player_sprite_num, (player_world_x + PLAYER_SPRITE_WIDTH - SCX_REG), (player_world_y + PLAYER_SPRITE_HEIGHT - SCY_REG));
 
 	enable_interrupts(); 
 }

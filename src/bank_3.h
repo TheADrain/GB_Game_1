@@ -4,6 +4,7 @@
 /* BANK_3 - MAPDATA 1-10 */
 #include "maps/map01.h"
 #include "maps/map02.h"
+#include "maps/map01_widetest.h"
 
 
 #endif
