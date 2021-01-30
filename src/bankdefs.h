@@ -1,8 +1,7 @@
 #ifndef BANKDEFS
 #define BANKDEFS
 /* -----------------------ROM BANKING DEFINES------------------------ */
-#include "bank_1.h"
-#include "bank_2.h"
+/* bank 1 and 2 are handled in make.bat and contain GBT player and music data */
 #include "bank_3.h"
 #include "bank_4.h"
 #include "bank_5.h"

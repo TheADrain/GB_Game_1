@@ -1,6 +1,10 @@
 #ifndef MAIN_H
 #define MAIN_H
 #include <gb/gb.h>
+
+/* ---------------------MUSIC-------------------------- */
+#include "gbt_player.h"
+extern const unsigned char * song_Data[];
 /* ---------------------GAME FLOW-------------------------- */
 
 /* GAME FLOW STATE */

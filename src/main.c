@@ -111,6 +111,13 @@ void splash_init()
 	/* Initialize the title map data */
 	set_bkg_tiles(0, 0, splash_mapWidth, splash_mapHeight, splash_map);
 	SHOW_BKG;
+	
+	/* test music */
+	gbt_play(song_Data, 2, 7);
+    gbt_loop(0);
+    set_interrupts(VBL_IFLAG);
+	/* test music */
+
 	enable_interrupts();
 
 	FadeFromBlack(4U);
@@ -121,9 +128,12 @@ void splash_update()
 	if(JOY_PRESSED(BTN_START))
 	{
 		/* move to the next state */
+		gbt_stop();
 		title_init();
 		GAME_FLOW_STATE = GAMEFLOW_TITLE;
 	}
+
+	gbt_update();
 }
 
 void title_init()

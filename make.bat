@@ -1,4 +1,8 @@
 @echo Building...
+
+REM compiling music
+tools\mod2gbt assets/music/template.mod song 2
+
 REM some code standards regarding ANSI C to SDCC
 REM    https://github.com/gamefolk/gamefolk.github.io/blob/master/guide.md
 REM makefile docs http://gbdk.sourceforge.net/doc/html/c01.html
@@ -15,9 +19,10 @@ REM you'll need to add any c file not explicitly included in main here
 ..\..\bin\lcc -c -o bin/player.o src/player.c
 ..\..\bin\lcc -c -o bin/levels.o src/levels.c
 ..\..\bin\lcc -c -o bin/scrolling.o src/scrolling.c
+..\..\bin\lcc -c -o bin/gbt_player.o src/gbt_player.s
 REM compile the bank file objects
-..\..\bin\lcc -Wf-bo1 -c -o bin/bank_1.o src/bank_1.c
-..\..\bin\lcc -Wf-bo2 -c -o bin/bank_2.o src/bank_2.c
+..\..\bin\lcc -Wf-bo1 -c -o bin/bank_1.o src/gbt_player_bank1.s
+..\..\bin\lcc -Wf-bo2 -c -o bin/bank_2.o output.c
 ..\..\bin\lcc -Wf-bo3 -c -o bin/bank_3.o src/bank_3.c
 ..\..\bin\lcc -Wf-bo4 -c -o bin/bank_4.o src/bank_4.c
 ..\..\bin\lcc -Wf-bo5 -c -o bin/bank_5.o src/bank_5.c
