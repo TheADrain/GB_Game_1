@@ -188,7 +188,7 @@ void load_current_level()
 	disable_interrupts();
 
 	/* Initialize the VRAM data */
-	SWITCH_ROM_MBC1(BANK_GRAPHICS_DATA);
+	SWITCH_ROM_MBC1(BANK_GRAPHICS_DATA_1);
 	/* load the sprite tiles */
 	SPRITES_8x16;
 	set_sprite_data(0x00, spritesLength, sprites);

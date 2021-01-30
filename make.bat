@@ -20,6 +20,9 @@ REM compile the bank file objects
 ..\..\bin\lcc -Wf-bo2 -c -o bin/bank_2.o src/bank_2.c
 ..\..\bin\lcc -Wf-bo3 -c -o bin/bank_3.o src/bank_3.c
 ..\..\bin\lcc -Wf-bo4 -c -o bin/bank_4.o src/bank_4.c
+..\..\bin\lcc -Wf-bo5 -c -o bin/bank_5.o src/bank_5.c
+..\..\bin\lcc -Wf-bo6 -c -o bin/bank_6.o src/bank_6.c
+..\..\bin\lcc -Wf-bo7 -c -o bin/bank_7.o src/bank_7.c
 
 REM compile the rom from all the compiled .o files
 ..\..\bin\lcc -Wl-m -Wl-j -Wl-yt1 -Wl-yo8 -o game.gb bin/*.o
