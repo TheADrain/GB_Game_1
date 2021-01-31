@@ -11,6 +11,10 @@ TODO:
 - consider uploading the template project to github
 - then maybe implementing the same template project in RGBASM assembler?
 
+- sound
+	- need a system for muting particular sound channels for N frames 
+	- need a system to hold sound effect data (channels, noise pattern and triggering muting music channels)
+
 - Toolchain (once we've figured out how to load levels and actually started building levels to play,
 	don't do this until we have an actual game in the making)
 	- need something to compile all the level data into large blobs
@@ -52,3 +56,4 @@ TODO:
 
 - Player Object
 	- Basic player movement (left/right/a to jump)
+

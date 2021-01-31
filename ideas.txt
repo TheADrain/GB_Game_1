@@ -1,0 +1,34 @@
+- Design Ideas
+	- Worlds
+		- 1 Forest
+		- 2 Castle Exterior
+		- 3 Castle Interior
+		- 4 Scaffolding/Clouds
+		- 5 Space Climb
+		- 6 Moon
+
+- Forest
+	- Enemies
+		- Spiders (attack from above)
+		- Ghouls/Zombies (ground walkers)
+		- bird (swooping attack, proximity triggered)
+
+	- Unique Ideas
+		- hang from branches?
+		- climb spider silk?
+
+- Castle Interior/Exterior
+	- Enemies
+		- bats
+		- ?
+
+	- Unique Ideas
+		- hanging from railings?
+
+- Scaffolding/Clouds
+	- Enemies
+		- construction workers (throw hammers?)
+
+	- Unique Ideas
+		- falling/breaking platforms?
+		- 

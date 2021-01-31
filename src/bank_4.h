@@ -4,5 +4,6 @@
 /* BANK_4 - GRAPHICS DATA 1 */
 #include "sprites/sprites.h"		/* Sprite Data */
 #include "tiles/tower_tiledata.h"	/* Level Tilesets */
+#include "tiles/forest_tiledata.h"	
 
 #endif

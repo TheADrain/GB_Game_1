@@ -113,6 +113,7 @@ void splash_init()
 	SHOW_BKG;
 	
 	/* test music */
+	gbt_enable_channels(0x00);
 	gbt_play(song_Data, 2, 7);
     gbt_loop(0);
     set_interrupts(VBL_IFLAG);
@@ -125,6 +126,19 @@ void splash_init()
 
 void splash_update()
 {
+	if(JOY_PRESSED(BTN_A))
+	{
+		NR50_REG = 0x77;
+		NR51_REG = 0xFF;
+		NR52_REG = 0x80;
+		/*NR41-44
+		3A, A3, 33, 80*/
+		NR41_REG = 0x3A;
+		NR42_REG = 0xA3;
+		NR43_REG = 0x33;
+		NR44_REG = 0x80;
+	}
+
 	if(JOY_PRESSED(BTN_START))
 	{
 		/* move to the next state */
@@ -133,6 +147,7 @@ void splash_update()
 		GAME_FLOW_STATE = GAMEFLOW_TITLE;
 	}
 
+	gbt_enable_channels(0x07);
 	gbt_update();
 }
 
@@ -203,7 +218,9 @@ void load_current_level()
 	SPRITES_8x16;
 	set_sprite_data(0x00, spritesLength, sprites);
 	/* load tiles for the title screen */
-	set_bkg_data(0x00, tower_tiledataLength, tower_tiledata);
+	//set_bkg_data(0x00, tower_tiledataLength, tower_tiledata);
+	set_bkg_data(0x00, forest_tiledataLength, forest_tiledata);
+	CUR_LEVEL = 2;
 	/* Initialize the title map data */
 	SWITCH_ROM_MBC1(levels[CUR_LEVEL].RomBank);
 
@@ -211,10 +228,10 @@ void load_current_level()
 	level_collision_data = levels[CUR_LEVEL].CollisionMap;
 	CUR_MAP_WIDTH = levels[CUR_LEVEL].Width;*/
 
-	level_tilemap_data = (unsigned char*)&map01_tilemap;
-	level_collision_data = (unsigned char*)&map01_collision;
-	CUR_MAP_WIDTH = map01Width;
-	CUR_MAP_HEIGHT = map01Height;
+	level_tilemap_data = levels[CUR_LEVEL].MapTileData;
+	level_collision_data = levels[CUR_LEVEL].CollisionMap;
+	CUR_MAP_WIDTH = levels[CUR_LEVEL].Width;
+	CUR_MAP_HEIGHT = levels[CUR_LEVEL].Height;
 
 	UINT8 i = 0;
 	for(i = 0; i < CUR_MAP_HEIGHT; i++)

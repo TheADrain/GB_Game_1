@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "testMap_Jumping.tmx",
+    "activeFile": "forest01.tmx",
     "expandedProjectPaths": [
         "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports",
         "."
@@ -74,6 +74,18 @@
             "scaleInDock": 16,
             "scaleInEditor": 1
         },
+        "forest.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 4
+        },
+        "forest01.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 90.99999999999997,
+                "y": 78.33333333333331
+            }
+        },
         "map01.tmx": {
             "scale": 1.5,
             "selectedLayer": 1,
@@ -91,11 +103,11 @@
             }
         },
         "testMap_Jumping.tmx": {
-            "scale": 1,
+            "scale": 3,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 736,
-                "y": 31.5
+                "x": 511.8333333333333,
+                "y": 72.16666666666666
             }
         },
         "tower.tsx": {
@@ -109,26 +121,28 @@
     "map.orientation": 1,
     "map.tileHeight": 8,
     "map.tileWidth": 8,
-    "map.width": 32,
+    "map.width": 128,
     "openFiles": [
         "collision.tsx",
         "tower.tsx",
-        "testMap_Jumping.tmx"
+        "testMap_Jumping.tmx",
+        "forest.tsx",
+        "forest01.tmx"
     ],
     "project": "assets.tiled-project",
     "recentFiles": [
         "collision.tsx",
         "tower.tsx",
         "testMap_Jumping.tmx",
+        "forest.tsx",
+        "forest01.tmx",
         "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports/tower.tsx",
         "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports/collision.tsx",
         "map01_widetest.tmx",
         "map01.tmx",
         "C:/gbdk2020/gbdk/projects/GB_Game1/assets/levels/map02.tmx",
         "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports/map02.tmx",
-        "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports/map01.tmx",
-        "C:/Users/The_A_000/Field.tsx",
-        "C:/Users/The_A_000/fieldmap.tmx"
+        "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports/map01.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.margin": 0,

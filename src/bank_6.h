@@ -5,4 +5,6 @@
 #include "maps/map01.h"
 #include "maps/map02.h"
 
+#include "maps/map_forest01.h"
+
 #endif
