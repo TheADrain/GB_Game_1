@@ -3,6 +3,8 @@
 #include <gb/gb.h>
 #include "input.h"
 
+#define DEBUG_MOVEMENT
+
 /* init the camera in the bottom left corner of the map for now */
 #define CAMERA_START_X 0U
 #define CAMERA_START_Y ((32U*8U) - 145U)
@@ -107,5 +109,8 @@ extern UINT16 u16Temp1, u16Temp2;
 void TestCollisionAtWorldPosition(); 
 void TestCollisionAtGridPosition(); 
 void TestGrounded(); 
+
+void handle_scroll_horizontal();
+void handle_scroll_vertical();
 
 #endif

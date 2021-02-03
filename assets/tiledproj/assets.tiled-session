@@ -96,7 +96,7 @@
             "scale": 1.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 187.33333333333334,
+                "x": 202.66666666666669,
                 "y": -14.333333333333314
             }
         },
@@ -116,8 +116,8 @@
             "scale": 2,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 128,
-                "y": 128.25
+                "x": 129,
+                "y": 124.75
             }
         },
         "map01_widetest.tmx": {
@@ -129,19 +129,19 @@
             }
         },
         "map02.tmx": {
-            "scale": 1.1739285714285714,
-            "selectedLayer": 0,
+            "scale": 1,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 128.62792820200792,
-                "y": 128.20200790994826
+                "x": 112,
+                "y": 391.5
             }
         },
         "testMap_Jumping.tmx": {
             "scale": 3,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 511.8333333333333,
-                "y": 72.16666666666666
+                "x": 76.66666666666667,
+                "y": 83.5
             }
         },
         "tower.tsx": {
@@ -168,6 +168,7 @@
     "project": "assets.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "testMap_Jumping.tmx",
         "map02.tmx",
         "map01.tmx",
         "forest02.tmx",
@@ -176,7 +177,6 @@
         "forest01.tmx",
         "C:/gbdk2020/gbdk/projects/ScrollingOptimisationBranch/assets/tiledproj/forest01.tmx",
         "collision.tsx",
-        "testMap_Jumping.tmx",
         "tower.tsx",
         "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports/tower.tsx",
         "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports/collision.tsx"

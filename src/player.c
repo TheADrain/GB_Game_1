@@ -51,6 +51,29 @@ void init_game_camera()
 
 void update_player() 
 {
+#ifdef DEBUG_MOVEMENT
+
+	/* DEBUG_MOVEMENT */
+	if(JOY_DOWN(BTN_LEFT))
+	{
+		player_world_x -= 1;
+	}
+	else if(JOY_DOWN(BTN_RIGHT))
+	{
+		player_world_x += 1;
+	}
+
+	if(JOY_DOWN(BTN_UP))
+	{
+		player_world_y -= 1;
+	}
+	else if(JOY_DOWN(BTN_DOWN))
+	{
+		player_world_y += 1;
+	}
+
+#else /* DEBUG_MOVEMENT */
+
 	/* find movement vector */
 	if(JOY_DOWN(BTN_LEFT))
 	{
@@ -163,6 +186,8 @@ void update_player()
 	/* subtract whole pixels from the move vector only after collision has been handled */
 	player_move_x = player_move_x % SUBPIXELS;
 	player_move_y = player_move_y % SUBPIXELS;
+
+#endif /* DEBUG_MOVEMENT */
 }
 
 void HandleCollisionHorizontal()
@@ -374,9 +399,16 @@ INT16 tempy;
 UINT16 widthOffset;
 INT16 rightBound;
 INT16 rightTileEdge = BKG_WIDTH;
+
+INT16 topBound;
+INT16 topTileEdge = BKG_HEIGHT;
+
+INT16 bottomBound;
+
 UINT8 cameraDelta = 128;
 
 UINT16 scroll_x_temp;
+UINT16 scroll_y_temp;
 unsigned char * scrl_data_ptr;
 UINT8 scrl_i = 0;
 
@@ -384,10 +416,26 @@ void update_camera()
 {
 	tempx = player_world_x - CAMERA_OFFSET_X;
 	tempy = player_world_y - CAMERA_OFFSET_Y;
-	rightBound = (CUR_MAP_WIDTH * TILE_SIZE) - SCREEN_WIDTH;
+	
+	if(levels[CUR_LEVEL].MapType == MAP_HORIZONTAL)
+	{
+		rightBound = (CUR_MAP_WIDTH * TILE_SIZE) - SCREEN_WIDTH;
+		cameraDelta += (tempx - camera_x);
+		handle_scroll_horizontal();
+	}
+	else
+	{
+		bottomBound = (CUR_MAP_HEIGHT * TILE_SIZE) - SCREEN_HEIGHT;
+		cameraDelta += (tempy - camera_y);
+		handle_scroll_vertical();
+	}
 
-	cameraDelta += (tempx - camera_x);
+	camera_x = tempx;
+	camera_y = tempy; 
+}
 
+void handle_scroll_horizontal()
+{
 	/* clamp to the level width bounds */
 	if(tempx < 0 )
 	{
@@ -396,7 +444,6 @@ void update_camera()
 	{
 		tempx = rightBound;
 	}
-
 
 	if(tempy < 0)
 	{
@@ -415,9 +462,9 @@ void update_camera()
 
 			UINT16 scx = (tempx >> 3) + 24;
 			scroll_x_temp = (scx)%BKG_WIDTH;
-			unsigned char* mapData = levels[CUR_LEVEL].MapTileData;
-			mapData += (CUR_MAP_HEIGHT * scx);
-			set_bkg_tiles(scroll_x_temp, 0, 1, CUR_MAP_HEIGHT, mapData);
+			scrl_data_ptr = levels[CUR_LEVEL].MapTileData;
+			scrl_data_ptr += (CUR_MAP_HEIGHT * scx);
+			set_bkg_tiles(scroll_x_temp, 0, 1, CUR_MAP_HEIGHT, scrl_data_ptr);
 		}
 	}
 	else if (tempx < camera_x)
@@ -429,12 +476,58 @@ void update_camera()
 
 			UINT16 scx = (tempx >> 3) - 4;
 			scroll_x_temp = (scx)%BKG_WIDTH;
-			unsigned char* mapData = levels[CUR_LEVEL].MapTileData;
-			mapData += (CUR_MAP_HEIGHT * scx);
-			set_bkg_tiles(scroll_x_temp, 0, 1, CUR_MAP_HEIGHT, mapData);
+			scrl_data_ptr = levels[CUR_LEVEL].MapTileData;
+			scrl_data_ptr += (CUR_MAP_HEIGHT * scx);
+			set_bkg_tiles(scroll_x_temp, 0, 1, CUR_MAP_HEIGHT, scrl_data_ptr);
 		}
 	}
+}
 
-	camera_x = tempx;
-	camera_y = tempy; 
+void handle_scroll_vertical()
+{
+	/* clamp to the level width bounds */
+	if(tempx < 0 )
+	{
+		tempx = 0;
+	} else if (tempx >= CAMERA_RIGHT_BOUND)
+	{
+		tempx = CAMERA_RIGHT_BOUND;
+	}
+
+	if(tempy < 0)
+	{
+		tempy = 0;
+	} else if (tempy >= bottomBound)
+	{
+		tempy = bottomBound;
+	}
+
+	if(tempy > camera_y)
+	{
+		/* moving up */
+		if(cameraDelta >= (128+8))
+		{
+			cameraDelta -= 8;
+
+			UINT16 scy = (tempy >> 3) + 24;
+			scroll_y_temp = (scy)%BKG_HEIGHT;
+			unsigned char* mapData = levels[CUR_LEVEL].MapTileData;
+			mapData += (CUR_MAP_WIDTH * scy);
+			set_bkg_tiles(0, scroll_y_temp, CUR_MAP_WIDTH, 1, mapData);
+		}
+	}
+	else if (tempx < camera_y)
+	{
+		/* moving down */
+		if(cameraDelta <= (128-8))
+		{
+			cameraDelta += 8;
+
+			UINT16 scy = (tempy >> 3) - 4;
+			scroll_y_temp = (scy)%BKG_HEIGHT;
+			unsigned char* mapData = levels[CUR_LEVEL].MapTileData;
+			mapData += (CUR_MAP_HEIGHT * scy);
+			set_bkg_tiles(0, scroll_y_temp, CUR_MAP_WIDTH, 1, mapData);
+		}
+	}
 }

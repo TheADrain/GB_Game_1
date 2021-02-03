@@ -37,6 +37,12 @@
  "nextlayerid":3,
  "nextobjectid":1,
  "orientation":"orthogonal",
+ "properties":[
+        {
+         "name":"ScrollDirection",
+         "type":"string",
+         "value":"Horizontal"
+        }],
  "renderorder":"right-down",
  "tiledversion":"1.4.3",
  "tileheight":8,

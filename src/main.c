@@ -202,61 +202,98 @@ void levelcard_update()
 	if(JOY_PRESSED(BTN_START))
 	{
 		/* move to the next state */
-		load_current_level();	
+		FadeToWhite(4U);
+
+		set_current_level(1U);
+		load_current_level_graphics();
+		load_current_level_map();	
+
+		start_level();
+		
+
 		GAME_FLOW_STATE = GAMEFLOW_GAME;
 	}
 }
 
-void load_current_level()
+void set_current_level(UINT8 newLevel)
 {
-	FadeToWhite(4U);
-	/* load the level pointed to by CUR_LEVEL */
-	/* todo: bank switching based on which level we want rather than just switching to bank 3 */
 	disable_interrupts();
 
-	/* Initialize the VRAM data */
-	SWITCH_ROM_MBC1(BANK_GRAPHICS_DATA_1);
-	/* load the sprite tiles */
-	SPRITES_8x16;
-	set_sprite_data(0x00, spritesLength, sprites);
-	/* load tiles for the title screen */
-	//set_bkg_data(0x00, tower_tiledataLength, tower_tiledata);
-	set_bkg_data(0x00, forest_tiledataLength, forest_tiledata);
-	CUR_LEVEL = 2;
-	/* Initialize the title map data */
-	SWITCH_ROM_MBC1(levels[CUR_LEVEL].RomBank);
+	CUR_LEVEL = newLevel;
 
-	/*level_tilemap_data = levels[CUR_LEVEL].MapTileData;
-	level_collision_data = levels[CUR_LEVEL].CollisionMap;
-	CUR_MAP_WIDTH = levels[CUR_LEVEL].Width;*/
+	enable_interrupts();
+}
+
+void load_current_level_graphics()
+{
+	disable_interrupts();
+
+	/* ensure we're in sprite 8x16 mode */
+	SPRITES_8x16;
+
+	/* load the sprite tiles (for now this is same for all levels) */
+	SWITCH_ROM_MBC1(BANK_GRAPHICS_DATA_1);
+	set_sprite_data(0x00, spritesLength, sprites);
+
+	/* load the background tiles for this map */
+	set_bkg_data(0x00, levels[CUR_LEVEL].tileDataLength, levels[CUR_LEVEL].tileDataPtr);
 
 	level_tilemap_data = levels[CUR_LEVEL].MapTileData;
 	level_collision_data = levels[CUR_LEVEL].CollisionMap;
 	CUR_MAP_WIDTH = levels[CUR_LEVEL].Width;
 	CUR_MAP_HEIGHT = levels[CUR_LEVEL].Height;
 
+	enable_interrupts();
+}
+
+void load_current_level_map()
+{
+	disable_interrupts();
+	
+	/* Initialize the title map data */
+	SWITCH_ROM_MBC1(levels[CUR_LEVEL].RomBank);
+
 	/* currently assuming column-first map */
 	UINT8 i = 0;
-	unsigned char* testPtr = levels[CUR_LEVEL].MapTileData;
-	for(i = 0; i < 32; i++)
+	unsigned char* dataPtr = levels[CUR_LEVEL].MapTileData;
+		
+	
+	/* draw left to right for a horizontal level */
+	if(levels[CUR_LEVEL].MapType == MAP_HORIZONTAL)
 	{
-		testPtr += CUR_MAP_HEIGHT;
-		set_bkg_tiles(i, 0, 1, CUR_MAP_HEIGHT, testPtr);
+		for(i = 0; i < 32; i++)
+		{
+			set_bkg_tiles(i, 0, 1, CUR_MAP_HEIGHT, dataPtr);
+			dataPtr += CUR_MAP_HEIGHT;
+		}
 	}
+	/* and top to bottom for a vertical one */
+	else
+	{
+		for(i = 0; i < 32; i++)
+		{
+			set_bkg_tiles(0, i, CUR_MAP_WIDTH, 1, dataPtr);
+			dataPtr += CUR_MAP_WIDTH;
+		}
+	}
+	
+	enable_interrupts();
+}
 
-	//set_bkg_tiles(0, 0, levels[CUR_LEVEL].Width, levels[CUR_LEVEL].Height, level_tilemap_data);
+void start_level()
+{
+	init_game_camera();
+	init_player_sprite();
 
 	SHOW_BKG;
 	SHOW_SPRITES;
-	
-	init_game_camera();
-	init_player_sprite();
 
 	gbt_enable_channels(0x00);
 	gbt_play(song_Data, 2, 7);
 	gbt_loop(1);
 
-	enable_interrupts();
+	/* spawn and position the player */
+
 	FadeFromWhite(4U);
 }
 
