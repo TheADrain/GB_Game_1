@@ -11,9 +11,29 @@ TODO:
 - consider uploading the template project to github
 - then maybe implementing the same template project in RGBASM assembler?
 
+- player
+	- split player logic into states
+		GROUNDED, JUMPING, FALLING, etc etc
+	- player mechanics
+		jumping
+		jump hold a to go higher
+		dash in 4 directions? maybe just 2
+	- player powerups
+		not sure yet, some kind of projectile maybe? fire flower style
+
+- environment objects
+	- moving platforms up/down
+	- moving platforms left/right
+	- falling platforms?
+	- 
+
 - sound
 	- need a system for muting particular sound channels for N frames 
 	- need a system to hold sound effect data (channels, noise pattern and triggering muting music channels)
+
+- debug
+	- need a debug menu accesible with start+select and able to be defined out of builds
+	- needs to contain a level select menu
 
 - Toolchain (once we've figured out how to load levels and actually started building levels to play,
 	don't do this until we have an actual game in the making)
@@ -43,17 +63,23 @@ TODO:
 	- put these structures into an array somewhere (by hand? ugh... maybe write a tool?)
 	- load levels using this array of level data:
 		- LEVEL_DATA struct { width, height, rom_bank, &level_map, &collision_map, &things_map }
+		- add tileset to the above data structure
+		- add any other meta data here such as level type
+			- enum LevelType { HORIZONTAL_SCROLLER, VERTICAL_SCROLLER, etc }
+
+	- triggerable from debug menu as well as from hitting a level transition tile or the end of the level?
 
 - Game Flow
 	- create a structure for the player data (x, y , sub_x, sub_y, speed)
 		- sortas done, arguable if this needs to be a STRUCT or just globals
+	- create a struct for objects
+		- { world_x, world_y, sprite, animation_data etc }
 
 - Game Camera
 	- game camera should follow the player X/Y position but be bound by the VRAM screen size for now 
 		- done but needs some additional features:
 			- get level size from the level data incase we want smaller (or in future larger) areas
+	- refactor scrolling to work based on the current level type
+	- refactor scrolling to be more efficient if possible
 
-
-- Player Object
-	- Basic player movement (left/right/a to jump)
 

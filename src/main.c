@@ -75,7 +75,9 @@ void main()
 
 			case GAMEFLOW_GAME:
 				wait_vbl_done();
+				SWITCH_ROM_MBC1(levels[CUR_LEVEL].RomBank);
 				update_player();
+				SWITCH_ROM_MBC1(levels[CUR_LEVEL].RomBank);
 				update_camera();
 				break;
 	  }
@@ -233,10 +235,13 @@ void load_current_level()
 	CUR_MAP_WIDTH = levels[CUR_LEVEL].Width;
 	CUR_MAP_HEIGHT = levels[CUR_LEVEL].Height;
 
+	/* currently assuming column-first map */
 	UINT8 i = 0;
-	for(i = 0; i < CUR_MAP_HEIGHT; i++)
+	unsigned char* testPtr = levels[CUR_LEVEL].MapTileData;
+	for(i = 0; i < 32; i++)
 	{
-		set_bkg_tiles(0, i, BKG_WIDTH, 1, level_tilemap_data+(CUR_MAP_WIDTH*i));
+		testPtr += CUR_MAP_HEIGHT;
+		set_bkg_tiles(i, 0, 1, CUR_MAP_HEIGHT, testPtr);
 	}
 
 	//set_bkg_tiles(0, 0, levels[CUR_LEVEL].Width, levels[CUR_LEVEL].Height, level_tilemap_data);
@@ -246,6 +251,10 @@ void load_current_level()
 	
 	init_game_camera();
 	init_player_sprite();
+
+	gbt_enable_channels(0x00);
+	gbt_play(song_Data, 2, 7);
+	gbt_loop(1);
 
 	enable_interrupts();
 	FadeFromWhite(4U);

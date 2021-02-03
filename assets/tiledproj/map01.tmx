@@ -4,7 +4,7 @@
   <export target="map01.csv" format="csv"/>
  </editorsettings>
  <tileset firstgid="1" source="tower.tsx"/>
- <tileset firstgid="65" source="collision.tsx"/>
+ <tileset firstgid="65" source="gameplay.tsx"/>
  <layer id="1" name="background" width="32" height="32">
   <data encoding="csv">
 22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,

@@ -70,28 +70,54 @@
                 "y": 116.5
             }
         },
+        "C:/gbdk2020/gbdk/projects/ScrollingOptimisationBranch/assets/tiledproj/collision.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/gbdk2020/gbdk/projects/ScrollingOptimisationBranch/assets/tiledproj/forest.tsx": {
+            "scaleInDock": 5.5
+        },
+        "C:/gbdk2020/gbdk/projects/ScrollingOptimisationBranch/assets/tiledproj/forest01.tmx": {
+            "scale": 2,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 269.5,
+                "y": 82.75
+            }
+        },
         "collision.tsx": {
             "scaleInDock": 16,
-            "scaleInEditor": 1
+            "scaleInEditor": 32
         },
         "forest.tsx": {
-            "scaleInDock": 2,
-            "scaleInEditor": 4
+            "scaleInDock": 4,
+            "scaleInEditor": 3
         },
         "forest01.tmx": {
             "scale": 1.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 90.99999999999997,
-                "y": 78.33333333333331
+                "x": 187.33333333333334,
+                "y": -14.333333333333314
             }
         },
-        "map01.tmx": {
-            "scale": 1.5,
+        "forest02.tmx": {
+            "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 315.99999999999994,
-                "y": 103
+                "x": 512,
+                "y": 128.66666666666663
+            }
+        },
+        "gameplay.tsx": {
+            "scaleInDock": 8,
+            "scaleInEditor": 11
+        },
+        "map01.tmx": {
+            "scale": 2,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 128,
+                "y": 128.25
             }
         },
         "map01_widetest.tmx": {
@@ -100,6 +126,14 @@
             "viewCenter": {
                 "x": 104,
                 "y": 95.75
+            }
+        },
+        "map02.tmx": {
+            "scale": 1.1739285714285714,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 128.62792820200792,
+                "y": 128.20200790994826
             }
         },
         "testMap_Jumping.tmx": {
@@ -115,34 +149,37 @@
             "scaleInEditor": 1
         }
     },
+    "lastUsedTilesetExportFilter": "JSON tileset files (*.json)",
     "map.height": 32,
-    "map.lastUsedExportFilter": "CSV files (*.csv)",
+    "map.lastUsedExportFilter": "JSON map files (*.json)",
     "map.lastUsedFormat": "tmx",
     "map.orientation": 1,
     "map.tileHeight": 8,
     "map.tileWidth": 8,
     "map.width": 128,
     "openFiles": [
-        "collision.tsx",
-        "tower.tsx",
-        "testMap_Jumping.tmx",
+        "forest01.tmx",
         "forest.tsx",
-        "forest01.tmx"
+        "gameplay.tsx",
+        "forest02.tmx",
+        "map01.tmx",
+        "map02.tmx"
     ],
     "project": "assets.tiled-project",
+    "property.type": "string",
     "recentFiles": [
-        "collision.tsx",
-        "tower.tsx",
-        "testMap_Jumping.tmx",
+        "map02.tmx",
+        "map01.tmx",
+        "forest02.tmx",
+        "gameplay.tsx",
         "forest.tsx",
         "forest01.tmx",
+        "C:/gbdk2020/gbdk/projects/ScrollingOptimisationBranch/assets/tiledproj/forest01.tmx",
+        "collision.tsx",
+        "testMap_Jumping.tmx",
+        "tower.tsx",
         "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports/tower.tsx",
-        "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports/collision.tsx",
-        "map01_widetest.tmx",
-        "map01.tmx",
-        "C:/gbdk2020/gbdk/projects/GB_Game1/assets/levels/map02.tmx",
-        "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports/map02.tmx",
-        "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports/map01.tmx"
+        "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports/collision.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.margin": 0,

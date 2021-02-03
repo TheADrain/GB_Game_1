@@ -371,9 +371,15 @@ void TestCollisionAtGridPosition()
 
 INT16 tempx;/* is there a way to handle this with 8 bit? */
 INT16 tempy;
+UINT16 widthOffset;
 INT16 rightBound;
 INT16 rightTileEdge = BKG_WIDTH;
-INT8 cameraDelta = 0;
+UINT8 cameraDelta = 128;
+
+UINT16 scroll_x_temp;
+unsigned char * scrl_data_ptr;
+UINT8 scrl_i = 0;
+
 void update_camera() 
 {
 	tempx = player_world_x - CAMERA_OFFSET_X;
@@ -381,6 +387,7 @@ void update_camera()
 	rightBound = (CUR_MAP_WIDTH * TILE_SIZE) - SCREEN_WIDTH;
 
 	cameraDelta += (tempx - camera_x);
+
 	/* clamp to the level width bounds */
 	if(tempx < 0 )
 	{
@@ -389,6 +396,7 @@ void update_camera()
 	{
 		tempx = rightBound;
 	}
+
 
 	if(tempy < 0)
 	{
@@ -401,31 +409,29 @@ void update_camera()
 	if(tempx > camera_x)
 	{
 		/* moving right */
-		if(cameraDelta >= TILE_SIZE)
+		if(cameraDelta >= (128+8))
 		{
 			cameraDelta -= 8;
 
-			UINT8 i = 0;
-			UINT16 scx = (tempx >> 3);
-			for(i = 0; i < CUR_MAP_HEIGHT; i++)
-			{
-				set_bkg_tiles((scx+24)%BKG_WIDTH, i, 1, 1, level_tilemap_data+(i*CUR_MAP_WIDTH)+scx+24);
-			}
+			UINT16 scx = (tempx >> 3) + 24;
+			scroll_x_temp = (scx)%BKG_WIDTH;
+			unsigned char* mapData = levels[CUR_LEVEL].MapTileData;
+			mapData += (CUR_MAP_HEIGHT * scx);
+			set_bkg_tiles(scroll_x_temp, 0, 1, CUR_MAP_HEIGHT, mapData);
 		}
 	}
-	else
+	else if (tempx < camera_x)
 	{
 		/* moving left */
-		if(cameraDelta <= -TILE_SIZE)
+		if(cameraDelta <= (128-8))
 		{
 			cameraDelta += 8;
 
-			UINT8 i = 0;
-			UINT8 scx = (tempx >> 3);
-			for(i = 0; i < CUR_MAP_HEIGHT; i++)
-			{
-				set_bkg_tiles((scx-4)%BKG_WIDTH, i, 1, 1, level_tilemap_data+(i*CUR_MAP_WIDTH)+(scx-4));
-			}
+			UINT16 scx = (tempx >> 3) - 4;
+			scroll_x_temp = (scx)%BKG_WIDTH;
+			unsigned char* mapData = levels[CUR_LEVEL].MapTileData;
+			mapData += (CUR_MAP_HEIGHT * scx);
+			set_bkg_tiles(scroll_x_temp, 0, 1, CUR_MAP_HEIGHT, mapData);
 		}
 	}
 
