@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "forest01.tmx",
+    "activeFile": "map02.tmx",
     "expandedProjectPaths": [
-        "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports",
-        "."
+        ".",
+        "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -113,11 +113,11 @@
             "scaleInEditor": 11
         },
         "map01.tmx": {
-            "scale": 2,
+            "scale": 3,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 129,
-                "y": 124.75
+                "x": 127.33333333333334,
+                "y": 137.5
             }
         },
         "map01_widetest.tmx": {
@@ -129,11 +129,11 @@
             }
         },
         "map02.tmx": {
-            "scale": 1,
-            "selectedLayer": 1,
+            "scale": 3,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 112,
-                "y": 391.5
+                "x": 108,
+                "y": 648.5
             }
         },
         "testMap_Jumping.tmx": {
@@ -145,8 +145,8 @@
             }
         },
         "tower.tsx": {
-            "scaleInDock": 8,
-            "scaleInEditor": 1
+            "scaleInDock": 4,
+            "scaleInEditor": 8
         }
     },
     "lastUsedTilesetExportFilter": "JSON tileset files (*.json)",
@@ -163,21 +163,22 @@
         "gameplay.tsx",
         "forest02.tmx",
         "map01.tmx",
-        "map02.tmx"
+        "map02.tmx",
+        "tower.tsx"
     ],
     "project": "assets.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "testMap_Jumping.tmx",
-        "map02.tmx",
-        "map01.tmx",
-        "forest02.tmx",
-        "gameplay.tsx",
-        "forest.tsx",
         "forest01.tmx",
+        "forest.tsx",
+        "gameplay.tsx",
+        "forest02.tmx",
+        "map01.tmx",
+        "tower.tsx",
+        "map02.tmx",
+        "testMap_Jumping.tmx",
         "C:/gbdk2020/gbdk/projects/ScrollingOptimisationBranch/assets/tiledproj/forest01.tmx",
         "collision.tsx",
-        "tower.tsx",
         "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports/tower.tsx",
         "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports/collision.tsx"
     ],
