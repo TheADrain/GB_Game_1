@@ -45,10 +45,7 @@ TODO:
 			- might need to make sure bank 1 has enough space for the level data array but it shouldn't be a big prob
 
 - System stuff
-	- implement the GBDK compatible version of the GBT music player and test it works with banking properly
-		and that it doesn't fuck up the game switching banks to get music data
-	- you'll have to find the old GBDK compatible version of GBT player as the newer version only
-		supports RGBS which is untested with GBDK
+
 
 - Input
 	- 
@@ -59,8 +56,6 @@ TODO:
 	- display a screen showing the level number 
 	- start the game once it's been done
 
-	- get level dimensions without defines as they'll need to go into a level data structure
-	- put these structures into an array somewhere (by hand? ugh... maybe write a tool?)
 	- load levels using this array of level data:
 		- LEVEL_DATA struct { width, height, rom_bank, &level_map, &collision_map, &things_map }
 		- add tileset to the above data structure
@@ -69,17 +64,18 @@ TODO:
 
 	- triggerable from debug menu as well as from hitting a level transition tile or the end of the level?
 
+	- player spawning at the right position in the level (left-most for horiz, bottom for vert)
+
 - Game Flow
+	- implement the level loading flow and a debug command for going to the next level?
+
 	- create a structure for the player data (x, y , sub_x, sub_y, speed)
 		- sortas done, arguable if this needs to be a STRUCT or just globals
 	- create a struct for objects
 		- { world_x, world_y, sprite, animation_data etc }
 
 - Game Camera
-	- game camera should follow the player X/Y position but be bound by the VRAM screen size for now 
-		- done but needs some additional features:
-			- get level size from the level data incase we want smaller (or in future larger) areas
-	- refactor scrolling to work based on the current level type
-	- refactor scrolling to be more efficient if possible
+	- maybe wants to be a little smorter? not so eager to follow on the Y axis
+	- fix the scrolling getting out of sync bug... :(
 
 

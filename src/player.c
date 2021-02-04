@@ -407,8 +407,8 @@ INT16 bottomBound;
 
 UINT8 cameraDelta = 128;
 
-UINT16 scroll_x_temp;
-UINT16 scroll_y_temp;
+UINT16 scroll_x_temp = 0U;
+UINT16 scroll_y_temp = 0U;
 unsigned char * scrl_data_ptr;
 UINT8 scrl_i = 0;
 
@@ -504,7 +504,7 @@ void handle_scroll_vertical()
 
 	if(tempy > camera_y)
 	{
-		/* moving up */
+		/* moving down */
 		if(cameraDelta >= (128+8))
 		{
 			cameraDelta -= 8;
@@ -513,20 +513,24 @@ void handle_scroll_vertical()
 			scroll_y_temp = (scy)%BKG_HEIGHT;
 			unsigned char* mapData = levels[CUR_LEVEL].MapTileData;
 			mapData += (CUR_MAP_WIDTH * scy);
+
+			SWITCH_ROM_MBC1(levels[CUR_LEVEL].RomBank);
 			set_bkg_tiles(0, scroll_y_temp, CUR_MAP_WIDTH, 1, mapData);
 		}
 	}
-	else if (tempx < camera_y)
+	else if (tempy < camera_y)
 	{
-		/* moving down */
+		/* moving up */
 		if(cameraDelta <= (128-8))
 		{
 			cameraDelta += 8;
 
-			UINT16 scy = (tempy >> 3) - 4;
+			UINT16 scy = (tempy >> 3) - 4;			
 			scroll_y_temp = (scy)%BKG_HEIGHT;
 			unsigned char* mapData = levels[CUR_LEVEL].MapTileData;
-			mapData += (CUR_MAP_HEIGHT * scy);
+			mapData += (CUR_MAP_WIDTH * scy);
+
+			SWITCH_ROM_MBC1(levels[CUR_LEVEL].RomBank);
 			set_bkg_tiles(0, scroll_y_temp, CUR_MAP_WIDTH, 1, mapData);
 		}
 	}

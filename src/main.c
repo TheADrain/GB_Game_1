@@ -204,7 +204,7 @@ void levelcard_update()
 		/* move to the next state */
 		FadeToWhite(4U);
 
-		set_current_level(1U);
+		set_current_level(FIRST_LVL);
 		load_current_level_graphics();
 		load_current_level_map();	
 

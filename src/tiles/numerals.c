@@ -13,6 +13,8 @@
     CGB Palette: None
 */
 
+
+
 // Tilemap Data Length in tiles (16 bytes each)
 #define numeralsLength 12
 // Tilemap Data (one 16-byte tile per line)

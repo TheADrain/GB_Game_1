@@ -2,6 +2,9 @@
 #define MAIN_H
 #include <gb/gb.h>
 
+//#define DEBUG_MOVEMENT
+#define FIRST_LVL 1U
+
 /* ---------------------MUSIC-------------------------- */
 #include "gbt_player.h"
 extern const unsigned char * song_Data[];

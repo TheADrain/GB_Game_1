@@ -28,7 +28,7 @@ typedef struct LEVEL_DATA {
 	/* pointer to the tile graphics data for this map here? */
 	unsigned char* MapTileData;
 	unsigned char* CollisionMap;
-	unsigned char* ThingsMap;
+	/*unsigned char* ThingsMap;*/
 };
 
 /* ---------------------   LEVELS    -------------------------- */
