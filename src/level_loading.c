@@ -5,6 +5,7 @@
 #include "utils_1.h"
 #include "input.h"
 #include "player.h"
+#include "string.h"
 
 UINT8 numerals_offset = 0;
 UINT8 tileDataCtr = 0x00;
@@ -12,11 +13,21 @@ UINT8 tileDataCtr = 0x00;
 #define LEVELNUM_X 12
 #define LEVELNUM_y 10
 
+
 void levelcard_init()
 {
 	FadeToBlack(4U);
-
+	
 	disable_interrupts();
+
+	HIDE_SPRITES;
+	HIDE_BKG;
+
+	move_bkg(0U, 0U);
+
+	DISPLAY_OFF;
+	memset((UBYTE*)BG_MAP_1, 0U, 32*32);
+
 	/* Initialize the VRAM data */
 	SWITCH_ROM_MBC1(BANK_TITLE);
 	/* load tiles for the title screen */
@@ -27,6 +38,7 @@ void levelcard_init()
 
 	numerals_offset = levelcard_tilesLength;
 	tileDataCtr += levelcard_tilesLength;
+
 	set_bkg_data(tileDataCtr, numeralsLength, numerals);
 
 	if(CUR_LEVEL < 10)
@@ -47,7 +59,8 @@ void levelcard_init()
 		fill_bkg_rect(LEVELNUM_X, LEVELNUM_y, 1, 1, (numerals_offset + tens));
 		fill_bkg_rect(LEVELNUM_X+1, LEVELNUM_y, 1, 1, (numerals_offset + ctr + 1));
 	}
-
+	
+	DISPLAY_ON;
 	SHOW_BKG;
 	enable_interrupts();
 
@@ -56,11 +69,12 @@ void levelcard_init()
 
 void levelcard_update()
 {
+	move_bkg(0U, 0U);
 	if(JOY_PRESSED(BTN_START))
 	{
 		/* move to the next state */
 		FadeToWhite(4U);
-
+				
 		load_current_level_graphics();
 		load_current_level_map();	
 		start_level();
@@ -136,6 +150,8 @@ void load_current_level_map()
 
 void start_level()
 {
+	disable_interrupts();
+	/* spawn and position the player */
 	init_game_camera();
 	init_player_sprite();
 
@@ -146,7 +162,15 @@ void start_level()
 	gbt_play(song_Data, 2, 7);
 	gbt_loop(1);
 
-	/* spawn and position the player */
+	add_VBL(vblint);
+	enable_interrupts();
 
 	FadeFromWhite(4U);
+}
+
+void end_level()
+{
+	disable_interrupts();
+	remove_VBL(vblint);
+	enable_interrupts();
 }

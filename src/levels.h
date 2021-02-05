@@ -21,6 +21,10 @@ typedef struct LEVEL_DATA {
 	/* other properties */
 	UINT8 SpawnType;
 
+	/* player spawn x and y */
+	UINT16 PlayerSpawnX;
+	UINT16 PlayerSpawnY;
+
 	/* where to get tile data from */
 	UINT8 tileDataLength;
 	unsigned char* tileDataPtr;

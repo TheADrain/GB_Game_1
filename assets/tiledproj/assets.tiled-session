@@ -5,8 +5,8 @@
     },
     "activeFile": "map02.tmx",
     "expandedProjectPaths": [
-        ".",
-        "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports"
+        "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports",
+        "."
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -96,8 +96,8 @@
             "scale": 1.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 202.66666666666669,
-                "y": -14.333333333333314
+                "x": 512,
+                "y": 71.66666666666666
             }
         },
         "forest02.tmx": {
@@ -116,7 +116,7 @@
             "scale": 3,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 127.33333333333334,
+                "x": 127.33333333333333,
                 "y": 137.5
             }
         },
@@ -129,11 +129,11 @@
             }
         },
         "map02.tmx": {
-            "scale": 3,
+            "scale": 1.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 108,
-                "y": 648.5
+                "x": 198,
+                "y": 538.3333333333333
             }
         },
         "testMap_Jumping.tmx": {

@@ -42,6 +42,9 @@ UINT16 u16Temp2 = 0;
 void init_player_sprite()
 {
 	set_sprite_tile(player_sprite_num, player_sprite_tile);
+
+	player_world_x = levels[CUR_LEVEL].PlayerSpawnX;
+	player_world_y = levels[CUR_LEVEL].PlayerSpawnY;
 }
 
 void init_game_camera()
@@ -192,10 +195,7 @@ void update_player()
 
 void HandleCollisionHorizontal()
 {
-/* TODO: SIMPLIFY THIS CODE DOWN TO SOME!!!!
-
-all these offsets and shit could be done ONCE (PLAYER_SPRITE_WIDTH - PLAYER_WIDTH)
-*/
+/* TODO: SIMPLIFY THIS CODE DOWN TO SOME!!!!*/
 	if(player_move_x < 0)
 	{
 		/* test top left point */
@@ -386,7 +386,6 @@ void TestCollisionAtGridPosition()
 	if(levels[CUR_LEVEL].CollisionMap[u16Temp1] == TILE_SOLID)
 	{
 		collision_grid_test_result = COLLISION_FOUND;
-		
 	}
 	else
 	{

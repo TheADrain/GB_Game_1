@@ -26,12 +26,10 @@ unsigned char* level_collision_data;
 void vblint()
 {
 	/* for now this routine is only used for gameplay */
-	if(GAME_FLOW_STATE != GAMEFLOW_GAME)
+	if(GAME_FLOW_STATE == GAMEFLOW_GAME)
 	{
-		return;
+		DoGraphicsUpdate();
 	}
-
-	DoGraphicsUpdate();
 }
 
 void main()
@@ -42,14 +40,10 @@ void main()
   enable_interrupts(); 
   boot_init();  
 
-  add_VBL(vblint);
-
   /* main loop */
   while(1) {
 
 	  poll_input();
-
-	  set_current_level(FIRST_LVL);
 
 	  switch(GAME_FLOW_STATE)
 	  {
@@ -74,6 +68,20 @@ void main()
 				break;
 
 			case GAMEFLOW_GAME:
+
+				if(JOY_PRESSED(BTN_START))
+				{
+					GAME_FLOW_STATE = GAMEFLOW_LEVELCARD;
+					end_level();
+					wait_vbl_done();
+
+					CUR_LEVEL = CUR_LEVEL + 1;
+					set_current_level(CUR_LEVEL);
+					levelcard_init();	
+					
+					break;
+				}
+
 				wait_vbl_done();
 				SWITCH_ROM_MBC1(levels[CUR_LEVEL].RomBank);
 				update_player();
@@ -175,6 +183,7 @@ void title_update()
 	if(JOY_PRESSED(BTN_START))
 	{
 		/* move to the next state */
+		set_current_level(FIRST_LVL);
 		levelcard_init();	
 		GAME_FLOW_STATE = GAMEFLOW_LEVELCARD;
 	}

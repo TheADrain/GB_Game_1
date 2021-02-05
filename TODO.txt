@@ -8,9 +8,6 @@
 
 
 TODO:
-- consider uploading the template project to github
-- then maybe implementing the same template project in RGBASM assembler?
-
 - player
 	- split player logic into states
 		GROUNDED, JUMPING, FALLING, etc etc
@@ -45,7 +42,7 @@ TODO:
 			- might need to make sure bank 1 has enough space for the level data array but it shouldn't be a big prob
 
 - System stuff
-
+	- 
 
 - Input
 	- 
@@ -53,6 +50,10 @@ TODO:
 - Title/Splash screen
 
 - Level Loading Flow
+	- need an actual level startup flow rather than loading and dumping the player in
+	- need a level closedown flow too for when the player beats a level
+		- these don't have to be hugely flashy I just want them to not cause bugs between levels
+
 	- display a screen showing the level number 
 	- start the game once it's been done
 

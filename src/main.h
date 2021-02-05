@@ -2,8 +2,12 @@
 #define MAIN_H
 #include <gb/gb.h>
 
-//#define DEBUG_MOVEMENT
-#define FIRST_LVL 1U
+/* Some useful memory address defines */
+#define BG_MAP_1 0x9800U
+#define BG_MAP_2 0x9C00U
+
+/*#define DEBUG_MOVEMENT*/
+#define FIRST_LVL 0U
 
 /* ---------------------MUSIC-------------------------- */
 #include "gbt_player.h"
@@ -37,7 +41,7 @@ extern unsigned char* level_tilemap_data;
 extern unsigned char* level_collision_data;
 
 /* ---------------------FUNCTION DECLARATIONS------------------------- */
-void vlbint(); /* v-blank interrupt routine */
+void vblint(); /* v-blank interrupt routine */
 /* game flow states */
 void boot_init();
 void boot_update();
