@@ -32,6 +32,8 @@ extern UINT8 GAME_FLOW_STATE;
 /* INPUT VARS */
 extern UINT8 pad_state_temp ;
 
+extern UINT8 global_frame_count;
+
 /* ---------------------LEVEL DATA-------------------------- */
 extern UINT8 CUR_LEVEL;
 extern UINT8 CUR_LEVEL_BANK;

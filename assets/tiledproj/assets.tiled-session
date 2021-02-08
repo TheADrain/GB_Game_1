@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "map02.tmx",
+    "activeFile": "map01.tmx",
     "expandedProjectPaths": [
         "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports",
         "."
@@ -93,11 +93,11 @@
             "scaleInEditor": 3
         },
         "forest01.tmx": {
-            "scale": 1.5,
+            "scale": 4,
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 512,
-                "y": 71.66666666666666
+                "y": 71.875
             }
         },
         "forest02.tmx": {
@@ -116,8 +116,8 @@
             "scale": 3,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 127.33333333333333,
-                "y": 137.5
+                "x": 126.33333333333333,
+                "y": 127.16666666666664
             }
         },
         "map01_widetest.tmx": {
@@ -132,8 +132,8 @@
             "scale": 1.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 198,
-                "y": 538.3333333333333
+                "x": 128,
+                "y": 383.66666666666663
             }
         },
         "testMap_Jumping.tmx": {
@@ -173,9 +173,9 @@
         "forest.tsx",
         "gameplay.tsx",
         "forest02.tmx",
-        "map01.tmx",
         "tower.tsx",
         "map02.tmx",
+        "map01.tmx",
         "testMap_Jumping.tmx",
         "C:/gbdk2020/gbdk/projects/ScrollingOptimisationBranch/assets/tiledproj/forest01.tmx",
         "collision.tsx",

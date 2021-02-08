@@ -11,6 +11,8 @@
 /* ---------------------GLOBAL VARS-------------------------- */
 UINT8 GAME_FLOW_STATE = GAMEFLOW_BOOT;
 
+UINT8 global_frame_count = 0U;
+
 /* INPUT VARS */
 UINT8 pad_state_temp = 0U;
 
@@ -32,6 +34,33 @@ void vblint()
 	}
 }
 
+void DoGraphicsUpdate()
+{
+	disable_interrupts();
+	/* do as much of our graphics update as possible in one place */	
+	move_bkg(camera_x, camera_y);
+
+	/* see if we have a stored commane to load tiles into background vram */
+	if(stored_tile_load_command == 1U)
+	{
+		stored_tile_load_command = 0U;
+
+		SWITCH_ROM_MBC1(levels[CUR_LEVEL].RomBank);
+		set_bkg_tiles(stored_tile_load_bkg_x, 
+			stored_tile_load_bkg_y, 
+			stored_tile_load_bkg_w, 
+			stored_tile_load_bkg_h, 
+			stored_scrl_dat_ptr);
+	}
+
+	/* sprites are rendered at the position -8 in x and -16 in y so that 0,0 equates to off-screen */
+	move_sprite(player_sprite_num, (player_world_x + PLAYER_SPRITE_WIDTH - SCX_REG), (player_world_y + PLAYER_SPRITE_HEIGHT - SCY_REG));
+
+	/*update animated tiles*/
+
+	enable_interrupts(); 
+}
+
 void main()
 {
   TDT_MODE_0;
@@ -43,27 +72,25 @@ void main()
   /* main loop */
   while(1) {
 
-	  poll_input();
+	  poll_input(); 
+	  global_frame_count = global_frame_count + 1;
+	  wait_vbl_done();
 
 	  switch(GAME_FLOW_STATE)
 	  {
 			case GAMEFLOW_BOOT:
-				wait_vbl_done();
 				boot_update();
 				break;
 
 	  		case GAMEFLOW_SPLASH:
-				wait_vbl_done();
 				splash_update();
 				break;
 
 			case GAMEFLOW_TITLE:
-				wait_vbl_done();
 				title_update();
 				break;
 
 			case GAMEFLOW_LEVELCARD:
-				wait_vbl_done();
 				levelcard_update();
 				break;
 
@@ -73,20 +100,17 @@ void main()
 				{
 					GAME_FLOW_STATE = GAMEFLOW_LEVELCARD;
 					end_level();
-					wait_vbl_done();
 
 					CUR_LEVEL = CUR_LEVEL + 1;
 					set_current_level(CUR_LEVEL);
 					levelcard_init();	
-					
+					 
 					break;
 				}
 
-				wait_vbl_done();
-				SWITCH_ROM_MBC1(levels[CUR_LEVEL].RomBank);
 				update_player();
-				SWITCH_ROM_MBC1(levels[CUR_LEVEL].RomBank);
-				update_camera();
+				update_camera(); 
+				
 				break;
 	  }
   }
@@ -189,14 +213,3 @@ void title_update()
 	}
 }
 
-void DoGraphicsUpdate()
-{
-	/* do as much of our graphics update as possible in one place */	
-	disable_interrupts();
-
-	move_bkg(camera_x, camera_y);
-	/* sprites are rendered at the position -8 in x and -16 in y so that 0,0 equates to off-screen */
-	move_sprite(player_sprite_num, (player_world_x + PLAYER_SPRITE_WIDTH - SCX_REG), (player_world_y + PLAYER_SPRITE_HEIGHT - SCY_REG));
-
-	enable_interrupts(); 
-}
