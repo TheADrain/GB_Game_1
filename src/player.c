@@ -45,10 +45,16 @@ UINT16 u16Temp2 = 0;
 
 void init_player_sprite()
 {
-	set_sprite_tile(player_sprite_num, player_sprite_tile);
-
 	player_world_x = levels[CUR_LEVEL].PlayerSpawnX;
 	player_world_y = levels[CUR_LEVEL].PlayerSpawnY;
+
+	set_sprite_tile(player_sprite_num, player_sprite_tile);
+	set_sprite_tile(player_sprite_num+1, player_sprite_tile+1U);
+	set_sprite_tile(player_sprite_num+2, player_sprite_tile+16U);
+	set_sprite_tile(player_sprite_num+3, player_sprite_tile+17U);
+	set_sprite_tile(player_sprite_num+4, player_sprite_tile+32U);
+	set_sprite_tile(player_sprite_num+5, player_sprite_tile+33U);
+	
 }
 
 void init_game_camera()
@@ -202,20 +208,21 @@ void update_player()
 
 void HandleCollisionHorizontal()
 {
-/* TODO: SIMPLIFY THIS CODE DOWN TO SOME!!!!*/
 	UINT8 collision_type = 0U;
 
 	if(player_move_x < 0)
 	{
-		/* test top left point */
-		collision_grid_test_x = (player_world_x + (PLAYER_SPRITE_WIDTH - PLAYER_WIDTH));
-		collision_grid_test_y = (player_world_y);
+		/* test high left point */
+		UINT16 test_x = player_world_x - PLAYER_HALF_WIDTH;
+		UINT16 test_y = (player_world_y) - PLAYER_HEIGHT_CHECK_1;
+		collision_grid_test_x = test_x;
+		collision_grid_test_y = test_y;
 
 		TestCollisionAtWorldPosition();
 		collision_type = TestCollisionType_MovingLeft(collision_grid_test_result);
 		if(collision_type == COLLISION_RESULT_SOLID)
 		{
-			player_world_x += (TILE_SIZE-((player_world_x + (PLAYER_SPRITE_WIDTH - PLAYER_WIDTH)) % TILE_SIZE));
+			player_world_x += (TILE_SIZE-((test_x) % TILE_SIZE));
 			return;
 		}
 		else if(collision_type == COLLISION_RESULT_SOLID_NON_GRID_ALIGNED)
@@ -224,32 +231,16 @@ void HandleCollisionHorizontal()
 			return;
 		}
 
-		/* test bottom left point */
-		collision_grid_test_x = (player_world_x + (PLAYER_SPRITE_WIDTH - PLAYER_WIDTH));
-		collision_grid_test_y = (player_world_y + PLAYER_HEIGHT-1);
+		/* test low left point */
+		collision_grid_test_x = test_x;
+		test_y = player_world_y - PLAYER_HEIGHT_CHECK_2;
+		collision_grid_test_y = test_y;
 
 		TestCollisionAtWorldPosition();
 		collision_type = TestCollisionType_MovingLeft(collision_grid_test_result);
 		if(collision_type == COLLISION_RESULT_SOLID)
 		{
-			player_world_x += (TILE_SIZE - ((player_world_x + (PLAYER_SPRITE_WIDTH - PLAYER_WIDTH)) % TILE_SIZE));
-			return;
-		}
-		else if(collision_type == COLLISION_RESULT_SOLID_NON_GRID_ALIGNED)
-		{
-			player_world_x = prev_player_world_x;
-			return;
-		}
-
-		/* test mid left point */
-		collision_grid_test_x = (player_world_x + (PLAYER_SPRITE_WIDTH - PLAYER_WIDTH));
-		collision_grid_test_y = (player_world_y + PLAYER_HALF_HEIGHT);
-
-		TestCollisionAtWorldPosition();
-		collision_type = TestCollisionType_MovingLeft(collision_grid_test_result);
-		if(collision_type == COLLISION_RESULT_SOLID)
-		{
-			player_world_x += (TILE_SIZE-((player_world_x + (PLAYER_SPRITE_WIDTH - PLAYER_WIDTH)) % TILE_SIZE));
+			player_world_x += (TILE_SIZE-(test_x % TILE_SIZE));
 			return;
 		}
 		else if(collision_type == COLLISION_RESULT_SOLID_NON_GRID_ALIGNED)
@@ -260,15 +251,17 @@ void HandleCollisionHorizontal()
 	}
 	else if(player_move_x > 0)
 	{
-		/* test top right point */
-		collision_grid_test_x = (player_world_x + (PLAYER_SPRITE_WIDTH - (PLAYER_SPRITE_WIDTH - PLAYER_WIDTH))-1);
-		collision_grid_test_y = (player_world_y);	
+		/* test high right point */
+		UINT16 test_x = (player_world_x + PLAYER_HALF_WIDTH);
+		UINT16 test_y = (player_world_y - PLAYER_HEIGHT_CHECK_1);	
+		collision_grid_test_x = test_x;
+		collision_grid_test_y = test_y;
 
 		TestCollisionAtWorldPosition();
 		collision_type = TestCollisionType_MovingRight(collision_grid_test_result);
 		if(collision_type == COLLISION_RESULT_SOLID)
 		{
-			player_world_x -= (((player_world_x + (PLAYER_SPRITE_WIDTH - (PLAYER_SPRITE_WIDTH - PLAYER_WIDTH))) % TILE_SIZE));
+			player_world_x -= (test_x % TILE_SIZE);
 			return;
 		}
 		else if(collision_type == COLLISION_RESULT_SOLID_NON_GRID_ALIGNED)
@@ -277,32 +270,16 @@ void HandleCollisionHorizontal()
 			return;
 		}
 
-		/* test bottom right point */
-		collision_grid_test_x = (player_world_x + (PLAYER_SPRITE_WIDTH - (PLAYER_SPRITE_WIDTH - PLAYER_WIDTH))-1);
-		collision_grid_test_y = (player_world_y + PLAYER_HEIGHT-1);
+		/* test low right point */
+		collision_grid_test_x = test_x;
+		test_y = (player_world_y - PLAYER_HEIGHT_CHECK_2);
+		collision_grid_test_y = test_y;
 
 		TestCollisionAtWorldPosition();
 		collision_type = TestCollisionType_MovingRight(collision_grid_test_result);
 		if(collision_type == COLLISION_RESULT_SOLID)
 		{
-			player_world_x -= (((player_world_x + (PLAYER_SPRITE_WIDTH - (PLAYER_SPRITE_WIDTH - PLAYER_WIDTH))) % TILE_SIZE));
-			return;
-		}
-		else if(collision_type == COLLISION_RESULT_SOLID_NON_GRID_ALIGNED)
-		{
-			player_world_x = prev_player_world_x;
-			return;
-		}
-
-		/* test mid right point */
-		collision_grid_test_x = (player_world_x + (PLAYER_SPRITE_WIDTH - (PLAYER_SPRITE_WIDTH - PLAYER_WIDTH))-1);
-		collision_grid_test_y = (player_world_y + PLAYER_HALF_HEIGHT);
-
-		TestCollisionAtWorldPosition();
-		collision_type = TestCollisionType_MovingRight(collision_grid_test_result);
-		if(collision_type == COLLISION_RESULT_SOLID)
-		{
-			player_world_x -= (((player_world_x + (PLAYER_SPRITE_WIDTH - (PLAYER_SPRITE_WIDTH - PLAYER_WIDTH))) % TILE_SIZE));
+			player_world_x -= (test_x % TILE_SIZE);
 			return;
 		}
 		else if(collision_type == COLLISION_RESULT_SOLID_NON_GRID_ALIGNED)
@@ -320,14 +297,16 @@ void HandleCollisionVertical()
 	if(player_move_y < 0)
 	{
 		/* test top left point */
-		collision_grid_test_x = (UINT16)(player_world_x + (PLAYER_SPRITE_WIDTH - PLAYER_WIDTH));
-		collision_grid_test_y = (UINT16)(player_world_y);
+		UINT16 test_x = player_world_x - (PLAYER_HALF_WIDTH-1);
+		UINT16 test_y = player_world_y - PLAYER_HEIGHT;
+		collision_grid_test_x = test_x;
+		collision_grid_test_y = test_y;
 
 		TestCollisionAtWorldPosition();
 		collision_type = TestCollisionType_MovingUp(collision_grid_test_result);
 		if(collision_type == COLLISION_RESULT_SOLID)
 		{
-			player_world_y += (TILE_SIZE - (player_world_y % TILE_SIZE));
+			player_world_y += (TILE_SIZE - (test_y % TILE_SIZE));
 			player_intertia_y = 0;
 			return;
 		}
@@ -338,14 +317,15 @@ void HandleCollisionVertical()
 		}
 
 		/* test top right point */
-		collision_grid_test_x = (UINT16)(player_world_x + (PLAYER_SPRITE_WIDTH - (PLAYER_SPRITE_WIDTH - PLAYER_WIDTH))-1);
-		collision_grid_test_y = (player_world_y);	
+		test_x = player_world_x + (PLAYER_HALF_WIDTH-1);
+		collision_grid_test_x = test_x;
+		collision_grid_test_y = test_y;	
 
 		TestCollisionAtWorldPosition();
 		collision_type = TestCollisionType_MovingUp(collision_grid_test_result);
 		if(collision_type == COLLISION_RESULT_SOLID)
 		{
-			player_world_y += (TILE_SIZE - (player_world_y % TILE_SIZE));
+			player_world_y += (TILE_SIZE - (test_y % TILE_SIZE));
 			player_intertia_y = 0;
 			return;
 		}
@@ -358,8 +338,10 @@ void HandleCollisionVertical()
 	else if(player_move_y > 0)
 	{
 		/* test bottom left point */
-		collision_grid_test_x = (UINT16)(player_world_x + (PLAYER_SPRITE_WIDTH - PLAYER_WIDTH));
-		collision_grid_test_y = (UINT16)(player_world_y + PLAYER_HEIGHT);
+		UINT16 test_x = player_world_x - (PLAYER_HALF_WIDTH-1);
+		UINT16 test_y = player_world_y;
+		collision_grid_test_x = test_x;
+		collision_grid_test_y = test_y;
 
 		TestCollisionAtWorldPosition();
 		collision_type = TestCollisionType_MovingDown(collision_grid_test_result);
@@ -370,7 +352,7 @@ void HandleCollisionVertical()
 			player_intertia_y = 0;
 			player_fell = 0U;
 			jump_buffer = 0U;
-			player_world_y -= (((player_world_y + PLAYER_HEIGHT) % TILE_SIZE));
+			player_world_y -= (((test_y) % TILE_SIZE));
 			return;
 		}
 		else if(collision_type == COLLISION_RESULT_SOLID_NON_GRID_ALIGNED)
@@ -380,8 +362,9 @@ void HandleCollisionVertical()
 		}
 
 		/* test bottom right point */
-		collision_grid_test_x = (UINT16)(player_world_x + (PLAYER_SPRITE_WIDTH - (PLAYER_SPRITE_WIDTH - PLAYER_WIDTH))-1);
-		collision_grid_test_y = (player_world_y + PLAYER_HEIGHT);
+		test_x = player_world_x + (PLAYER_HALF_WIDTH-1);
+		collision_grid_test_x = test_x;
+		collision_grid_test_y = test_y;
 
 		TestCollisionAtWorldPosition();
 		collision_type = TestCollisionType_MovingDown(collision_grid_test_result);
@@ -392,7 +375,7 @@ void HandleCollisionVertical()
 			player_intertia_y = 0;
 			player_fell = 0U;
 			jump_buffer = 0U;
-			player_world_y -= (((player_world_y + PLAYER_HEIGHT) % TILE_SIZE));
+			player_world_y -= (((test_y) % TILE_SIZE));
 			return;
 		}
 		else if(collision_type == COLLISION_RESULT_SOLID_NON_GRID_ALIGNED)
@@ -406,8 +389,8 @@ void HandleCollisionVertical()
 void TestGrounded()
 {
 	/* test bottom left point */
-	collision_grid_test_x = (UINT16)(player_world_x);
-	collision_grid_test_y = (UINT16)(player_world_y + PLAYER_HEIGHT + 4);
+	collision_grid_test_x = (UINT16)(player_world_x - (PLAYER_HALF_WIDTH-1));
+	collision_grid_test_y = (UINT16)(player_world_y);
 
 	UINT8 collision_type = 0U;
 
@@ -416,8 +399,8 @@ void TestGrounded()
 	if(collision_type == COLLISION_RESULT_NONE)
 	{
 		/* test bottom right point */
-		collision_grid_test_x = (player_world_x + PLAYER_WIDTH);
-		collision_grid_test_y = (player_world_y + PLAYER_HEIGHT + 4);
+		collision_grid_test_x = (player_world_x + (PLAYER_HALF_WIDTH-1));
+		collision_grid_test_y = (player_world_y);
 
 		TestCollisionAtWorldPosition();
 		collision_type = TestCollisionType_MovingDown(collision_grid_test_result);

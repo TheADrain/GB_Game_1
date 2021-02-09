@@ -53,9 +53,16 @@ void DoGraphicsUpdate()
 			stored_scrl_dat_ptr);
 	}
 
-	/* sprites are rendered at the position -8 in x and -16 in y so that 0,0 equates to off-screen */
-	move_sprite(player_sprite_num, (player_world_x + PLAYER_SPRITE_WIDTH - SCX_REG), (player_world_y + PLAYER_SPRITE_HEIGHT - SCY_REG));
-
+	/* sprites are rendered at the position -8 in x and -8 in y so that 0,0 equates to off-screen */
+	/* always bottom right of the player hitbox */
+	UINT16 pos_x = (player_world_x - SCX_REG) + 4;
+	UINT16 pos_y = (player_world_y - SCY_REG) + 8;
+	move_sprite(player_sprite_num, pos_x-4, pos_y-16);
+	move_sprite(player_sprite_num+1U, pos_x+4, pos_y-16);
+	move_sprite(player_sprite_num+2U, pos_x-4, pos_y-8);
+	move_sprite(player_sprite_num+3U, pos_x+4, pos_y-8);
+	move_sprite(player_sprite_num+4U, pos_x-4, pos_y);
+	move_sprite(player_sprite_num+5U, pos_x+4, pos_y);
 	/*update animated tiles*/
 
 	enable_interrupts(); 
@@ -66,6 +73,10 @@ void main()
   TDT_MODE_0;
   /* startup */
   DISPLAY_ON;
+  
+	/* ensure we're in sprite 8x8 mode */
+	SPRITES_8x8;
+
   enable_interrupts(); 
   boot_init();  
 

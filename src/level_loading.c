@@ -101,12 +101,10 @@ void load_current_level_graphics()
 {
 	disable_interrupts();
 
-	/* ensure we're in sprite 8x16 mode */
-	SPRITES_8x16;
-
 	/* load the sprite tiles (for now this is same for all levels) */
 	SWITCH_ROM_MBC1(BANK_GRAPHICS_DATA_1);
-	set_sprite_data(0x00, spritesLength, sprites);
+
+	set_sprite_data(0x00, player_spritesLength, player_sprites);
 
 	/* load the background tiles for this map */
 	set_bkg_data(0x00, levels[CUR_LEVEL].tileDataLength, levels[CUR_LEVEL].tileDataPtr);
