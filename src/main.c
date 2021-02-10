@@ -1,6 +1,7 @@
 #include "main.h"
 #include <gb/gb.h>
 #include "bankdefs.h"
+#include "sprite_manager.h"
 #include "levels.h"
 #include "input.h"
 #include "utils_1.h"
@@ -70,16 +71,8 @@ void DoGraphicsUpdate()
 
 void main()
 {
-  TDT_MODE_0;
-  /* startup */
-  DISPLAY_ON;
-  
-	/* ensure we're in sprite 8x8 mode */
-	SPRITES_8x8;
-
-  enable_interrupts(); 
-  boot_init();  
-
+	boot_init();  
+ 
   /* main loop */
   while(1) {
 
@@ -135,6 +128,17 @@ void boot_init()
 
 	reset_input();
 	FadeOutNintendoLogo();
+
+	TDT_MODE_0;
+	/* startup */
+	DISPLAY_ON;
+  
+	/* ensure we're in sprite 8x8 mode */
+	init_sprite_manager();
+	SPRITES_8x8;
+	SHOW_SPRITES;
+
+	enable_interrupts(); 
 
 	/* immediately move on to splash state */
 	splash_init();
