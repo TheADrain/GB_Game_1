@@ -16,6 +16,7 @@ REM you'll need to add any c file not explicitly included in main here
 ..\..\bin\lcc -c -o bin/main.o src/main.c
 ..\..\bin\lcc -c -o bin/input.o src/input.c
 ..\..\bin\lcc -c -o bin/sprite_manager.o src/sprite_manager.c
+..\..\bin\lcc -c -o bin/actors.o src/actors.c
 ..\..\bin\lcc -c -o bin/utils_1.o src/utils_1.c
 ..\..\bin\lcc -c -o bin/player.o src/player.c
 ..\..\bin\lcc -c -o bin/collision.o src/collision.c
