@@ -1,11 +1,9 @@
 /* BANK_4 - GRAPHICS DATA 1 */
-const unsigned char bank_4_num[1] =
-{
-	0x04
-};
 
-#include "sprites/sprites.c" /* Sprite Data */
-#include "sprites/player_sprites.c"
+/* sprite data */
+#include "sprites/spr_gameplay.c"		/* Player and Gameplay Sprite Data */
+#include "sprites/spr_actors_forest.c"		/* forest area actor sprites */
 
-#include "tiles/tower_tiledata.c" /* Level Tilesets */
-#include "tiles/forest_tiledata.c"
+/* Level Tilesets */
+#include "tiles/tset_forest.c"	
+#include "tiles/tset_tower.c"	

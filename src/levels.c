@@ -4,30 +4,30 @@ const struct LEVEL_DATA levels[3] =
 {
 	{ 
 		MAP_HORIZONTAL,
-		map01Width, 
-		map01Height, 
+		map_tower01Width, 
+		map_tower01Height, 
 		BANK_MAPDATA_01, 
 		SPAWN_LEFT,
 		20, /* spawn x */
 		220, /* spawn y */
-		tower_tiledataLength,
-		(unsigned char*)&tower_tiledata,
-		(unsigned char*)&map01_tilemap, 
-		(unsigned char*)&map01_collision
+		tset_towerLength,
+		(unsigned char*)&tset_tower,
+		(unsigned char*)&map_tower01_tilemap, 
+		(unsigned char*)&map_tower01_collision
 	},
 
 	{ 
 		MAP_VERTICAL,
-		map02Width, 
-		map02Height, 
+		map_tower02Width, 
+		map_tower02Height, 
 		BANK_MAPDATA_01, 
 		SPAWN_BOTTOM,
 		20, /* spawn x */
 		716, /* spawn y */
-		tower_tiledataLength,
-		(unsigned char*)&tower_tiledata,
-		(unsigned char*)&map02_tilemap, 
-		(unsigned char*)&map02_collision 
+		tset_towerLength,
+		(unsigned char*)&tset_tower,
+		(unsigned char*)&map_tower02_tilemap, 
+		(unsigned char*)&map_tower02_collision 
 	},
 
 	{ 
@@ -38,8 +38,8 @@ const struct LEVEL_DATA levels[3] =
 		SPAWN_LEFT,
 		20, /* spawn x */
 		96, /* spawn y */
-		forest_tiledataLength,
-		(unsigned char*)&forest_tiledata,
+		tset_forestLength,
+		(unsigned char*)&tset_forest,
 		(unsigned char*)&map_forest01_tilemap, 
 		(unsigned char*)&map_forest01_collision 
 	},

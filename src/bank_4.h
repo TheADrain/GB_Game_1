@@ -2,10 +2,13 @@
 #define BANK_4
 
 /* BANK_4 - GRAPHICS DATA 1 */
-#include "sprites/sprites.h"		/* Sprite Data */
-#include "sprites/player_sprites.h"
 
-#include "tiles/tower_tiledata.h"	/* Level Tilesets */
-#include "tiles/forest_tiledata.h"	
+/* sprite data */
+#include "sprites/spr_gameplay.h"		/* Player and Gameplay Sprite Data */
+#include "sprites/spr_actors_forest.h"		/* forest area actor sprites */
+
+/* Level Tilesets */
+#include "tiles/tset_forest.h"	
+#include "tiles/tset_tower.h"	
 
 #endif

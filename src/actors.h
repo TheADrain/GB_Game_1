@@ -24,6 +24,13 @@ typedef struct ACTOR {
 	UINT16 PositionX;
 	UINT16 PositionY;
 
+	//struct ANIM_FRAME *const CurAnim;
+	struct ANIM_FRAME * CurAnimFramePtr;
+	UINT8 CurAnimFrameIndex;
+	UINT8 AnimTimer;
+
+	UINT8 UpdateSprites;
+
 	UINT8 SpritesAllocated;
 	UINT8 SpriteIndexes[MAX_SPRITES_PER_ACTOR];
 

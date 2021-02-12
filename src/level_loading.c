@@ -101,10 +101,13 @@ void load_current_level_graphics()
 {
 	disable_interrupts();
 
-	/* load the sprite tiles (for now this is same for all levels) */
+	/* load the gameplay sprite tiles (for now this is same for all levels) */
 	SWITCH_ROM_MBC1(BANK_GRAPHICS_DATA_1);
+	set_sprite_data(VRAM_START, spr_gameplayLength, spr_gameplay);
 
-	set_sprite_data(0x00, player_spritesLength, player_sprites);
+	/* load the actor tiles for this level type */
+	/* TODO: put this in the level data */
+	set_sprite_data(VRAM_ACTORS, spr_actors_forestLength, spr_actors_forest);
 
 	/* load the background tiles for this map */
 	set_bkg_data(0x00, levels[CUR_LEVEL].tileDataLength, levels[CUR_LEVEL].tileDataPtr);

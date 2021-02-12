@@ -11,7 +11,4 @@
 #include "tiles/levelcard_tiles.h"	/* levelcard graphics */
 #include "tiles/numerals.h"			/* levelcard numerals */
 
-#define MAX_LEVELS 2
-#define START_LEVEL 1
-
 #endif

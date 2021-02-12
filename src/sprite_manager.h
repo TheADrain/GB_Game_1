@@ -68,8 +68,8 @@ void release_sprite(UINT8 spritenum);
 	 an actor */
 
 typedef struct ANIM_TILE {
-	UINT8 YOffset;
-	UINT8 XOffset;
+	INT8 YOffset;
+	INT8 XOffset;
 	UINT8 Tile;
 
 	/* bit 1 (rightmost) == Y-flip
@@ -80,6 +80,7 @@ typedef struct ANIM_TILE {
 
 typedef struct ANIM_FRAME {
 	UINT8 NumTiles;
+	UINT8 FrameDuration;
 	struct ANIM_TILE AnimTiles[];
 };
 

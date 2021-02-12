@@ -1,5 +1,5 @@
 /*
-    map02.h
+    map_tower02.h
 
     Generated with GBImageConverter
 
@@ -9,12 +9,12 @@
 */
 
 // Tilemap Data Length
-#define map02Length 3072
+#define map_tower02Length 3072
 // Tilemap Width and Height
-#define map02Width 32
-#define map02Height 96
+#define map_tower02Width 32
+#define map_tower02Height 96
 // Tile Plane Data 
-extern const unsigned char map02_tilemap[3072];
+extern const unsigned char map_tower02_tilemap[3072];
 // Collision Plane Data 
-extern const unsigned char map02_collision[3072];
+extern const unsigned char map_tower02_collision[3072];
     

@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "testMap_Jumping.tmx",
+    "activeFile": "gameplay.tsx",
     "expandedProjectPaths": [
-        "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports",
-        "."
+        ".",
+        "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -96,16 +96,16 @@
             "scale": 4,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 180.5,
-                "y": 106.625
+                "x": 512,
+                "y": 35.375
             }
         },
         "forest02.tmx": {
             "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 511.99999999999994,
-                "y": 128.66666666666669
+                "x": 512,
+                "y": 128.66666666666663
             }
         },
         "gameplay.tsx": {
@@ -113,11 +113,11 @@
             "scaleInEditor": 11
         },
         "map01.tmx": {
-            "scale": 3,
+            "scale": 2,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 121.99999999999999,
-                "y": 136.5
+                "x": 135.5,
+                "y": 140.75
             }
         },
         "map01_widetest.tmx": {
@@ -132,8 +132,8 @@
             "scale": 1.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 150.66666666666666,
-                "y": 325
+                "x": 128,
+                "y": 383.66666666666663
             }
         },
         "testMap_Jumping.tmx": {
@@ -159,23 +159,18 @@
     "map.width": 128,
     "openFiles": [
         "forest01.tmx",
-        "forest.tsx",
-        "gameplay.tsx",
         "forest02.tmx",
-        "map01.tmx",
-        "map02.tmx",
-        "tower.tsx",
-        "testMap_Jumping.tmx"
+        "gameplay.tsx"
     ],
     "project": "assets.tiled-project",
     "property.type": "string",
     "recentFiles": [
         "forest01.tmx",
-        "forest.tsx",
-        "gameplay.tsx",
         "forest02.tmx",
-        "map01.tmx",
+        "gameplay.tsx",
         "map02.tmx",
+        "map01.tmx",
+        "forest.tsx",
         "tower.tsx",
         "testMap_Jumping.tmx",
         "C:/gbdk2020/gbdk/projects/ScrollingOptimisationBranch/assets/tiledproj/forest01.tmx",

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.4" tiledversion="1.4.3" name="gameplay" tilewidth="8" tileheight="8" tilecount="16" columns="4">
- <image source="gameplaytiles.bmp" width="32" height="32"/>
+ <image source="gameplaytiles.png" width="32" height="32"/>
  <tile id="0">
   <properties>
    <property name="collision" value="none"/>

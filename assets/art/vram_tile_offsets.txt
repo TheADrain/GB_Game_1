@@ -7,7 +7,7 @@ MISC_UI_2 = 144
    within this, numerals starting from 0
    MISC_UI_2 + 16
 	or 160
-ACTORS = 176
+ACTORS = 192
 
 Max Tilemap Size:
 160 tiles (otherwise we overwrite the actors)

@@ -72,11 +72,19 @@ UINT8 create_actor(UINT8 actor_type)
 
 		actors_array[actor_index].ActorType = actor_type;
 
+		actors_array[actor_index].SpritesAllocated = sprite_allocation;
+
 		actors_array[actor_index].Width = actor_defs[actor_type].Width;
 		actors_array[actor_index].Height = actor_defs[actor_type].Height;
 
 		actors_array[actor_index].PositionX = 0U;
 		actors_array[actor_index].PositionY = 0U;
+
+		actors_array[actor_index].CurAnimFramePtr = 0U;
+		actors_array[actor_index].CurAnimFrameIndex = 0U;
+		actors_array[actor_index].AnimTimer = 0U;
+
+		actors_array[actor_index].UpdateSprites = 0U;
 
 		actors_array[actor_index].Initialize = actor_defs[actor_type].Initialize;
 		actors_array[actor_index].Update = actor_defs[actor_type].Update;
@@ -134,6 +142,7 @@ const struct ACTOR_DEFINITION actor_defs[NUM_DEFINED_ACTORS] = {
 	},
 	{ 
 		ACTOR_ENEMY_1,
+
 		1U, /* width */
 		1U, /* height */
 

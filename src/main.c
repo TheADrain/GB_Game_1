@@ -10,6 +10,10 @@
 #include "scrolling.h"
 #include "level_loading.h"
 
+#ifdef USE_TEST_SCENE
+#include "_test_scene.c"
+#endif
+
 /* ---------------------GLOBAL VARS-------------------------- */
 UINT8 GAME_FLOW_STATE = GAMEFLOW_BOOT;
 
@@ -81,7 +85,7 @@ void main()
 {
 	wait_vbl_done();
 	boot_init();  
- 
+
   /* main loop */
   while(1) {
 
@@ -94,6 +98,13 @@ void main()
 			case GAMEFLOW_BOOT:
 				boot_update();
 				break;
+
+#ifdef USE_TEST_SCENE
+/* alternate loop for test scene only */
+			default:
+				_test_scene_update();
+				break;
+#else
 
 	  		case GAMEFLOW_SPLASH:
 				splash_update();
@@ -125,6 +136,7 @@ void main()
 				update_camera(); 
 				
 				break;
+#endif
 	  }
   }
 }
@@ -149,11 +161,12 @@ void boot_init()
 	SPRITES_8x8;
 	SHOW_SPRITES;
 
-	/* put some temp sprites over the nintendo ones */
-	SWITCH_ROM_MBC1(BANK_GRAPHICS_DATA_1);
-	set_sprite_data(0x00, player_spritesLength, player_sprites);
-
 	enable_interrupts(); 
+
+#ifdef USE_TEST_SCENE
+	GAME_FLOW_STATE = 0xFF;
+	return;
+#endif
 
 	/* immediately move on to splash state */
 	splash_init();

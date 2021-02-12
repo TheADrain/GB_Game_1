@@ -1,5 +1,5 @@
 /*
-    map01.h
+    map_tower01.h
 
     Generated with GBImageConverter
 
@@ -9,12 +9,12 @@
 */
 
 // Tilemap Data Length
-#define map01Length 1024
+#define map_tower01Length 1024
 // Tilemap Width and Height
-#define map01Width 32
-#define map01Height 32
+#define map_tower01Width 32
+#define map_tower01Height 32
 // Tile Plane Data 
-extern const unsigned char map01_tilemap[1024];
+extern const unsigned char map_tower01_tilemap[1024];
 // Collision Plane Data 
-extern const unsigned char map01_collision[1024];
+extern const unsigned char map_tower01_collision[1024];
     
