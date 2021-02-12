@@ -15,6 +15,7 @@ struct ACTOR * created_actor_ptr = 0U;
 void init_actor_manager()
 {
 	UINT8 i = 0U;
+	UINT8 j = 0U;
 	for(i = 0; i < MAX_ACTORS; i = i + 1)
 	{
 		actors_array[i].ActorType = 0U;
@@ -24,8 +25,14 @@ void init_actor_manager()
 		actors_array[i].PositionX = 0U;
 		actors_array[i].PositionY = 0U;
 
-		actors_array[i].shape_ptr = 0U;
-		actors_array[i].Initialize = 0U;
+		actors_array[i].SpritesAllocated = 0U;
+		
+		j = 0U;
+		for(j = 0; j < MAX_SPRITES_PER_ACTOR; j = j + 1)
+		{
+			actors_array[i].SpriteIndexes[j] = 0U;
+		}
+
 		actors_array[i].Update = 0U;
 	}
 
@@ -55,10 +62,11 @@ UINT8 create_actor(UINT8 actor_type)
 		}
 	}
 
-	UINT8 shape_type = actor_defs[actor_type].SpriteShapeType;
+	UINT8 sprite_allocation = actor_defs[actor_type].SpriteAllocation;
 
 	/* init a shape if we can */
-	if(create_shape(shape_type))
+	if(grab_sprites(sprite_allocation))
+	// todo: reserve the sprites insted
 	{
 		actors_in_use[actor_index] = ACTOR_USED;
 
@@ -70,11 +78,15 @@ UINT8 create_actor(UINT8 actor_type)
 		actors_array[actor_index].PositionX = 0U;
 		actors_array[actor_index].PositionY = 0U;
 
-		actors_array[actor_index].SpriteShapeType = shape_type;
-		actors_array[actor_index].shape_ptr = created_shape_ptr;
-
 		actors_array[actor_index].Initialize = actor_defs[actor_type].Initialize;
 		actors_array[actor_index].Update = actor_defs[actor_type].Update;
+
+		/* allocate the sprites we grabbed */
+		i = 0U;
+		for(i = 0; i < sprite_allocation; i = i + 1)
+		{
+			actors_array[actor_index].SpriteIndexes[i] = grabbed_sprites_buffer[i];
+		}
 
 		created_actor_ptr = &(actors_array[actor_index]);
 
@@ -97,11 +109,11 @@ void release_actor(struct ACTOR * actor_ptr)
 	actors_array[actor_index].Initialize = 0U;
 	actors_array[actor_index].Update = 0U;
 
-	/* check shape is valid incase we already released it */
-	if(actors_array[actor_index].shape_ptr != 0U)
+	UINT8 i = 0U;
+	UINT8 sprite_allocation = actors_array[actor_index].SpritesAllocated;
+	for(i = 0; i < sprite_allocation; i = i + 1)
 	{
-		release_shape(actors_array[actor_index].shape_ptr);
-		actors_array[actor_index].shape_ptr = 0U;
+		release_sprite(actors_array[actor_index].SpriteIndexes[i]);
 	}
 
 	actors_in_use[actor_index] = ACTOR_FREE;
@@ -114,7 +126,7 @@ const struct ACTOR_DEFINITION actor_defs[NUM_DEFINED_ACTORS] = {
 		1U, /* width */
 		1U, /* height */
 
-		SHAPE_1x1, /* sprite shape to use */
+		1U, /* HOW MANY SPRITES TO RESERVE */
 
 		/* function pointers */
 		&Initialize_EmptyActor,
@@ -125,11 +137,11 @@ const struct ACTOR_DEFINITION actor_defs[NUM_DEFINED_ACTORS] = {
 		1U, /* width */
 		1U, /* height */
 
-		SHAPE_2x2, /* sprite shape to use */
+		4U, /* HOW MANY SPRITES TO RESERVE */
 
 		/* function pointers */
-		&Initialize_EmptyActor,
-		&UpdateEmptyActor
+		&Initialize_TestActor,
+		&UpdateTestActor
 	}
 };
 
@@ -141,3 +153,10 @@ void UpdateEmptyActor(struct ACTOR* actor_ptr)
 {
 }
 
+void Initialize_TestActor(struct ACTOR* actor_ptr)
+{
+}
+
+void UpdateTestActor(struct ACTOR* actor_ptr)
+{
+}

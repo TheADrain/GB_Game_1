@@ -47,99 +47,41 @@ void mark_sprites_used();
 void release_sprite(UINT8 spritenum);
 
 /*
-	---------- SHAPE MANAGEMENT -------------
-	a shape is a collection of sprites associated with a specific layout
-	eg 2x2 or 2x3
-
+	---------- ANIM MANAGEMENT -------------
 */
 
-/* For now all shapes are rectanguler with a Width
-	and height in tile size
+
+/* now it is an ACTOR that will reserve a number of
+	sprites, and it will manage the animations from there
 */
 
-/* can't see the gameboy being able to handle 32 meta sprites anyway but I can lower this if necessary */
-#define MAX_SPRITES_PER_SHAPE 8
-#define MAX_SHAPES 32
 
-#define SHAPE_FREE 0x00
-#define SHAPE_USED 0x01
 
-#define SHAPE_NOT_AVAILABLE 0x00
-#define SHAPE_AVAILABLE 0x01
+/**** experimental anim frame definitions *****/
+#define FR_FLIP_NONE 0x00
+#define FR_FLIP_X 0x01
+#define FR_FLIP_Y 0x02
+#define FR_FLIP_BOTH 0x03
 
-typedef struct SHAPE {
+/* be sure to reserve enough sprites for
+	the largest animation frame when creating
+	 an actor */
 
-	UINT8 ShapeType;
+typedef struct ANIM_TILE {
+	UINT8 YOffset;
+	UINT8 XOffset;
+	UINT8 Tile;
 
-	/* just so we know which shape this is if we only have a ptr to the shape */
-	UINT8 ShapeIndex; 
-
-	UINT8 Width;
-	UINT8 Height;
-	UINT8 NumSprites;
-
-	/* render X and Y value */
-	/* origin is assumed to be bottom right of the total sprite area */
-	UINT16 PositionX;
-	UINT16 PositionY;
-
-	/* ptr to our shapes array of sprite indices in the OAM table */
-	UINT8 (* SpriteArrayPtr)[MAX_SPRITES_PER_SHAPE];
-
-	/* function pointers */
-	void (*Hide) (struct SHAPE * shape_ptr);
-	void (*Place) (struct SHAPE * shape_ptr);
+	/* bit 1 (rightmost) == Y-flip
+	   bit 2 == x-flip
+	*/
+	UBYTE Props; 
 };
 
-/* reserve some ram for the shapes to store their sprite arrays in */
-extern UINT8 shape_sprite_arrays[MAX_SHAPES][MAX_SPRITES_PER_SHAPE];
-
-extern struct SHAPE shapes_array[MAX_SHAPES];
-
-extern UINT8 shapes_in_use[MAX_SHAPES];
-
-extern struct SHAPE * created_shape_ptr;
-
-void init_shape_manager();
-UINT8 create_shape(UINT8 shape_type);
-void release_shape(struct SHAPE * shape_ptr);
-
-#define SHAPE_1x1 0U
-#define SHAPE_2x2 1U
-#define SHAPE_2x3 2U
-#define SHAPE_2x1 3U
-#define SHAPE_1x2 4U
-#define NUM_DEFINED_SHAPES 5
-/* add more shapes if we need em */
-
-/* lookup table for shapes and shape functions */
-typedef struct SHAPE_DEFINITION {
-	UINT8 ShapeType;
-	UINT8 Width;
-	UINT8 Height;
-	UINT8 NumSprites;
-
-	/* function pointers */
-	void (*Hide) (struct SHAPE * shape_ptr);
-	void (*Place) (struct SHAPE * shape_ptr);
+typedef struct ANIM_FRAME {
+	UINT8 NumTiles;
+	struct ANIM_TILE AnimTiles[];
 };
 
-extern const struct SHAPE_DEFINITION shapes_defs[NUM_DEFINED_SHAPES];
-
-/* sprite position functions */
-/* call these after updating the shapes x and y coords to position the sprites
-	in screen space
-
-	sprites are placed as if the bottom right of the shape is the origin
-*/
-void hide_shape(struct SHAPE * shape_ptr);
-
-void place_shape_1x1(struct SHAPE * shape_ptr);
-void place_shape_2x2(struct SHAPE * shape_ptr);
-void place_shape_2x3(struct SHAPE * shape_ptr);
-void place_shape_2x1(struct SHAPE * shape_ptr); 
-void place_shape_1x2(struct SHAPE * shape_ptr);
-
-/* sprite flip functions */
 
 #endif

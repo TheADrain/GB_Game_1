@@ -10,6 +10,8 @@
 #define ACTOR_NOT_AVAILABLE 0x00
 #define ACTOR_AVAILABLE 0x01
 
+#define MAX_SPRITES_PER_ACTOR 8U
+
 typedef struct ACTOR {
 
 	UINT8 ActorType;
@@ -22,10 +24,8 @@ typedef struct ACTOR {
 	UINT16 PositionX;
 	UINT16 PositionY;
 
-	UINT8 SpriteShapeType;
-
-	/* shape pointer */
-	struct SHAPE* shape_ptr;
+	UINT8 SpritesAllocated;
+	UINT8 SpriteIndexes[MAX_SPRITES_PER_ACTOR];
 
 	/* function pointers */
 	void (*Initialize) (struct ACTOR * actor_ptr);
@@ -53,7 +53,8 @@ typedef struct ACTOR_DEFINITION {
 	UINT8 Width;
 	UINT8 Height;
 
-	UINT8 SpriteShapeType;
+	/* HOW MANY SPRITES TO RESERVE */
+	UINT8 SpriteAllocation;
 
 	/* function pointers */
 	void (*Initialize) (struct ACTOR * actor_ptr);
@@ -65,5 +66,8 @@ extern const struct ACTOR_DEFINITION actor_defs[NUM_DEFINED_ACTORS];
 
 void Initialize_EmptyActor(struct ACTOR* actor_ptr);
 void UpdateEmptyActor(struct ACTOR* actor_ptr);
+
+void Initialize_TestActor(struct ACTOR* actor_ptr);
+void UpdateTestActor(struct ACTOR* actor_ptr);
 
 #endif

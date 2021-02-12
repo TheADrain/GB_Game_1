@@ -2,6 +2,7 @@
 #include <gb/gb.h>
 #include "bankdefs.h"
 #include "sprite_manager.h"
+#include "actors.h"
 #include "levels.h"
 #include "input.h"
 #include "utils_1.h"
@@ -27,11 +28,7 @@ unsigned char* level_tilemap_data;
 unsigned char* level_collision_data;
 
 /* ---- temp test stuff ---- */
-struct SHAPE * shape_ptr;
-struct SHAPE * shape_ptr2;
-struct SHAPE * shape_ptr3;
-struct SHAPE * shape_ptr4;
-struct SHAPE * shape_ptr5;
+
 /* -------------------------- */
 
 
@@ -148,78 +145,13 @@ void boot_init()
   
 	/* ensure we're in sprite 8x8 mode and init sprite systems */
 	init_sprite_manager();
-	init_shape_manager();
+	init_actor_manager();
 	SPRITES_8x8;
 	SHOW_SPRITES;
 
 	/* put some temp sprites over the nintendo ones */
 	SWITCH_ROM_MBC1(BANK_GRAPHICS_DATA_1);
 	set_sprite_data(0x00, player_spritesLength, player_sprites);
-
-	if(create_shape(SHAPE_2x2) == SHAPE_AVAILABLE)
-	{
-		shape_ptr = created_shape_ptr;
-		shape_ptr->PositionX = 50;
-		shape_ptr->PositionY = 80;
-
-		set_sprite_tile((*shapes_array[shape_ptr->ShapeIndex].SpriteArrayPtr)[0], 2);
-		set_sprite_tile((*shapes_array[shape_ptr->ShapeIndex].SpriteArrayPtr)[1], 3);
-		set_sprite_tile((*shapes_array[shape_ptr->ShapeIndex].SpriteArrayPtr)[2], 18);
-		set_sprite_tile((*shapes_array[shape_ptr->ShapeIndex].SpriteArrayPtr)[3], 19);
-
-		shape_ptr->Place(shape_ptr);
-	}	
-
-	if(create_shape(SHAPE_1x2) == SHAPE_AVAILABLE)
-	{
-		shape_ptr2 = created_shape_ptr;
-		shape_ptr2->PositionX = 120;
-		shape_ptr2->PositionY = 100;
-
-		set_sprite_tile((*shapes_array[shape_ptr2->ShapeIndex].SpriteArrayPtr)[0], 20);
-		set_sprite_tile((*shapes_array[shape_ptr2->ShapeIndex].SpriteArrayPtr)[1], 21);
-
-		shape_ptr2->Place(shape_ptr2);
-	}	
-
-	if(create_shape(SHAPE_2x1) == SHAPE_AVAILABLE)
-	{
-		shape_ptr3 = created_shape_ptr;
-		shape_ptr3->PositionX = 60;
-		shape_ptr3->PositionY = 120;
-
-		set_sprite_tile((*shapes_array[shape_ptr3->ShapeIndex].SpriteArrayPtr)[0], 16);
-		set_sprite_tile((*shapes_array[shape_ptr3->ShapeIndex].SpriteArrayPtr)[1], 17);
-
-		shape_ptr3->Place(shape_ptr3);
-	}	
-
-	if(create_shape(SHAPE_1x1) == SHAPE_AVAILABLE)
-	{
-		shape_ptr4 = created_shape_ptr;
-		shape_ptr4->PositionX = 20;
-		shape_ptr4->PositionY = 50;
-
-		set_sprite_tile((*shapes_array[shape_ptr4->ShapeIndex].SpriteArrayPtr)[0U], 17);
-
-		shape_ptr4->Place(shape_ptr4);
-	}	
-
-	if(create_shape(SHAPE_2x3) == SHAPE_AVAILABLE)
-	{
-		shape_ptr5 = created_shape_ptr;
-		shape_ptr5->PositionX = 20;
-		shape_ptr5->PositionY = 30;
-
-		set_sprite_tile((*shapes_array[shape_ptr5->ShapeIndex].SpriteArrayPtr)[0U], 0);
-		set_sprite_tile((*shapes_array[shape_ptr5->ShapeIndex].SpriteArrayPtr)[1U], 1);
-		set_sprite_tile((*shapes_array[shape_ptr5->ShapeIndex].SpriteArrayPtr)[2U], 16);
-		set_sprite_tile((*shapes_array[shape_ptr5->ShapeIndex].SpriteArrayPtr)[3U], 17);
-		set_sprite_tile((*shapes_array[shape_ptr5->ShapeIndex].SpriteArrayPtr)[4U], 32);
-		set_sprite_tile((*shapes_array[shape_ptr5->ShapeIndex].SpriteArrayPtr)[5U], 33);
-
-		shape_ptr5->Place(shape_ptr5);
-	}	
 
 	enable_interrupts(); 
 
@@ -258,22 +190,6 @@ void splash_init()
 
 void splash_update()
 {
-	shape_ptr->PositionX = shape_ptr->PositionX + 1;
-	shape_ptr->Place(shape_ptr);
-
-	shape_ptr2->PositionX = shape_ptr2->PositionX - 1;
-	shape_ptr2->Place(shape_ptr2);
-
-	shape_ptr3->PositionX = shape_ptr3->PositionX + 1;
-	shape_ptr3->Place(shape_ptr3);
-
-	shape_ptr4->PositionX = shape_ptr4->PositionX + 1;
-	shape_ptr4->PositionY = shape_ptr4->PositionY + 1;
-	shape_ptr4->Place(shape_ptr4);
-
-	shape_ptr5->PositionY = shape_ptr5->PositionY + 1;
-	shape_ptr5->Place(shape_ptr5);
-
 	if(JOY_PRESSED(BTN_A))
 	{
 		NR50_REG = 0x77;
