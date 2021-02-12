@@ -1,0 +1,17 @@
+TILE ZONE INDEXES
+
+PLAYER = 0
+GAMEPLAY = 80
+MISC_UI_1 = 112
+MISC_UI_2 = 144
+   within this, numerals starting from 0
+   MISC_UI_2 + 16
+	or 160
+ACTORS = 176
+
+Max Tilemap Size:
+160 tiles (otherwise we overwrite the actors)
+
+Max actors spritemap size:
+64 tiles
+otherwise we loop around and start cutting into player tiles
