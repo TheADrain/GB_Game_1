@@ -29,8 +29,6 @@ typedef struct ACTOR {
 	UINT8 CurAnimFrameIndex;
 	UINT8 AnimTimer;
 
-	UINT8 UpdateSprites;
-
 	UINT8 SpritesAllocated;
 	UINT8 SpriteIndexes[MAX_SPRITES_PER_ACTOR];
 

@@ -84,8 +84,6 @@ UINT8 create_actor(UINT8 actor_type)
 		actors_array[actor_index].CurAnimFrameIndex = 0U;
 		actors_array[actor_index].AnimTimer = 0U;
 
-		actors_array[actor_index].UpdateSprites = 0U;
-
 		actors_array[actor_index].Initialize = actor_defs[actor_type].Initialize;
 		actors_array[actor_index].Update = actor_defs[actor_type].Update;
 
