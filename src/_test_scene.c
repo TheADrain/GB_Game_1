@@ -12,10 +12,16 @@ struct ACTOR * actor4 = 0U;
 struct ACTOR * actor5 = 0U;
 struct ACTOR * actor6 = 0U;
 
-struct ACTOR * test_actors[6U];
+struct ACTOR * actor7 = 0U;
+struct ACTOR * actor8 = 0U;
 
-UINT8 a_i = 0U;
-UINT8 _i = 0U;
+struct ACTOR * actor9 = 0U;
+struct ACTOR * actor10 = 0U;
+
+struct ACTOR * test_actors[10U];
+
+register UINT8 a_i = 0U;
+register UINT8 _i = 0U;
 
 void Initialize_TestActor1(struct ACTOR* a);
 void UpdateTestActor1(struct ACTOR* a);
@@ -46,6 +52,7 @@ void _init_test_scene()
 
 	/* ------test code here----------- */
 
+
 	if(create_actor(ACTOR_ENEMY_1) == ACTOR_AVAILABLE)
 	{
 		actor1 = created_actor_ptr;
@@ -57,11 +64,11 @@ void _init_test_scene()
 
 		actor1->Initialize(actor1);
 
-		fill_bkg_rect(1, 1, 1, 1, UI_NUM_1);
+		fill_bkg_rect(1U, 1U, 1U, 1U, UI_NUM_1);
 	}
 	else
 	{
-		fill_bkg_rect(1, 1, 1, 1, UI_NUM_0);
+		fill_bkg_rect(1U, 1U, 1U, 1U, UI_NUM_0);
 	}
 
 	if(create_actor(ACTOR_ENEMY_1) == ACTOR_AVAILABLE)
@@ -154,35 +161,127 @@ void _init_test_scene()
 		fill_bkg_rect(6, 1, 1, 1, UI_NUM_0);
 	}
 
-	actor1->PositionX = 50U;
+	if(create_actor(ACTOR_ENEMY_1) == ACTOR_AVAILABLE)
+	{
+		actor7 = created_actor_ptr;
+		test_actors[6U] = actor7;
+
+		/* replace init/update functions to test */
+		actor7->Initialize = &Initialize_TestActor1;
+		actor7->Update = &UpdateTestActor1;
+
+		actor7->Initialize(actor7);
+
+		fill_bkg_rect(7, 1, 1, 1, UI_NUM_1);
+	}
+	else
+	{
+		fill_bkg_rect(7, 1, 1, 1, UI_NUM_0);
+	}
+
+	if(create_actor(ACTOR_ENEMY_1) == ACTOR_AVAILABLE)
+	{
+		actor8 = created_actor_ptr;
+		test_actors[7U] = actor8;
+
+		/* replace init/update functions to test */
+		actor8->Initialize = &Initialize_TestActor1;
+		actor8->Update = &UpdateTestActor1;
+
+		actor8->Initialize(actor8);
+
+		fill_bkg_rect(8, 1, 1, 1, UI_NUM_1);
+	}
+	else
+	{
+		fill_bkg_rect(8, 1, 1, 1, UI_NUM_0);
+	}
+
+	if(create_actor(ACTOR_ENEMY_1) == ACTOR_AVAILABLE)
+	{
+		actor9 = created_actor_ptr;
+		test_actors[8U] = actor9;
+
+		/* replace init/update functions to test */
+		actor9->Initialize = &Initialize_TestActor1;
+		actor9->Update = &UpdateTestActor1;
+
+		actor9->Initialize(actor9);
+
+		fill_bkg_rect(9, 1, 1, 1, UI_NUM_1);
+	}
+	else
+	{
+		fill_bkg_rect(9, 1, 1, 1, UI_NUM_0);
+	}
+
+	if(create_actor(ACTOR_ENEMY_1) == ACTOR_AVAILABLE)
+	{
+		actor10 = created_actor_ptr;
+		test_actors[9U] = actor10;
+
+		/* replace init/update functions to test */
+		actor10->Initialize = &Initialize_TestActor1;
+		actor10->Update = &UpdateTestActor1;
+
+		actor10->Initialize(actor10);
+
+		fill_bkg_rect(10, 1, 1, 1, UI_NUM_1);
+	}
+	else
+	{
+		fill_bkg_rect(10, 1, 1, 1, UI_NUM_0);
+	}
+
+	actor1->PositionX = 30U;
 	actor1->PositionY = 110U;
-	actor1->CurAnimFramePtr = frames_crow_idle[0U];
+	actor1->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
 	actor1->AnimTimer = actor1->CurAnimFramePtr->FrameDuration;
 
 	actor2->PositionX = 70U;
-	actor2->PositionY = 100U;
-	actor2->CurAnimFramePtr = frames_crow_idle[0U];
+	actor2->PositionY = 110U;
+	actor2->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
 	actor2->AnimTimer = actor2->CurAnimFramePtr->FrameDuration - 60;
 
-	actor3->PositionX = 30U;
+	actor3->PositionX = 90U;
 	actor3->PositionY = 110U;
-	actor3->CurAnimFramePtr = frames_crow_idle[0U];
+	actor3->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
 	actor3->AnimTimer = actor3->CurAnimFramePtr->FrameDuration;
 
-	actor4->PositionX = 110U;
-	actor4->PositionY = 100U;
-	actor4->CurAnimFramePtr = frames_crow_idle[0U];
+	actor4->PositionX = 120U;
+	actor4->PositionY = 150U;
+	actor4->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
 	actor4->AnimTimer = actor4->CurAnimFramePtr->FrameDuration - 30;
 
 	actor5->PositionX = 30U;
-	actor5->PositionY = 70U;
-	actor5->CurAnimFramePtr = frames_crow_idle[0U];
+	actor5->PositionY = 80U;
+	actor5->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
 	actor5->AnimTimer = actor5->CurAnimFramePtr->FrameDuration;
 
-	actor6->PositionX = 90U;
-	actor6->PositionY = 70U;
-	actor6->CurAnimFramePtr = frames_crow_idle[0U];
+	actor6->PositionX = 70U;
+	actor6->PositionY = 80U;
+	actor6->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
 	actor6->AnimTimer = actor6->CurAnimFramePtr->FrameDuration - 90;
+
+	actor7->PositionX = 90U;
+	actor7->PositionY = 80U;
+	actor7->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
+	actor7->AnimTimer = actor7->CurAnimFramePtr->FrameDuration - 50;
+
+	actor8->PositionX = 120U;
+	actor8->PositionY = 50U;
+	actor8->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
+	actor8->AnimTimer = actor8->CurAnimFramePtr->FrameDuration - 90;
+
+	actor9->PositionX = 34U;
+	actor9->PositionY = 65U;
+	actor9->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
+	actor9->AnimTimer = actor9->CurAnimFramePtr->FrameDuration - 90;
+
+	actor10->PositionX = 90U;
+	actor10->PositionY = 65U;
+	actor10->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
+	actor10->AnimTimer = actor10->CurAnimFramePtr->FrameDuration - 15;
 
 	/* ----------------*/
 
@@ -191,7 +290,7 @@ void _init_test_scene()
 	FadeFromBlack(4U);
 }
 
-
+UINT16 test16 = 0U;
 void _test_scene_update()
 {
 	if(_test_scene_initialized == 0U)
@@ -199,9 +298,12 @@ void _test_scene_update()
 		_init_test_scene();
 	}
 
-	for(a_i = 0U; a_i < 6U; a_i = a_i + 1)
+	for(a_i = 0U; a_i < MAX_ACTORS; a_i = a_i + 1)
 	{
-		test_actors[a_i]->Update(test_actors[a_i]);
+		if(actors_in_use[a_i] == ACTOR_USED)
+		{
+			actors_array[a_i].Update(&actors_array[a_i]);
+		}
 	}
 }
 
@@ -230,32 +332,33 @@ void Initialize_TestActor1(struct ACTOR* a)
 			move_sprite(a->SpriteIndexes[_i], 0, 0);
 		}
 	}
-}
+} 
+
+UINT8 anim_tmr = 0;
 
 void UpdateTestActor1(struct ACTOR* a)
 {
 	frame_spritecount = a->CurAnimFramePtr->NumTiles;
 	sprites_allocated_count = a->SpritesAllocated;
 
-	a->AnimTimer = a->AnimTimer - 1;
+	anim_tmr = a->AnimTimer - 1;
 
-	if(a->AnimTimer == 0U)
+	if(anim_tmr == 0U)
 	{
-		a->CurAnimFrameIndex = a-> CurAnimFrameIndex + 1U;
+		a->CurAnimFrameIndex = a->CurAnimFrameIndex + 1U;
 		if(a->CurAnimFrameIndex > 1U)
 		{
 			a->CurAnimFrameIndex = 0U;
 		}
 
-		a->CurAnimFramePtr = frames_crow_idle[a->CurAnimFrameIndex];
+		a->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[a->CurAnimFrameIndex];
 
-		a->AnimTimer = a->CurAnimFramePtr->FrameDuration;
+		anim_tmr = a->CurAnimFramePtr->FrameDuration;
 
 		for(_i = 0U; _i < sprites_allocated_count; _i = _i+1)
 		{
 			if(_i >= frame_spritecount)
 			{
-				/* hide unused sprites */
 				move_sprite(a->SpriteIndexes[_i], 0, 0);
 			}
 			else
@@ -265,11 +368,10 @@ void UpdateTestActor1(struct ACTOR* a)
 		}
 	}
 
-	/* Position the tiles in relation to the actor origin */
-	for(_i = 0U; _i < frame_spritecount; _i = _i+1)
+	a->AnimTimer = anim_tmr;
+
+	for(_i = 0U; _i < sprites_allocated_count; _i = _i+1)
 	{
-		py = a->PositionY + a->CurAnimFramePtr->AnimTiles[_i].YOffset;
-		px = a->PositionX + a->CurAnimFramePtr->AnimTiles[_i].XOffset;
-		move_sprite(a->SpriteIndexes[_i], px, py);
+		move_sprite(a->SpriteIndexes[_i], a->PositionX + a->CurAnimFramePtr->AnimTiles[_i].XOffset, a->PositionY + a->CurAnimFramePtr->AnimTiles[_i].YOffset);
 	}
 }

@@ -2,7 +2,7 @@
 #define ACTORS_H
 #include <gb/gb.h>
 
-#define MAX_ACTORS 16
+#define MAX_ACTORS 16U
 
 #define ACTOR_FREE 0x00
 #define ACTOR_USED 0x01
