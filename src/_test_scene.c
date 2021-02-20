@@ -233,54 +233,45 @@ void _init_test_scene()
 		fill_bkg_rect(10, 1, 1, 1, UI_NUM_0);
 	}
 
-	actor1->PositionX = 30U;
+	actor1->PositionX = 50U;
 	actor1->PositionY = 110U;
-	actor1->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
 	actor1->AnimTimer = actor1->CurAnimFramePtr->FrameDuration;
 
-	actor2->PositionX = 70U;
+	actor2->PositionX = 90U;
 	actor2->PositionY = 110U;
-	actor2->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
 	actor2->AnimTimer = actor2->CurAnimFramePtr->FrameDuration - 60;
 
-	actor3->PositionX = 90U;
+	actor3->PositionX = 110U;
 	actor3->PositionY = 110U;
-	actor3->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
 	actor3->AnimTimer = actor3->CurAnimFramePtr->FrameDuration;
 
-	actor4->PositionX = 120U;
+	actor4->PositionX = 140U;
 	actor4->PositionY = 150U;
-	actor4->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
 	actor4->AnimTimer = actor4->CurAnimFramePtr->FrameDuration - 30;
 
-	actor5->PositionX = 30U;
+	actor5->PositionX = 50U;
 	actor5->PositionY = 80U;
-	actor5->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
+	
 	actor5->AnimTimer = actor5->CurAnimFramePtr->FrameDuration;
 
-	actor6->PositionX = 70U;
+	actor6->PositionX = 90U;
 	actor6->PositionY = 80U;
-	actor6->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
 	actor6->AnimTimer = actor6->CurAnimFramePtr->FrameDuration - 90;
 
-	actor7->PositionX = 90U;
+	actor7->PositionX = 110U;
 	actor7->PositionY = 80U;
-	actor7->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
 	actor7->AnimTimer = actor7->CurAnimFramePtr->FrameDuration - 50;
 
-	actor8->PositionX = 120U;
+	actor8->PositionX = 130U;
 	actor8->PositionY = 50U;
-	actor8->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
 	actor8->AnimTimer = actor8->CurAnimFramePtr->FrameDuration - 90;
 
-	actor9->PositionX = 34U;
+	actor9->PositionX = 64U;
 	actor9->PositionY = 65U;
-	actor9->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
 	actor9->AnimTimer = actor9->CurAnimFramePtr->FrameDuration - 90;
 
 	actor10->PositionX = 90U;
 	actor10->PositionY = 65U;
-	actor10->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
 	actor10->AnimTimer = actor10->CurAnimFramePtr->FrameDuration - 15;
 
 	/* ----------------*/
@@ -290,7 +281,14 @@ void _init_test_scene()
 	FadeFromBlack(4U);
 }
 
-UINT16 test16 = 0U;
+INT8 dir = -1U;
+UINT8 dirFlip = 0U;
+UINT8 cnt = 0U;
+UINT8 cnt2 = 0U;
+
+UINT8 uptCnt = 0U;
+
+UINT8 odd = 0U;
 void _test_scene_update()
 {
 	if(_test_scene_initialized == 0U)
@@ -298,11 +296,42 @@ void _test_scene_update()
 		_init_test_scene();
 	}
 
-	for(a_i = 0U; a_i < MAX_ACTORS; a_i = a_i + 1)
+	UpdateActors();
+
+
+	cnt++;
+	if(cnt < ACTOR_ANIM_TIMESTEP)
 	{
-		if(actors_in_use[a_i] == ACTOR_USED)
+		return;
+	}
+	else
+	{
+		cnt = 0U;
+	}
+
+	cnt2++;
+
+	if(cnt2 > 40)
+	{
+		cnt2 = 0U;
+		if(dirFlip == 0U)
 		{
-			actors_array[a_i].Update(&actors_array[a_i]);
+			dirFlip = 1U;
+		}
+		else
+		{
+			dirFlip = 0U;
+		}
+	}
+	else
+	{
+		if(dirFlip == 0U)
+		{
+			dir = -1;
+		}
+		else
+		{
+			dir = 1;
 		}
 	}
 }
@@ -317,6 +346,8 @@ void Initialize_TestActor1(struct ACTOR* a)
 	/* Set the tiles for the first frame */
 	
 	frame_spritecount = a->CurAnimFramePtr->NumTiles;
+
+	a->CurAnimFramePtr = (struct ANIM_FRAME *)frames_crow_idle[0U];
 
 	_i = 0U;
 	sprites_allocated_count = a->SpritesAllocated;
@@ -334,16 +365,16 @@ void Initialize_TestActor1(struct ACTOR* a)
 	}
 } 
 
-UINT8 anim_tmr = 0;
+INT8 anim_tmr = 0;
 
 void UpdateTestActor1(struct ACTOR* a)
 {
 	frame_spritecount = a->CurAnimFramePtr->NumTiles;
 	sprites_allocated_count = a->SpritesAllocated;
 
-	anim_tmr = a->AnimTimer - 1;
+	anim_tmr = a->AnimTimer - ACTOR_ANIM_TIMESTEP;
 
-	if(anim_tmr == 0U)
+	if(anim_tmr <= 0U)
 	{
 		a->CurAnimFrameIndex = a->CurAnimFrameIndex + 1U;
 		if(a->CurAnimFrameIndex > 1U)
@@ -369,6 +400,7 @@ void UpdateTestActor1(struct ACTOR* a)
 	}
 
 	a->AnimTimer = anim_tmr;
+	a->PositionX = a->PositionX + dir;
 
 	for(_i = 0U; _i < sprites_allocated_count; _i = _i+1)
 	{

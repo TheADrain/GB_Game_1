@@ -31,7 +31,7 @@ const struct ANIM_FRAME frame_crow_fly =
 {
 	/* fly frame */
 	4U,
-	16U,
+	10U,
 	{
 		/* tile 1 */{ -8, 0, 0U, FR_FLIP_NONE },
 		/* tile 2 */{ -8, 8, 1U, FR_FLIP_NONE },
@@ -44,7 +44,7 @@ const struct ANIM_FRAME frame_crow_swoop =
 {
 	/* swoop attack frame */
 	2U,
-	16U,
+	10U,
 	{
 		/* tile 1 */{ 0, 0, 3U, FR_FLIP_NONE },
 		/* tile 2 */{ 0, 8, 4U, FR_FLIP_NONE }

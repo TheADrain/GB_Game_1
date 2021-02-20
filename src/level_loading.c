@@ -6,6 +6,7 @@
 #include "input.h"
 #include "player.h"
 #include "string.h"
+#include "scrolling.h"
 
 UINT8 numerals_offset = 0;
 UINT8 tileDataCtr = 0x00;

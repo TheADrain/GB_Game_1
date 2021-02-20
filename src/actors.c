@@ -10,7 +10,10 @@
 */
 struct ACTOR actors_array[MAX_ACTORS];
 UINT8 actors_in_use[MAX_ACTORS];
+UINT8 num_actors_in_use = 0U;
 struct ACTOR * created_actor_ptr = 0U;
+
+
 
 void init_actor_manager()
 {
@@ -95,6 +98,7 @@ UINT8 create_actor(UINT8 actor_type)
 		}
 
 		created_actor_ptr = &(actors_array[actor_index]);
+		num_actors_in_use = num_actors_in_use + 1;
 
 		return ACTOR_AVAILABLE;
 	}
@@ -123,6 +127,7 @@ void release_actor(struct ACTOR * actor_ptr)
 	}
 
 	actors_in_use[actor_index] = ACTOR_FREE;
+	num_actors_in_use = num_actors_in_use - 1;
 }
 
 /* ACTOR DEFINITIONS */
@@ -166,4 +171,31 @@ void Initialize_TestActor(struct ACTOR* actor_ptr)
 
 void UpdateTestActor(struct ACTOR* actor_ptr)
 {
+}
+
+/* main actor update function */
+
+UINT8 cur_update_actor_idx = 0U;
+UINT8 actr_i = 0U;
+UINT8 actr_upd_lim = 0U;
+void UpdateActors()
+{
+	actr_upd_lim = actr_i + ACTORS_PER_UPDATE;
+	if(actr_upd_lim > MAX_ACTORS)
+	{
+		actr_upd_lim = MAX_ACTORS;
+	}
+
+	for(actr_i; actr_i < actr_upd_lim; actr_i = actr_i + 1)
+	{
+		if(actors_in_use[actr_i] == ACTOR_USED)
+		{
+			actors_array[actr_i].Update(&actors_array[actr_i]);
+		}
+	}
+
+	if(actr_i >= MAX_ACTORS)
+	{
+		actr_i = 0U;
+	}
 }

@@ -2,7 +2,11 @@
 #define ACTORS_H
 #include <gb/gb.h>
 
-#define MAX_ACTORS 16U
+
+#define MAX_ACTORS 15U
+/* must be a clean divisor of MAX_ACTORS */
+#define ACTORS_PER_UPDATE 3U
+#define ACTOR_ANIM_TIMESTEP 5U
 
 #define ACTOR_FREE 0x00
 #define ACTOR_USED 0x01
@@ -74,5 +78,7 @@ void UpdateEmptyActor(struct ACTOR* actor_ptr);
 
 void Initialize_TestActor(struct ACTOR* actor_ptr);
 void UpdateTestActor(struct ACTOR* actor_ptr);
+
+void UpdateActors();
 
 #endif

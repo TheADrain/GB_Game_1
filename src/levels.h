@@ -3,6 +3,37 @@
 #include <gb/gb.h>
 #include "bankdefs.h"
 
+/* ------- Notes on Level Format ---------
+
+	No compression is used (goal was to not use any SRAM)
+
+	Level (or at least chunk) maximum size is 256x32 as that will fit
+	in a single bank. Could potentially get 512x32 by 
+	splitting tile/collision into two banks.
+
+	Tile data is simply 0-256 (should never really go over 128, max 160)
+	however it is layed out either in columns or rows to enable copying to
+	VRAM in a single operation for horizontally or vertically scrolling levels.
+		
+		Horizontal levels are arranged in columns.
+		Vertical levels are arranged in rows.
+	
+	Collision and Object Data are combined in one array.
+	0-127 = Collision tile of the type indicated by that number,
+				no modification needed to get the collision type
+
+	128-256 = The object index from 128-256
+				flip the top bit to subtract 128 and you have
+				your object index of 0-127 use this index to lookup
+				the object for that index in the associated object table
+				for the level to find the actual object type and properties.
+
+	The 'levels' array is populated by hand (for now) and contains 
+		meta-data for each level, including its scroll type, 
+			dimensions and object data table pointer.
+
+*/
+
 #define MAP_HORIZONTAL 0U
 #define MAP_VERTICAL 1U
 

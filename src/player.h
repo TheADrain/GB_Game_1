@@ -82,10 +82,11 @@ extern UINT8 player_sprite_tile; /* the tile data for player graphic */
 extern const UINT8 player_speed;
 
 /* init and update functions */
-void init_game_camera();
+
 void init_player_sprite();
 void update_player();
-void update_camera();
+
+
 
 /* collision functions */
 #define COLLIDER_TILE_SIZE 8U
@@ -107,25 +108,6 @@ void TestCollisionAtGridPosition();
 void TestGrounded(); 
 
 
-/* ============================================================================ */
-/* =================== camera motion and level scrolling ====================== */
-/* ============================================================================ */
 
-extern UINT16 camera_x; /* the screen scroll offsets */
-extern UINT16 camera_y;
-extern UINT8 player_scr_x; /* the scree-space sprite position for the player */
-extern UINT8 player_scr_y;
-
-// store tile load commands until next vblank
-extern UBYTE stored_tile_load_command;
-
-extern UINT8 stored_tile_load_bkg_x;
-extern UINT8 stored_tile_load_bkg_y;
-extern UINT8 stored_tile_load_bkg_w;
-extern UINT8 stored_tile_load_bkg_h;
-extern unsigned char * stored_scrl_dat_ptr;
-
-void handle_scroll_horizontal();
-void handle_scroll_vertical();
 
 #endif
