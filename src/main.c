@@ -10,6 +10,7 @@
 #include "scrolling.h"
 #include "level_loading.h"
 
+
 #ifdef USE_TEST_SCENE
 #include "_test_scene.c"
 #endif
@@ -21,6 +22,11 @@ UINT8 global_frame_count = 0U;
 
 /* INPUT VARS */
 UINT8 pad_state_temp = 0U;
+
+/* HELPER VARS */
+UINT8 v_i = 0U;
+UINT8 v_j = 0U;
+UINT8 v_k = 0U;
 
 /* ---------------------LEVEL DATA-------------------------- */
 UINT8 CUR_LEVEL = 0U;
@@ -63,20 +69,6 @@ void DoGraphicsUpdate()
 			stored_tile_load_bkg_h, 
 			stored_scrl_dat_ptr);
 	}
-
-	/* sprites are rendered at the position -8 in x and -16 in y so that 0,0 equates to off-screen */
-	/* always bottom right of the player hitbox */
-	UINT16 pos_x = (player_world_x - SCX_REG) + 8;
-	UINT16 pos_y = (player_world_y - SCY_REG) + 16;
-	move_sprite(player_sprite_num, pos_x-4, pos_y-24);
-	move_sprite(player_sprite_num+1U, pos_x+8, pos_y-24);
-	move_sprite(player_sprite_num+2U, pos_x, pos_y-16);
-	move_sprite(player_sprite_num+3U, pos_x+8, pos_y-16);
-	move_sprite(player_sprite_num+4U, pos_x, pos_y-8);
-	move_sprite(player_sprite_num+5U, pos_x+8, pos_y-8);
-	/*update animated tiles*/
-
-	
 
 	enable_interrupts(); 
 }
@@ -131,10 +123,11 @@ void main()
 					 
 					break;
 				}
-
+				
 				update_player();
 				update_camera(); 
-				
+				UpdateActors();
+
 				break;
 #endif
 	  }

@@ -1,7 +1,7 @@
 #ifndef ACTORS_H
 #define ACTORS_H
 #include <gb/gb.h>
-
+#include "sprite_manager.h"
 
 #define MAX_ACTORS 15U
 /* must be a clean divisor of MAX_ACTORS */
@@ -29,6 +29,8 @@ typedef struct ACTOR {
 	UINT16 PositionY;
 
 	//struct ANIM_FRAME *const CurAnim;
+
+
 	struct ANIM_FRAME * CurAnimFramePtr;
 	UINT8 CurAnimFrameIndex;
 	UINT8 AnimTimer;
@@ -39,6 +41,9 @@ typedef struct ACTOR {
 	/* function pointers */
 	void (*Initialize) (struct ACTOR * actor_ptr);
 	void (*Update) (struct ACTOR * actor_ptr);
+
+	/*property bytes used however that actor wants to use them*/
+	UBYTE State;
 };
 
 extern struct ACTOR actors_array[MAX_ACTORS];
@@ -51,10 +56,15 @@ void release_actor(struct ACTOR * actor_ptr);
 
 /* ----------- ACTOR DEFINITIONS ------------- */
 
+#define EMPTY_UPDATE 0U
+#define EMPTY_INIT 0U
+
 #define ACTOR_EMPTY 0U
-#define ACTOR_ENEMY_1 1U
+#define ACTOR_PLAYER 1U
+#define ACTOR_ENEMY_1 2U
+#define ACTOR_SKELTON 3U
 /* etc */
-#define NUM_DEFINED_ACTORS 3
+#define NUM_DEFINED_ACTORS 4
 
 /* lookup table for shapes and shape functions */
 typedef struct ACTOR_DEFINITION {
@@ -76,9 +86,10 @@ extern const struct ACTOR_DEFINITION actor_defs[NUM_DEFINED_ACTORS];
 void Initialize_EmptyActor(struct ACTOR* actor_ptr);
 void UpdateEmptyActor(struct ACTOR* actor_ptr);
 
-void Initialize_TestActor(struct ACTOR* actor_ptr);
-void UpdateTestActor(struct ACTOR* actor_ptr);
-
 void UpdateActors();
+
+void SetActorAnim(struct ACTOR * a, struct ANIMATION * anim);
+
+void UpdateActorAnim(struct ACTOR * a, struct ANIMATION * anim);
 
 #endif

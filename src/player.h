@@ -3,6 +3,7 @@
 #include <gb/gb.h>
 #include "input.h"
 #include "collision.h"
+#include "actors.h"
 
 /* init the camera in the bottom left corner of the map for now */
 #define CAMERA_START_X 0U
@@ -21,10 +22,10 @@
 
 #define PLAYER_WIDTH 14U 
 #define PLAYER_HALF_WIDTH 7U
-#define PLAYER_HEIGHT 24U
-#define PLAYER_HALF_HEIGHT 11U
-#define PLAYER_HEIGHT_CHECK_1 16U
-#define PLAYER_HEIGHT_CHECK_2 8U
+#define PLAYER_HEIGHT 14U
+#define PLAYER_HALF_HEIGHT 7U
+#define PLAYER_HEIGHT_CHECK_1 11U
+#define PLAYER_HEIGHT_CHECK_2 4U
 
 #define CAMERA_OFFSET_X ((160U/2U) - (4U))
 #define CAMERA_OFFSET_Y ((144U/2U) - (8U))
@@ -81,9 +82,14 @@ extern UINT8 player_sprite_tile; /* the tile data for player graphic */
 
 extern const UINT8 player_speed;
 
+extern struct ACTOR * player_actor;
+
 /* init and update functions */
 
 void init_player_sprite();
+void cleanup_player_sprite();
+void InitializePlayerActor(struct ACTOR* a);
+void UpdatePlayerActor(struct ACTOR* a);
 void update_player();
 
 
@@ -107,7 +113,26 @@ void TestCollisionAtWorldPosition();
 void TestCollisionAtGridPosition(); 
 void TestGrounded(); 
 
+/* player state functions */
+extern UINT8 player_state;
+#define PLAYER_STATE_IDLE 0U
+#define PLAYER_STATE_JUMPING 1U
+#define PLAYER_STATE_FALLING 2U
+#define PLAYER_STATE_DASHING 3U
+#define PLAYER_STATE_DROPPING_FROM_PLATFORM 4U
+#define PLAYER_STATE_HANGING_FROM_PLATFORM 5U
 
+#define DASH_HORIZ_SPEED 12U
+#define DASH_VERT_SPEED 12U
+#define DASH_DURATION 120U
+extern UINT8 dash_timer;
 
+void HandlePlayerStateIdle();
+void HandlePlayerStateJumping();
+void HandlePlayerStateFalling();
+
+void HandlePlayerDashing();
+void HandlePlayerDroppingFromPlatform();
+void HandlePlayerHangingFromPlatform();
 
 #endif

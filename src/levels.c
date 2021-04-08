@@ -23,7 +23,7 @@ const struct LEVEL_DATA levels[3] =
 		BANK_MAPDATA_01, 
 		SPAWN_BOTTOM,
 		20, /* spawn x */
-		716, /* spawn y */
+		50, /* spawn y */
 		tset_towerLength,
 		(unsigned char*)&tset_tower,
 		(unsigned char*)&map_tower02_tilemap, 

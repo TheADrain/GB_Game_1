@@ -2,6 +2,9 @@
 #define MAIN_H
 #include <gb/gb.h>
 
+#define _TRUE 1U
+#define _FALSE 0U
+
 /* Some useful memory address defines */
 #define BG_MAP_1 0x9800U
 #define BG_MAP_2 0x9C00U
@@ -28,10 +31,10 @@
 
 
 
-/*#define DEBUG_MOVEMENT*/
+#define DEBUG_MOVEMENT
 #define FIRST_LVL 0U
 
-//#define USE_TEST_SCENE
+/*#define USE_TEST_SCENE*/
 
 /* ---------------------MUSIC-------------------------- */
 #include "gbt_player.h"
@@ -55,8 +58,14 @@ extern UINT8 GAME_FLOW_STATE;
 
 /* INPUT VARS */
 extern UINT8 pad_state_temp ;
-
 extern UINT8 global_frame_count;
+
+/* HELPER VARS */
+/* volatile counters, don't expect them to persist after calling
+	any function, always set to 0U before using */
+extern UINT8 v_i;
+extern UINT8 v_j;
+extern UINT8 v_k;
 
 /* ---------------------LEVEL DATA-------------------------- */
 extern UINT8 CUR_LEVEL;

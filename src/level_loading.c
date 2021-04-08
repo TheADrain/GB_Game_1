@@ -18,8 +18,6 @@ UINT8 tileDataCtr = 0x00;
 void levelcard_init()
 {
 	FadeToBlack(4U);
-	
-	disable_interrupts();
 
 	HIDE_SPRITES;
 	HIDE_BKG;
@@ -33,6 +31,10 @@ void levelcard_init()
 	SWITCH_ROM_MBC1(BANK_TITLE);
 	/* load tiles for the title screen */
 	tileDataCtr = 0x00;
+
+	wait_vbl_done();
+	disable_interrupts();
+
 	set_bkg_data(tileDataCtr, levelcard_tilesLength, levelcard_tiles);
 	/* Initialize the title map data */
 	set_bkg_tiles(0, 0, levelcard_mapWidth, levelcard_mapHeight, levelcard_map);
@@ -100,6 +102,7 @@ void set_current_level(UINT8 newLevel)
 
 void load_current_level_graphics()
 {
+	wait_vbl_done();
 	disable_interrupts();
 
 	/* load the gameplay sprite tiles (for now this is same for all levels) */
@@ -118,6 +121,7 @@ void load_current_level_graphics()
 
 void load_current_level_map()
 {
+	wait_vbl_done();
 	disable_interrupts();
 	
 	/* Initialize the title map data */
@@ -173,6 +177,10 @@ void start_level()
 void end_level()
 {
 	disable_interrupts();
+
 	remove_VBL(vblint);
+
+	cleanup_player_sprite();
+
 	enable_interrupts();
 }

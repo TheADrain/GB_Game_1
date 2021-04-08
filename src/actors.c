@@ -1,5 +1,6 @@
 #include "actors.h"
 #include "sprite_manager.h"
+#include "actors/skelton.h"
 
 /* an actor is essentially a collection of the following
 	- a rectangle (hitbox)
@@ -29,6 +30,9 @@ void init_actor_manager()
 		actors_array[i].PositionY = 0U;
 
 		actors_array[i].SpritesAllocated = 0U;
+		
+		actors_array[i].Update = EMPTY_UPDATE;
+		actors_array[i].Initialize = EMPTY_INIT;
 		
 		j = 0U;
 		for(j = 0; j < MAX_SPRITES_PER_ACTOR; j = j + 1)
@@ -87,6 +91,8 @@ UINT8 create_actor(UINT8 actor_type)
 		actors_array[actor_index].CurAnimFrameIndex = 0U;
 		actors_array[actor_index].AnimTimer = 0U;
 
+		actors_array[actor_index].State = 0U;
+
 		actors_array[actor_index].Initialize = actor_defs[actor_type].Initialize;
 		actors_array[actor_index].Update = actor_defs[actor_type].Update;
 
@@ -119,6 +125,8 @@ void release_actor(struct ACTOR * actor_ptr)
 	actors_array[actor_index].Initialize = 0U;
 	actors_array[actor_index].Update = 0U;
 
+	actors_array[actor_index].State = 0U;
+
 	UINT8 i = 0U;
 	UINT8 sprite_allocation = actors_array[actor_index].SpritesAllocated;
 	for(i = 0; i < sprite_allocation; i = i + 1)
@@ -143,6 +151,17 @@ const struct ACTOR_DEFINITION actor_defs[NUM_DEFINED_ACTORS] = {
 		&Initialize_EmptyActor,
 		&UpdateEmptyActor
 	},
+	{
+		ACTOR_PLAYER,
+		16U, /* width */
+		16U, /* height */
+
+		8U, /* HOW MANY SPRITES TO RESERVE */
+
+		/* function pointers */
+		EMPTY_INIT,
+		EMPTY_UPDATE
+	},
 	{ 
 		ACTOR_ENEMY_1,
 
@@ -152,8 +171,20 @@ const struct ACTOR_DEFINITION actor_defs[NUM_DEFINED_ACTORS] = {
 		4U, /* HOW MANY SPRITES TO RESERVE */
 
 		/* function pointers */
-		&Initialize_TestActor,
-		&UpdateTestActor
+		&Initialize_EmptyActor,
+		&UpdateEmptyActor
+	},
+	{
+		ACTOR_SKELTON,
+
+		2U, /* width */
+		2U, /* height */
+
+		5U, /* HOW MANY SPRITES TO RESERVE */
+
+		/* function pointers */
+		&Initialize_ActorSkelton,
+		&Update_ActorSkelton
 	}
 };
 
@@ -165,21 +196,16 @@ void UpdateEmptyActor(struct ACTOR* actor_ptr)
 {
 }
 
-void Initialize_TestActor(struct ACTOR* actor_ptr)
-{
-}
-
-void UpdateTestActor(struct ACTOR* actor_ptr)
-{
-}
-
 /* main actor update function */
 
 UINT8 cur_update_actor_idx = 0U;
-UINT8 actr_i = 0U;
+UINT8 actr_i = 1U;
 UINT8 actr_upd_lim = 0U;
 void UpdateActors()
 {
+	/* always update actor 0 every frame, it should always be the player */
+	actors_array[0U].Update(&actors_array[0U]);
+
 	actr_upd_lim = actr_i + ACTORS_PER_UPDATE;
 	if(actr_upd_lim > MAX_ACTORS)
 	{
@@ -188,7 +214,7 @@ void UpdateActors()
 
 	for(actr_i; actr_i < actr_upd_lim; actr_i = actr_i + 1)
 	{
-		if(actors_in_use[actr_i] == ACTOR_USED)
+		if(actors_in_use[actr_i] == ACTOR_USED && actors_array[actr_i].Update != EMPTY_UPDATE)
 		{
 			actors_array[actr_i].Update(&actors_array[actr_i]);
 		}
@@ -196,6 +222,71 @@ void UpdateActors()
 
 	if(actr_i >= MAX_ACTORS)
 	{
-		actr_i = 0U;
+		actr_i = 1U;
+	}
+}
+
+void SetActorAnim(struct ACTOR * a, struct ANIMATION * anim)
+{
+	a->CurAnimFramePtr = (struct ANIM_FRAME *)(anim->Frames[0U]);
+	frame_spritecount = a->CurAnimFramePtr->NumTiles;
+
+	_i = 0U;
+	sprites_allocated_count = a->SpritesAllocated;
+	for(_i = 0U; _i < sprites_allocated_count; _i = _i+1)
+	{
+		if(_i < frame_spritecount)
+		{
+			set_sprite_tile(a->SpriteIndexes[_i], VRAM_PLAYER + a->CurAnimFramePtr->AnimTiles[_i].Tile);
+		}
+		else
+		{
+			move_sprite(a->SpriteIndexes[_i], 0, 0);
+		}
+	}
+
+	for(_i = 0U; _i < frame_spritecount; _i = _i+1)
+	{
+		move_sprite(a->SpriteIndexes[_i], a->PositionX + a->CurAnimFramePtr->AnimTiles[_i].XOffset, a->PositionY + a->CurAnimFramePtr->AnimTiles[_i].YOffset);
+	}
+}
+
+void UpdateActorAnim(struct ACTOR * a, struct ANIMATION * anim)
+{
+	frame_spritecount = a->CurAnimFramePtr->NumTiles;
+	sprites_allocated_count = a->SpritesAllocated;
+
+	anim_tmr = a->AnimTimer - ACTOR_ANIM_TIMESTEP;
+
+	if(anim_tmr <= 0U)
+	{
+		a->CurAnimFrameIndex = a->CurAnimFrameIndex + 1U;
+		if(a->CurAnimFrameIndex >= anim->NumFrames)
+		{
+			a->CurAnimFrameIndex = 0U;
+		}
+
+		a->CurAnimFramePtr = (struct ANIM_FRAME *)(anim->Frames[a->CurAnimFrameIndex]);
+
+		anim_tmr = a->CurAnimFramePtr->FrameDuration;
+
+		for(_i = 0U; _i < sprites_allocated_count; _i = _i+1)
+		{
+			if(_i >= frame_spritecount)
+			{
+				move_sprite(a->SpriteIndexes[_i], 0, 0);
+			}
+			else
+			{
+				set_sprite_tile(a->SpriteIndexes[_i], VRAM_PLAYER + a->CurAnimFramePtr->AnimTiles[_i].Tile);
+			}
+		}
+	}
+
+	a->AnimTimer = anim_tmr;
+	
+	for(_i = 0U; _i < frame_spritecount; _i = _i+1)
+	{
+		move_sprite(a->SpriteIndexes[_i], a->PositionX + a->CurAnimFramePtr->AnimTiles[_i].XOffset, a->PositionY + a->CurAnimFramePtr->AnimTiles[_i].YOffset);
 	}
 }

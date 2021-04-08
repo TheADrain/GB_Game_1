@@ -1,11 +1,13 @@
 #include "anims_forest.h"
 #include "../sprite_manager.h"
 
+extern UINT8 testVar = 100;
+
 const struct ANIM_FRAME frame_crow_perched_1 = 
 {
 	/* perched frame */
-	3U,
-	128U,
+	3U, /* num tiles */
+	128U, /* duration in ACTOR_ANIM_TIMESTEP (5 frames) */
 	{
 		/*            Y,  X,  TILE_ID, PROPS */
 		/* tile 1 */{ -8, 0, 2U, FR_FLIP_NONE },
@@ -65,19 +67,34 @@ const struct ANIM_FRAME *const frames_crow_idle[2U] =
 	{ &frame_crow_perched_2 }
 };
 
-const struct ANIM_FRAME skelly_stand = 
+const struct ANIM_FRAME skelly_stand_1 = 
 {
-	/* standing frame */
-		5U,
-		16U,
+	/* standing frame 1 */
+		5U, /* num tiles */
+		50U, /* duration in ACTOR_ANIM_TIMESTEP (5 frames) */
 		{
-			/* tile 1 */{ 4, 4, 32U, FR_FLIP_NONE },
+			/* tile 1 */{ -7, 4, 32U, FR_FLIP_NONE },
 			/* tile 2 */{ 0, 0, 33U, FR_FLIP_X },
-			/* tile 3 */{ 8, 0, 33U, FR_FLIP_NONE },
-			/* tile 4 */{ 0, 8, 49U, FR_FLIP_X },
+			/* tile 3 */{ 8, 0, 49U, FR_FLIP_X },
+			/* tile 4 */{ 0, 8, 33U, FR_FLIP_NONE },
 			/* tile 5 */{ 8, 8, 49U, FR_FLIP_NONE }
 		}
 };
+
+const struct ANIM_FRAME skelly_stand_2 = 
+{	
+	/* standing frame 2 */
+		5U,
+		20U,
+		{
+			/* tile 1 */{ -6, 4, 32U, FR_FLIP_NONE },
+			/* tile 2 */{ 0, 0, 33U, FR_FLIP_X },
+			/* tile 3 */{ 8, 0, 49U, FR_FLIP_X },
+			/* tile 4 */{ 0, 8, 33U, FR_FLIP_NONE },
+			/* tile 5 */{ 8, 8, 49U, FR_FLIP_NONE }
+		}
+};
+
 
 const struct ANIM_FRAME skelly_walk_1 = 
 {
@@ -107,9 +124,8 @@ const struct ANIM_FRAME skelly_walk_2 =
 	}
 };
 
-const struct ANIM_FRAME *const frames_skelly[SKELLY_FRAMES] =
+const struct ANIM_FRAME *const frames_skelly_stand[2U] =
 {
-	{ &skelly_stand	},
-	{ &skelly_walk_1 },
-	{ &skelly_walk_2 }
+	{ &skelly_stand_1 },
+	{ &skelly_stand_2 }
 };

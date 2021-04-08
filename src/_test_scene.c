@@ -1,4 +1,7 @@
+
 #include "anims/anims_forest.h"
+#include "actors/skelton.h"
+#include "actors.h"
 
 UINT8 _test_scene_initialized = 0U;
 
@@ -19,9 +22,6 @@ struct ACTOR * actor9 = 0U;
 struct ACTOR * actor10 = 0U;
 
 struct ACTOR * test_actors[10U];
-
-register UINT8 a_i = 0U;
-register UINT8 _i = 0U;
 
 void Initialize_TestActor1(struct ACTOR* a);
 void UpdateTestActor1(struct ACTOR* a);
@@ -48,7 +48,6 @@ void _init_test_scene()
 	/* TODO: define these VRAM offsets */
 	set_sprite_data(VRAM_ACTORS, spr_actors_forestLength, spr_actors_forest);
 
-	
 
 	/* ------test code here----------- */
 
@@ -107,15 +106,10 @@ void _init_test_scene()
 		fill_bkg_rect(3, 1, 1, 1, UI_NUM_0);
 	}
 
-	if(create_actor(ACTOR_ENEMY_1) == ACTOR_AVAILABLE)
+	if(create_actor(ACTOR_SKELTON) == ACTOR_AVAILABLE)
 	{
 		actor4 = created_actor_ptr;
 		test_actors[3U] = actor4;
-		
-		/* replace init/update functions to test */
-		actor4->Initialize = &Initialize_TestActor1;
-		actor4->Update = &UpdateTestActor1;
-
 		actor4->Initialize(actor4);
 
 		fill_bkg_rect(4, 1, 1, 1, UI_NUM_1);
@@ -125,12 +119,11 @@ void _init_test_scene()
 		fill_bkg_rect(4, 1, 1, 1, UI_NUM_0);
 	}
 
-	if(create_actor(ACTOR_ENEMY_1) == ACTOR_AVAILABLE)
+	/*if(create_actor(ACTOR_ENEMY_1) == ACTOR_AVAILABLE)
 	{
 		actor5 = created_actor_ptr;
 		test_actors[4U] = actor5;
 		
-		/* replace init/update functions to test */
 		actor5->Initialize = &Initialize_TestActor1;
 		actor5->Update = &UpdateTestActor1;
 
@@ -148,7 +141,6 @@ void _init_test_scene()
 		actor6 = created_actor_ptr;
 		test_actors[5U] = actor6;
 
-		/* replace init/update functions to test */
 		actor6->Initialize = &Initialize_TestActor1;
 		actor6->Update = &UpdateTestActor1;
 
@@ -166,7 +158,6 @@ void _init_test_scene()
 		actor7 = created_actor_ptr;
 		test_actors[6U] = actor7;
 
-		/* replace init/update functions to test */
 		actor7->Initialize = &Initialize_TestActor1;
 		actor7->Update = &UpdateTestActor1;
 
@@ -184,7 +175,6 @@ void _init_test_scene()
 		actor8 = created_actor_ptr;
 		test_actors[7U] = actor8;
 
-		/* replace init/update functions to test */
 		actor8->Initialize = &Initialize_TestActor1;
 		actor8->Update = &UpdateTestActor1;
 
@@ -202,7 +192,6 @@ void _init_test_scene()
 		actor9 = created_actor_ptr;
 		test_actors[8U] = actor9;
 
-		/* replace init/update functions to test */
 		actor9->Initialize = &Initialize_TestActor1;
 		actor9->Update = &UpdateTestActor1;
 
@@ -220,7 +209,6 @@ void _init_test_scene()
 		actor10 = created_actor_ptr;
 		test_actors[9U] = actor10;
 
-		/* replace init/update functions to test */
 		actor10->Initialize = &Initialize_TestActor1;
 		actor10->Update = &UpdateTestActor1;
 
@@ -231,7 +219,7 @@ void _init_test_scene()
 	else
 	{
 		fill_bkg_rect(10, 1, 1, 1, UI_NUM_0);
-	}
+	}*/
 
 	actor1->PositionX = 50U;
 	actor1->PositionY = 110U;
@@ -246,10 +234,10 @@ void _init_test_scene()
 	actor3->AnimTimer = actor3->CurAnimFramePtr->FrameDuration;
 
 	actor4->PositionX = 140U;
-	actor4->PositionY = 150U;
+	actor4->PositionY = 60;
 	actor4->AnimTimer = actor4->CurAnimFramePtr->FrameDuration - 30;
 
-	actor5->PositionX = 50U;
+	/*actor5->PositionX = 50U;
 	actor5->PositionY = 80U;
 	
 	actor5->AnimTimer = actor5->CurAnimFramePtr->FrameDuration;
@@ -273,7 +261,7 @@ void _init_test_scene()
 	actor10->PositionX = 90U;
 	actor10->PositionY = 65U;
 	actor10->AnimTimer = actor10->CurAnimFramePtr->FrameDuration - 15;
-
+	*/
 	/* ----------------*/
 
 	enable_interrupts();
@@ -336,8 +324,6 @@ void _test_scene_update()
 	}
 }
 
-UINT8 frame_spritecount = 0U;
-UINT8 sprites_allocated_count = 0U;
 UINT16 py = 0U;
 UINT16 px = 0U;
 
@@ -364,8 +350,6 @@ void Initialize_TestActor1(struct ACTOR* a)
 		}
 	}
 } 
-
-INT8 anim_tmr = 0;
 
 void UpdateTestActor1(struct ACTOR* a)
 {

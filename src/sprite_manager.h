@@ -58,10 +58,11 @@ void release_sprite(UINT8 spritenum);
 
 
 /**** experimental anim frame definitions *****/
+
 #define FR_FLIP_NONE 0x00
-#define FR_FLIP_X 0x01
-#define FR_FLIP_Y 0x02
-#define FR_FLIP_BOTH 0x03
+#define FR_FLIP_X S_FLIPX
+#define FR_FLIP_Y S_FLIPY
+#define FR_FLIP_BOTH (S_FLIPX | S_FLIPY)
 
 /* be sure to reserve enough sprites for
 	the largest animation frame when creating
@@ -84,5 +85,18 @@ typedef struct ANIM_FRAME {
 	struct ANIM_TILE AnimTiles[];
 };
 
+/* some vars used by anim code - volatile */
+extern UINT8 frame_spritecount;
+extern UINT8 sprites_allocated_count;
+
+extern UINT8 a_i;
+extern UINT8 _i;
+
+extern INT8 anim_tmr; 
+
+typedef struct ANIMATION {
+	UINT8 NumFrames;
+	struct ANIM_FRAME* Frames[];
+};
 
 #endif

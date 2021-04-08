@@ -25,15 +25,18 @@ extern const struct ANIM_FRAME *const frames_crow_idle[2U];
 /* temp: define here how many hardware sprites the skelly will use */
 #define SKELLY_RESERVE_SPRITES 5U;
 
-#define SKELLY_FRAMES 3U
+#define SKELLY_STAND_FRAMES 2U
 #define SKELLY_STAND_FRAME 0U
 #define SKELLY_WALK_FRAMES_START 1U
 #define SKELLY_WALK_FRAMES_END 2U
 
-extern const struct ANIM_FRAME skelly_stand;	
+extern UINT8 testVar;
+
+extern const struct ANIM_FRAME skelly_stand_1;	
+extern const struct ANIM_FRAME skelly_stand_2;
 extern const struct ANIM_FRAME skelly_walk_1;
 extern const struct ANIM_FRAME skelly_walk_2;
 
-extern const struct ANIM_FRAME *const frames_skelly[SKELLY_FRAMES];
+extern const struct ANIM_FRAME *const frames_skelly_stand[2U];
 
 #endif

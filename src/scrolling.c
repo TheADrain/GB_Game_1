@@ -28,7 +28,31 @@ unsigned char * stored_scrl_dat_ptr = 0U;
 
 void init_game_camera()
 {
-	update_camera();
+	rightBound = (CUR_MAP_WIDTH * TILE_SIZE) - SCREEN_WIDTH;
+	bottomBound = (CUR_MAP_HEIGHT * TILE_SIZE) - SCREEN_HEIGHT;
+
+	/* reset the camera to the players spawn position to prevent a large scroll delta on the first frame */
+	tempx = player_world_x - CAMERA_OFFSET_X;
+	tempy = player_world_y - CAMERA_OFFSET_Y;
+
+	if(tempx < 0 )
+	{
+		tempx = 0;
+	} else if (tempx >= rightBound)
+	{
+		tempx = rightBound;
+	}
+
+	if(tempy < 0)
+	{
+		tempy = 0;
+	} else if (tempy >= bottomBound)
+	{
+		tempy = bottomBound;
+	}
+
+	camera_x = tempx;
+	camera_y = tempy; 
 }
 
 void update_camera() 
@@ -52,8 +76,6 @@ void update_camera()
 void handle_scroll_horizontal()
 {
 	/* clamp to the level width bounds */
-	rightBound = (CUR_MAP_WIDTH * TILE_SIZE) - SCREEN_WIDTH;
-
 	if(tempx < 0 )
 	{
 		tempx = 0;
@@ -119,7 +141,7 @@ void handle_scroll_horizontal()
 void handle_scroll_vertical()
 {
 	/* clamp to the level width bounds */
-	bottomBound = (CUR_MAP_HEIGHT * TILE_SIZE) - SCREEN_HEIGHT;
+	
 
 	if(tempx < 0 )
 	{
