@@ -55,7 +55,9 @@ void DoGraphicsUpdate()
 {
 	disable_interrupts();
 	/* do as much of our graphics update as possible in one place */	
+	
 	move_bkg(camera_x, camera_y);
+	manual_update_player_sprite();
 
 	/* see if we have a stored command to load tiles into background vram */
 	if(stored_tile_load_command == 1U)
@@ -125,8 +127,10 @@ void main()
 				}
 				
 				update_player();
-				update_camera(); 
+
 				UpdateActors();
+
+				update_camera(); 
 
 				break;
 #endif

@@ -86,11 +86,19 @@ void InitializePlayerActor(struct ACTOR* a)
 
 void UpdatePlayerActor(struct ACTOR* a)
 {
-	player_actor->PositionX = (player_world_x - SCX_REG);
+	/*player_actor->PositionX = (player_world_x - SCX_REG);
 	player_actor->PositionY = (player_world_y - SCY_REG);
 	
 	SWITCH_ROM_MBC1(BANK_GRAPHICS_DATA_1);
-	UpdateActorAnim(a, &anim_player_idle);
+	UpdateActorAnim(a, &anim_player_idle);*/
+}
+
+void manual_update_player_sprite()
+{
+	player_actor->PositionX = (player_world_x - camera_x);
+	player_actor->PositionY = (player_world_y - camera_y);
+	SWITCH_ROM_MBC1(BANK_GRAPHICS_DATA_1);
+	UpdateActorAnim(player_actor, &anim_player_idle);
 }
 
 void update_player() 
@@ -316,6 +324,8 @@ void HandlePlayerStateFalling()
 			player_intertia_y = -PLAYER_JUMP_INERTIA;
 			player_move_y += player_intertia_y;
 			player_grounded = 0U;
+
+			player_state = PLAYER_STATE_JUMPING;
 		}
 	}
 

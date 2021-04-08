@@ -90,9 +90,8 @@ void init_player_sprite();
 void cleanup_player_sprite();
 void InitializePlayerActor(struct ACTOR* a);
 void UpdatePlayerActor(struct ACTOR* a);
+void manual_update_player_sprite();
 void update_player();
-
-
 
 /* collision functions */
 #define COLLIDER_TILE_SIZE 8U

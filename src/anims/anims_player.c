@@ -45,7 +45,6 @@ const struct ANIMATION anim_player_idle =
 {
 	/* NumFrames */
 	PLAYER_IDLE_FRAMES,
-	(struct ANIM_FRAME*)&anim_player_idle_frames,
 	{
 		{&anim_player_idle_frame_0},
 		{&anim_player_idle_frame_1},
