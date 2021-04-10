@@ -1,0 +1,4 @@
+Make sure you have MinGW installed
+You need MinGW libmingwex installed (use the get package manager)
+
+This is only for mod2gbt to work
