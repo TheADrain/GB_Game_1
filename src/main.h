@@ -31,7 +31,7 @@
 
 
 
-#define DEBUG_MOVEMENT
+//#define DEBUG_MOVEMENT
 #define FIRST_LVL 0U
 
 /*#define USE_TEST_SCENE*/

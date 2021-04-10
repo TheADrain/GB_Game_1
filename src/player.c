@@ -103,6 +103,28 @@ void manual_update_player_sprite()
 
 void update_player() 
 {
+#ifdef DEBUG_MOVEMENT
+
+	if (JOY_DOWN(BTN_LEFT))
+	{
+			player_world_x = player_world_x - 1;
+	}
+	else if (JOY_DOWN(BTN_RIGHT))
+	{
+			player_world_x = player_world_x + 1;
+	}
+
+	if (JOY_DOWN(BTN_UP))
+	{
+		player_world_y = player_world_y - 1;
+	}
+	else if (JOY_DOWN(BTN_DOWN))
+	{
+		player_world_y = player_world_y + 1;
+	}
+
+#else
+
 	switch(player_state)
 	{
 		case PLAYER_STATE_IDLE:
@@ -129,6 +151,8 @@ void update_player()
 			HandlePlayerHangingFromPlatform();
 			break;
 	}
+
+#endif
 
 	prev_player_world_x = player_world_x;
 	prev_player_world_y = player_world_y;

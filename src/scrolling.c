@@ -28,8 +28,19 @@ unsigned char * stored_scrl_dat_ptr = 0U;
 
 void init_game_camera()
 {
+	topBound = 0U;
 	rightBound = (CUR_MAP_WIDTH * TILE_SIZE) - SCREEN_WIDTH;
 	bottomBound = (CUR_MAP_HEIGHT * TILE_SIZE) - SCREEN_HEIGHT;
+
+	cameraDelta = 128U;
+	scroll_x_temp = 0U;
+	scroll_y_temp = 0U;
+	stored_tile_load_command = 0U;
+	stored_tile_load_bkg_x = 0U;
+	stored_tile_load_bkg_y = 0U;
+	stored_tile_load_bkg_w = 0U;
+	stored_tile_load_bkg_h = 0U;
+	stored_scrl_dat_ptr = 0U;
 
 	/* reset the camera to the players spawn position to prevent a large scroll delta on the first frame */
 	tempx = player_world_x - CAMERA_OFFSET_X;
@@ -52,7 +63,7 @@ void init_game_camera()
 	}
 
 	camera_x = tempx;
-	camera_y = tempy; 
+	camera_y = tempy;
 }
 
 void update_camera() 
@@ -101,6 +112,9 @@ void handle_scroll_horizontal()
 		{
 			cameraDelta -= 8;
 
+			/* scy is the top scren position in the level, bit-shifted by 3 to get the VRAM position */
+			/*  minus how many tiles ahead of the camera to draw */
+
 			UINT16 scx = (tempx >> 3) + 24;
 			scroll_x_temp = (scx)%BKG_WIDTH;
 			scrl_data_ptr = levels[CUR_LEVEL].MapTileData;
@@ -121,6 +135,9 @@ void handle_scroll_horizontal()
 		if(cameraDelta < (128-8))
 		{
 			cameraDelta += 8;
+
+			/* scy is the top scren position in the level, bit-shifted by 3 to get the VRAM position */
+			/*  minus how many tiles ahead of the camera to draw */
 
 			UINT16 scx = (tempx >> 3) - 4;
 			scroll_x_temp = (scx)%BKG_WIDTH;
@@ -168,17 +185,21 @@ void handle_scroll_vertical()
 		{
 			cameraDelta -= 8;
 
-			UINT16 scy = (tempy >> 3) + 24;
+			/* scy is the top scren position in the level, bit-shifted by 3 to get the VRAM position */
+			/*  minus how many tiles ahead of the camera to draw */
+
+			UINT16 scy = (tempy >> 3) + 22;
+			scy = scy - 1; /* draw a strip of 2 incase we are high enough velocity to skip one */
 			scroll_y_temp = (scy)%BKG_HEIGHT;
-			unsigned char* mapData = levels[CUR_LEVEL].MapTileData;
-			mapData += (CUR_MAP_WIDTH * scy);
+			scrl_data_ptr = levels[CUR_LEVEL].MapTileData;
+			scrl_data_ptr += (CUR_MAP_WIDTH * scy);
 
 			stored_tile_load_command = 1U;
 			stored_tile_load_bkg_x = 0U;
 			stored_tile_load_bkg_y = scroll_y_temp;
 			stored_tile_load_bkg_w = CUR_MAP_WIDTH;
-			stored_tile_load_bkg_h = 1U;
-			stored_scrl_dat_ptr = mapData;
+			stored_tile_load_bkg_h = 2U;
+			stored_scrl_dat_ptr = scrl_data_ptr;
 
 			/* this gets set in main.c DoGraphics */
 		}
@@ -191,16 +212,17 @@ void handle_scroll_vertical()
 			cameraDelta += 8;
 
 			UINT16 scy = (tempy >> 3) - 4;			
+			scy = scy - 1; /* draw a strip of 2 incase we are high enough velocity to skip one */
 			scroll_y_temp = (scy)%BKG_HEIGHT;
-			unsigned char* mapData = levels[CUR_LEVEL].MapTileData;
-			mapData += (CUR_MAP_WIDTH * scy);
+			scrl_data_ptr = levels[CUR_LEVEL].MapTileData;
+			scrl_data_ptr += (CUR_MAP_WIDTH * scy);
 
 			stored_tile_load_command = 1U;
 			stored_tile_load_bkg_x = 0U;
 			stored_tile_load_bkg_y = scroll_y_temp;
 			stored_tile_load_bkg_w = CUR_MAP_WIDTH;
-			stored_tile_load_bkg_h = 1U;
-			stored_scrl_dat_ptr = mapData;
+			stored_tile_load_bkg_h = 2U;
+			stored_scrl_dat_ptr = scrl_data_ptr;
 
 			/* this gets set in main.c DoGraphics */
 		}

@@ -50,6 +50,8 @@ typedef struct LEVEL_DATA {
 	UINT8 RomBank;
 
 	/* other properties */
+	/* todo: either implement or get rid of this! 
+	 it's supposed to automatically find the player spawn location for the level but it doesnt */
 	UINT8 SpawnType;
 
 	/* player spawn x and y */
