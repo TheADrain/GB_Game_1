@@ -1,5 +1,9 @@
 #include "levels.h"
 
+/* Level Collision Data holds both Collision Tiles and Object Spawn data */
+/* 0x00 to 0x7F is a Collision Tile */
+/* 0x80 to 0x FF is an Object Type */
+
 const struct LEVEL_DATA levels[3] =
 {
 	{ 
