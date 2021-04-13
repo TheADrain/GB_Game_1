@@ -84,6 +84,9 @@ extern const UINT8 player_speed;
 
 extern struct ACTOR * player_actor;
 
+#define CHECK_INTERVAL_LVL_COMPLETION 21U
+extern UINT8 player_lvl_complete_check_timer;
+
 /* init and update functions */
 
 void init_player_sprite();
@@ -92,6 +95,8 @@ void InitializePlayerActor(struct ACTOR* a);
 void UpdatePlayerActor(struct ACTOR* a);
 void manual_update_player_sprite();
 void update_player();
+
+
 
 /* collision functions */
 #define COLLIDER_TILE_SIZE 8U

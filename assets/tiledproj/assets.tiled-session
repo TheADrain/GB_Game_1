@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "tower01.tmx",
+    "activeFile": "forest01.tmx",
     "expandedProjectPaths": [
-        "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports",
-        "."
+        ".",
+        "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -96,7 +96,7 @@
             "scale": 4,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 511.875,
+                "x": 511.625,
                 "y": 71.875
             }
         },
@@ -160,8 +160,8 @@
             "scale": 3,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 100.16666666666666,
-                "y": 165.83333333333334
+                "x": 127.83333333333333,
+                "y": 127.83333333333334
             }
         },
         "tower02.tmx": {
@@ -192,12 +192,12 @@
     "project": "assets.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "forest01.tmx",
-        "forest02.tmx",
-        "gameplay.tsx",
         "object_indices.tsx",
         "tower02.tmx",
         "tower01.tmx",
+        "gameplay.tsx",
+        "forest02.tmx",
+        "forest01.tmx",
         "object_indices]]]].tsx",
         "map02.tmx",
         "map01.tmx",

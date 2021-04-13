@@ -85,6 +85,8 @@ void splash_update();
 void title_init();
 void title_update();
 
+void CheckLevelCompletion();
+
 
 void DoGraphicsUpdate();
 /* ----------------------------------------------- */

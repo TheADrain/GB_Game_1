@@ -52,6 +52,8 @@ UINT16 u16Temp2 = 0;
 
 extern struct ACTOR * player_actor = 0U;
 
+extern UINT8 player_lvl_complete_check_timer = 0U;
+
 void init_player_sprite()
 {
 	player_world_x = levels[CUR_LEVEL].PlayerSpawnX;
@@ -144,6 +146,8 @@ void update_player()
 	player_move_x = player_move_x % SUBPIXELS;
 	player_move_y = player_move_y % SUBPIXELS;
 }
+
+
 
 void HandlePlayerStateIdle()
 {
