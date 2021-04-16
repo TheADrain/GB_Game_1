@@ -23,6 +23,11 @@
 #define COL_ONEWAY_LEFT		6U
 #define COL_ONEWAY_RIGHT	7U
 
+/* 8 == hang tile? */
+
+/* Tile for registering level completion */
+#define COL_LEVEL_COMPLETE	12U
+
 /* what I really should do is have a tile props structure and feed in the travel direction 
 	rather than having 4 separate movement related collision routines
 

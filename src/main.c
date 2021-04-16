@@ -132,10 +132,46 @@ void main()
 
 				update_camera(); 
 
+				CheckLevelCompletion();
+
 				break;
 #endif
 	  }
   }
+}
+
+void CheckLevelCompletion()
+{
+	player_lvl_complete_check_timer = player_lvl_complete_check_timer + 1;
+	/* get the tile at the players feet and see if it is
+	   a level complete tile */
+
+	if(player_lvl_complete_check_timer >= CHECK_INTERVAL_LVL_COMPLETION)
+	{
+		player_lvl_complete_check_timer = 0U;
+
+		UINT16 test_x = player_world_x - PLAYER_HALF_WIDTH;
+		/*one above player position, as grounded player position
+			is actually in the top pixel of the floor tile */
+		UINT16 test_y = (player_world_y)-2;
+		collision_grid_test_x = test_x;
+		collision_grid_test_y = test_y;
+
+		TestCollisionAtWorldPosition();
+
+		if(collision_grid_test_result == COL_LEVEL_COMPLETE)
+		{
+			/* we finished the level */
+			/* todo: take control away from the player, and
+				hook up some sort of animation */
+			GAME_FLOW_STATE = GAMEFLOW_LEVELCARD;
+			end_level();
+
+			CUR_LEVEL = CUR_LEVEL + 1;
+			set_current_level(CUR_LEVEL);
+			levelcard_init();	
+		}
+	}
 }
 
 
