@@ -97,7 +97,7 @@ void UpdatePlayerActor(struct ACTOR* a)
 
 void manual_update_player_sprite()
 {
-	player_actor->PositionX = (player_world_x - camera_x);
+	player_actor->PositionX = (player_world_x - camera_x) + PLAYER_SPRITE_X_OFFSET;
 	player_actor->PositionY = (player_world_y - camera_y);
 	SWITCH_ROM_MBC1(BANK_GRAPHICS_DATA_1);
 	UpdateActorAnim(player_actor, &anim_player_idle);
@@ -169,9 +169,17 @@ void update_player()
 	/* subtract whole pixels from the move vector only after collision has been handled */
 	player_move_x = player_move_x % SUBPIXELS;
 	player_move_y = player_move_y % SUBPIXELS;
+
+	/* handle actor flipping x */
+	if (player_speed_x > 0)
+	{
+		player_actor->FlipX = 0U;
+	}
+	else if (player_speed_x < 0)
+	{
+		player_actor->FlipX = 1U;
+	}
 }
-
-
 
 void HandlePlayerStateIdle()
 {

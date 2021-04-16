@@ -8,10 +8,10 @@ const struct ANIM_FRAME anim_player_idle_frame_0 =
 	128U, /* duration in ACTOR_ANIM_TIMESTEP (5 frames) */
 	{
 		/*            Y,  X,  TILE_ID, PROPS */
-		/* tile 1 */{ 0, 0, 0U, FR_FLIP_NONE },
-		/* tile 2 */{ 8, 0, 16U, FR_FLIP_NONE },
-		/* tile 3 */{ 0, 8, 1U, FR_FLIP_NONE },
-		/* tile 4 */{ 8, 8, 17U, FR_FLIP_NONE }
+		/* tile 1 */{ 0, -4, 0U, FR_FLIP_NONE },
+		/* tile 2 */{ 8, -4, 16U, FR_FLIP_NONE },
+		/* tile 3 */{ 0, 4, 1U, FR_FLIP_NONE },
+		/* tile 4 */{ 8, 4, 17U, FR_FLIP_NONE }
 	}
 };
 
@@ -21,10 +21,10 @@ const struct ANIM_FRAME anim_player_idle_frame_1 =
 	46U, /* duration in ACTOR_ANIM_TIMESTEP (5 frames) */
 	{
 		/*            Y,  X,  TILE_ID, PROPS */
-		/* tile 1 */{ 0, 0, 0U, FR_FLIP_NONE },
-		/* tile 2 */{ 8, 0, 32U, FR_FLIP_NONE },
-		/* tile 3 */{ 0, 8, 1U, FR_FLIP_NONE },
-		/* tile 4 */{ 8, 8, 17U, FR_FLIP_NONE }
+		/* tile 1 */{ 0, -4, 0U, FR_FLIP_NONE },
+		/* tile 2 */{ 8, -4, 32U, FR_FLIP_NONE },
+		/* tile 3 */{ 0, 4, 1U, FR_FLIP_NONE },
+		/* tile 4 */{ 8, 4, 17U, FR_FLIP_NONE }
 	}
 };
 
@@ -34,10 +34,10 @@ const struct ANIM_FRAME anim_player_idle_frame_2 =
 	46U,/* duration in ACTOR_ANIM_TIMESTEP (5 frames) */
 	{
 		/*            Y,  X,  TILE_ID, PROPS */
-		/* tile 1 */{ 0, 0, 0U, FR_FLIP_NONE },
-		/* tile 2 */{ 8, 0, 33U, FR_FLIP_NONE },
-		/* tile 3 */{ 0, 8, 1U, FR_FLIP_NONE },
-		/* tile 4 */{ 8, 8, 17U, FR_FLIP_NONE }
+		/* tile 1 */{ 0, -4, 0U, FR_FLIP_NONE },
+		/* tile 2 */{ 8, -4, 33U, FR_FLIP_NONE },
+		/* tile 3 */{ 0, 4, 1U, FR_FLIP_NONE },
+		/* tile 4 */{ 8, 4, 17U, FR_FLIP_NONE }
 	}
 };
 

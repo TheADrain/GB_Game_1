@@ -29,7 +29,8 @@ typedef struct ACTOR {
 	UINT16 PositionY;
 
 	//struct ANIM_FRAME *const CurAnim;
-
+	UBYTE FlipX;
+	UBYTE FlipY;
 
 	struct ANIM_FRAME * CurAnimFramePtr;
 	UINT8 CurAnimFrameIndex;

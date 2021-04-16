@@ -29,6 +29,9 @@ void init_actor_manager()
 		actors_array[i].PositionX = 0U;
 		actors_array[i].PositionY = 0U;
 
+		actors_array[i].FlipX = 0U;
+		actors_array[i].FlipY = 0U;
+
 		actors_array[i].SpritesAllocated = 0U;
 		
 		actors_array[i].Update = EMPTY_UPDATE;
@@ -91,6 +94,9 @@ UINT8 create_actor(UINT8 actor_type)
 		actors_array[actor_index].CurAnimFrameIndex = 0U;
 		actors_array[actor_index].AnimTimer = 0U;
 
+		actors_array[actor_index].FlipX = 0U;
+		actors_array[actor_index].FlipY = 0U;
+
 		actors_array[actor_index].State = 0U;
 
 		actors_array[actor_index].Initialize = actor_defs[actor_type].Initialize;
@@ -121,6 +127,9 @@ void release_actor(struct ACTOR * actor_ptr)
 	actors_array[actor_index].Height = 0U;
 	actors_array[actor_index].PositionX = 0U;
 	actors_array[actor_index].PositionY = 0U;
+
+	actors_array[actor_index].FlipX = 0U;
+	actors_array[actor_index].FlipY = 0U;
 
 	actors_array[actor_index].Initialize = 0U;
 	actors_array[actor_index].Update = 0U;
@@ -251,8 +260,14 @@ void SetActorAnim(struct ACTOR * a, struct ANIMATION * anim)
 	}
 }
 
+UINT8 tmp_spr_props = 0U;
+UINT8 tmp_offset_x = 0U;
+UINT8 tmp_offset_y = 0U;
+
 void UpdateActorAnim(struct ACTOR * a, struct ANIMATION * anim)
 {
+	tmp_spr_props = 0U;
+
 	frame_spritecount = a->CurAnimFramePtr->NumTiles;
 	sprites_allocated_count = a->SpritesAllocated;
 
@@ -287,6 +302,30 @@ void UpdateActorAnim(struct ACTOR * a, struct ANIMATION * anim)
 	
 	for(_i = 0U; _i < frame_spritecount; _i = _i+1)
 	{
-		move_sprite(a->SpriteIndexes[_i], a->PositionX + a->CurAnimFramePtr->AnimTiles[_i].XOffset, a->PositionY + a->CurAnimFramePtr->AnimTiles[_i].YOffset);
+		tmp_spr_props = get_sprite_prop(a->SpriteIndexes[_i]);
+		tmp_offset_x = 0U;
+		tmp_offset_y = 0U;
+
+		if (a->FlipX == 0U)
+		{
+			/* turn flip x off */
+			tmp_spr_props = tmp_spr_props & ~S_FLIPX;
+
+			/* adjust x position */
+			tmp_offset_x = a->PositionX + a->CurAnimFramePtr->AnimTiles[_i].XOffset;
+		}
+		else
+		{
+			/* turn flip x on */
+			tmp_spr_props = tmp_spr_props | S_FLIPX;
+
+			/* adjust x position */
+			tmp_offset_x = a->PositionX - a->CurAnimFramePtr->AnimTiles[_i].XOffset;
+		}
+
+		/* only support flipx for now on actors I think... */
+
+		set_sprite_prop(a->SpriteIndexes[_i], tmp_spr_props);
+		move_sprite(a->SpriteIndexes[_i], tmp_offset_x, a->PositionY + a->CurAnimFramePtr->AnimTiles[_i].YOffset);
 	}
 }
