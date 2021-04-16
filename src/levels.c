@@ -4,7 +4,7 @@
 /* 0x00 to 0x7F is a Collision Tile */
 /* 0x80 to 0x FF is an Object Type */
 
-const struct LEVEL_DATA levels[3] =
+const struct LEVEL_DATA levels[TOTAL_LEVELS] =
 {
 	{ 
 		MAP_HORIZONTAL,
@@ -47,4 +47,18 @@ const struct LEVEL_DATA levels[3] =
 		(unsigned char*)&map_forest01_tilemap, 
 		(unsigned char*)&map_forest01_collision 
 	},
+	/* last map is a debug map */
+	{
+		MAP_HORIZONTAL,
+		map_dbglvl01Width,
+		map_dbglvl01Height,
+		BANK_MAPDATA_02,
+		SPAWN_LEFT,
+		20, /* spawn x */
+		220, /* spawn y */
+		tset_towerLength,
+		(unsigned char*)&tset_tower,
+		(unsigned char*)&map_dbglvl01_tilemap,
+		(unsigned char*)&map_dbglvl01_collision
+	}
 };

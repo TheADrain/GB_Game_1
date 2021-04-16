@@ -71,6 +71,7 @@ typedef struct LEVEL_DATA {
 /* ---------------------   LEVELS    -------------------------- */
 
 /* no way to do this automatically huh? ok then :< */
-extern const struct LEVEL_DATA levels[3];
+#define TOTAL_LEVELS 4
+extern const struct LEVEL_DATA levels[TOTAL_LEVELS];
 
 #endif

@@ -246,10 +246,18 @@ void title_update()
 {
 	if(JOY_PRESSED(BTN_START))
 	{
+#ifdef START_DEBUG_LEVEL_1
+		/* move to the debug level */
+		set_current_level(TOTAL_LEVELS-1);
+		levelcard_init();
+		GAME_FLOW_STATE = GAMEFLOW_LEVELCARD;
+#else
+
 		/* move to the next state */
 		set_current_level(FIRST_LVL);
 		levelcard_init();	
 		GAME_FLOW_STATE = GAMEFLOW_LEVELCARD;
+#endif
 	}
 }
 

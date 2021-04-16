@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "forest01.tmx",
+    "activeFile": "dbglvl0101.tmx",
     "expandedProjectPaths": [
         ".",
         "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports"
@@ -88,16 +88,24 @@
             "scaleInDock": 16,
             "scaleInEditor": 32
         },
+        "dbglvl0101.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 1500,
+                "y": -140
+            }
+        },
         "forest.tsx": {
             "scaleInDock": 4,
             "scaleInEditor": 3
         },
         "forest01.tmx": {
-            "scale": 5.5,
+            "scale": 2,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 469.81818181818187,
-                "y": 53.63636363636364
+                "x": 512,
+                "y": 71.75
             }
         },
         "forest02.tmx": {
@@ -158,10 +166,10 @@
         },
         "tower01.tmx": {
             "scale": 4,
-            "selectedLayer": 1,
+            "selectedLayer": 0,
             "viewCenter": {
                 "x": 128,
-                "y": 127.875
+                "y": 128
             }
         },
         "tower02.tmx": {
@@ -186,25 +194,26 @@
         "forest01.tmx",
         "forest02.tmx",
         "gameplay.tsx",
-        "tower01.tmx",
+        "dbglvl0101.tmx",
         "tower02.tmx",
-        "object_indices.tsx"
+        "object_indices.tsx",
+        "tower01.tmx"
     ],
     "project": "assets.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "forest01.tmx",
+        "forest02.tmx",
+        "gameplay.tsx",
+        "tower01.tmx",
         "object_indices.tsx",
         "tower02.tmx",
-        "tower01.tmx",
-        "gameplay.tsx",
-        "forest02.tmx",
-        "forest01.tmx",
+        "dbglvl0101.tmx",
         "object_indices]]]].tsx",
         "map02.tmx",
         "map01.tmx",
         "forest.tsx",
-        "tower.tsx",
-        "testMap_Jumping.tmx"
+        "tower.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.margin": 0,

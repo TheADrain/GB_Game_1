@@ -3,4 +3,7 @@
 
 // BANK_7 - MAPDATA 2
 
+/* Debug Levels */
+#include "maps/map_dbglvl01.h"
+
 #endif
