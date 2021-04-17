@@ -38,9 +38,10 @@ REM compile the bank file objects
 ..\..\bin\lcc -Wf-bo5 -Wl-y -Wf--debug -Wl-m -Wl-w -c -o bin/bank_5.o src/bank_5.c
 ..\..\bin\lcc -Wf-bo6 -Wl-y -Wf--debug -Wl-m -Wl-w -c -o bin/bank_6.o src/bank_6.c
 ..\..\bin\lcc -Wf-bo7 -Wl-y -Wf--debug -Wl-m -Wl-w -c -o bin/bank_7.o src/bank_7.c
+..\..\bin\lcc -Wf-bo8 -Wl-y -Wf--debug -Wl-m -Wl-w -c -o bin/bank_8.o src/bank_8.c
 
 REM compile the rom from all the compiled .o files
-..\..\bin\lcc -Wl-m -Wl-j -Wl-yt1 -Wl-yo8 -Wl-y -Wf--debug -Wl-m -Wl-w -o game.gb bin/*.o
+..\..\bin\lcc -Wl-m -Wl-j -Wl-yt1 -Wl-yo16 -Wl-y -Wf--debug -Wl-m -Wl-w -o game.gb bin/*.o
 
 REM move the built gb file to the build folder
 move /y *.gb build

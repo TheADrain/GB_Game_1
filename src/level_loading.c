@@ -91,13 +91,27 @@ void set_current_level(UINT8 newLevel)
 	disable_interrupts();
 
 	CUR_LEVEL = newLevel;
+	CUR_SUBLEVEL = 0U;
+	CUR_LEVEL_DATA_IDX = levels[CUR_LEVEL].FirstChunk;
 
-	level_tilemap_data = levels[CUR_LEVEL].MapTileData;
-	level_collision_data = levels[CUR_LEVEL].CollisionMap;
-	CUR_MAP_WIDTH = levels[CUR_LEVEL].Width;
-	CUR_MAP_HEIGHT = levels[CUR_LEVEL].Height;
+
+	level_tilemap_data = level_datas[CUR_LEVEL_DATA_IDX].MapTileData;
+	level_collision_data = level_datas[CUR_LEVEL_DATA_IDX].CollisionMap;
+	CUR_MAP_WIDTH = level_datas[CUR_LEVEL_DATA_IDX].Width;
+	CUR_MAP_HEIGHT = level_datas[CUR_LEVEL_DATA_IDX].Height;
 
 	enable_interrupts();
+}
+
+void increment_sub_level_data()
+{
+	CUR_SUBLEVEL = CUR_SUBLEVEL + 1;
+	CUR_LEVEL_DATA_IDX = levels[CUR_LEVEL].FirstChunk + CUR_SUBLEVEL;
+
+	level_tilemap_data = level_datas[CUR_LEVEL_DATA_IDX].MapTileData;
+	level_collision_data = level_datas[CUR_LEVEL_DATA_IDX].CollisionMap;
+	CUR_MAP_WIDTH = level_datas[CUR_LEVEL_DATA_IDX].Width;
+	CUR_MAP_HEIGHT = level_datas[CUR_LEVEL_DATA_IDX].Height;
 }
 
 void load_current_level_graphics()
@@ -114,7 +128,7 @@ void load_current_level_graphics()
 	set_sprite_data(VRAM_ACTORS, spr_actors_forestLength, spr_actors_forest);
 
 	/* load the background tiles for this map */
-	set_bkg_data(0x00, levels[CUR_LEVEL].tileDataLength, levels[CUR_LEVEL].tileDataPtr);
+	set_bkg_data(0x00, level_datas[CUR_LEVEL_DATA_IDX].tileDataLength, level_datas[CUR_LEVEL_DATA_IDX].tileDataPtr);
 
 	enable_interrupts();
 }
@@ -125,15 +139,15 @@ void load_current_level_map()
 	disable_interrupts();
 	
 	/* Initialize the title map data */
-	SWITCH_ROM_MBC1(levels[CUR_LEVEL].RomBank);
+	SWITCH_ROM_MBC1(level_datas[CUR_LEVEL_DATA_IDX].RomBank);
 
 	/* currently assuming column-first map */
 	UINT8 i = 0;
-	unsigned char* dataPtr = levels[CUR_LEVEL].MapTileData;
+	unsigned char* dataPtr = level_datas[CUR_LEVEL_DATA_IDX].MapTileData;
 		
 	
 	/* draw left to right for a horizontal level */
-	if(levels[CUR_LEVEL].MapType == MAP_HORIZONTAL)
+	if(level_datas[CUR_LEVEL_DATA_IDX].MapType == MAP_HORIZONTAL)
 	{
 		for(i = 0; i < 32; i++)
 		{

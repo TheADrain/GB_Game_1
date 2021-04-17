@@ -71,6 +71,8 @@ extern UINT8 v_k;
 
 /* ---------------------LEVEL DATA-------------------------- */
 extern UINT8 CUR_LEVEL;
+extern UINT8 CUR_SUBLEVEL;
+extern UINT8 CUR_LEVEL_DATA_IDX;
 extern UINT8 CUR_LEVEL_BANK;
 extern UINT8 CUR_MAP_WIDTH;
 extern UINT8 CUR_MAP_HEIGHT;
@@ -88,7 +90,9 @@ void title_init();
 void title_update();
 
 void CheckLevelCompletion();
-
+void CheckLevelCompletion_ExitTiles();
+void CheckLevelCompletion_RightBounds();
+void CheckLevelCompletion_SmoothToNextChunk();
 
 void DoGraphicsUpdate();
 /* ----------------------------------------------- */

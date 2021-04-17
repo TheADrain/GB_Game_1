@@ -23,6 +23,9 @@ extern UINT8 stored_tile_load_bkg_w;
 extern UINT8 stored_tile_load_bkg_h;
 extern unsigned char * stored_scrl_dat_ptr;
 
+extern INT16 camera_bottom_bound;
+extern INT16 camera_right_bound;
+
 void init_game_camera();
 void update_camera();
 

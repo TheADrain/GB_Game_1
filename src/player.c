@@ -56,8 +56,8 @@ extern UINT8 player_lvl_complete_check_timer = 0U;
 
 void init_player_sprite()
 {
-	player_world_x = levels[CUR_LEVEL].PlayerSpawnX;
-	player_world_y = levels[CUR_LEVEL].PlayerSpawnY;
+	player_world_x = level_datas[CUR_LEVEL_DATA_IDX].PlayerSpawnX;
+	player_world_y = level_datas[CUR_LEVEL_DATA_IDX].PlayerSpawnY;
 	
 	/* create the player sprite */
 	if(create_actor(ACTOR_PLAYER) == ACTOR_AVAILABLE)
@@ -642,12 +642,12 @@ void TestCollisionAtGridPosition()
 	collision_grid_test_result = 0U;
 
 	/* check level collision data at grid point for a collision tile */
-	u16Temp1 = (UINT16)collision_grid_test_y * (UINT16)levels[CUR_LEVEL].Width;
+	u16Temp1 = (UINT16)collision_grid_test_y * (UINT16)level_datas[CUR_LEVEL_DATA_IDX].Width;
 	u16Temp1 += (UINT16)collision_grid_test_x;
 
 	/* bank switch before testing this position! */
-	SWITCH_ROM_MBC1(levels[CUR_LEVEL].RomBank);
-	collision_grid_test_result = levels[CUR_LEVEL].CollisionMap[u16Temp1];
+	SWITCH_ROM_MBC1(level_datas[CUR_LEVEL_DATA_IDX].RomBank);
+	collision_grid_test_result = level_datas[CUR_LEVEL_DATA_IDX].CollisionMap[u16Temp1];
 
 }
 

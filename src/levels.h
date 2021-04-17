@@ -40,6 +40,21 @@
 #define SPAWN_LEFT 0U
 #define SPAWN_BOTTOM 1U
 
+#define EXIT_EXIT_TILES_ONLY 0U
+#define EXIT_RIGHT_BOUNDS 1U
+#define EXIT_SMOOTH_TO_NEXT_CHUNK 2U
+
+typedef struct LEVEL_DEF
+{
+	/* string level name ... etc */
+
+	UINT8 NumChunks;
+	UINT8 FirstChunk; /* The LevelData which represents the first chunk of level data */
+};
+
+#define TOTAL_LEVELS 5
+extern const struct LEVEL_DEF levels[TOTAL_LEVELS];
+
 /* Level Data structure */
 typedef struct LEVEL_DATA {
 
@@ -54,6 +69,8 @@ typedef struct LEVEL_DATA {
 	 it's supposed to automatically find the player spawn location for the level but it doesnt */
 	UINT8 SpawnType;
 
+	UINT8 ExitType;
+
 	/* player spawn x and y */
 	UINT16 PlayerSpawnX;
 	UINT16 PlayerSpawnY;
@@ -61,7 +78,7 @@ typedef struct LEVEL_DATA {
 	/* where to get tile data from */
 	UINT8 tileDataLength;
 	unsigned char* tileDataPtr;
-
+	
 	/* pointer to the tile graphics data for this map here? */
 	unsigned char* MapTileData;
 	unsigned char* CollisionMap;
@@ -71,7 +88,7 @@ typedef struct LEVEL_DATA {
 /* ---------------------   LEVELS    -------------------------- */
 
 /* no way to do this automatically huh? ok then :< */
-#define TOTAL_LEVELS 4
-extern const struct LEVEL_DATA levels[TOTAL_LEVELS];
+#define TOTAL_LEVEL_DATAS 7
+extern const struct LEVEL_DATA level_datas[TOTAL_LEVEL_DATAS];
 
 #endif

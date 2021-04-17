@@ -7,6 +7,7 @@
 #include "bank_5.h"
 #include "bank_6.h"
 #include "bank_7.h"
+#include "bank_8.h"
 
 /* yeah this is wasteful but it keeps things organized */
 #define BANK_GBT 1U
@@ -19,6 +20,7 @@
 
 #define BANK_MAPDATA_01 6U		/* Level data blob 1*/
 #define BANK_MAPDATA_02 7U		/* Level data blob 2*/
+#define BANK_MAPDATA_03 8U		/* Level data blob 3*/
 
 /* ...etc */
 

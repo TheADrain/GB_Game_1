@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "dbglvl0101.tmx",
+    "activeFile": "tower03_01.tmx",
     "expandedProjectPaths": [
-        ".",
-        "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports"
+        "C:/Users/The_A_000/Desktop/Gameboy/_Art Examples/gbTilesets/exports",
+        "."
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -92,8 +92,8 @@
             "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1500,
-                "y": -140
+                "x": 1020,
+                "y": 127.66666666666669
             }
         },
         "forest.tsx": {
@@ -179,6 +179,30 @@
                 "x": 127.97058147552286,
                 "y": 383.47046655941165
             }
+        },
+        "tower03_01.tmx": {
+            "scale": 4,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 160,
+                "y": 72
+            }
+        },
+        "tower03_02.tmx": {
+            "scale": 8,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 80,
+                "y": 143.9375
+            }
+        },
+        "tower03_03.tmx": {
+            "scale": 5.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 144,
+                "y": 71.9090909090909
+            }
         }
     },
     "last.exportedFilePath": "C:/gbdk2020/gbdk/projects/GB_Game1/assets/map_exports",
@@ -195,9 +219,11 @@
         "forest02.tmx",
         "gameplay.tsx",
         "dbglvl0101.tmx",
-        "tower02.tmx",
         "object_indices.tsx",
-        "tower01.tmx"
+        "tower02.tmx",
+        "tower03_01.tmx",
+        "tower03_02.tmx",
+        "tower03_03.tmx"
     ],
     "project": "assets.tiled-project",
     "property.type": "string",
@@ -205,16 +231,17 @@
         "forest01.tmx",
         "forest02.tmx",
         "gameplay.tsx",
-        "tower01.tmx",
+        "dbglvl0101.tmx",
         "object_indices.tsx",
         "tower02.tmx",
-        "dbglvl0101.tmx",
+        "tower03_03.tmx",
+        "tower03_02.tmx",
+        "tower03_01.tmx",
+        "tower01.tmx",
         "object_indices]]]].tsx",
-        "map02.tmx",
-        "map01.tmx",
-        "forest.tsx",
-        "tower.tsx"
+        "map02.tmx"
     ],
+    "resizeMap.removeObjects": false,
     "tileset.lastUsedFormat": "tsx",
     "tileset.margin": 0,
     "tileset.spacing": 0,

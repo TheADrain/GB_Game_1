@@ -3,13 +3,13 @@
 INT16 tempx;
 INT16 tempy;
 UINT16 widthOffset;
-INT16 rightBound;
+INT16 camera_right_bound;
 INT16 rightTileEdge = BKG_WIDTH;
 
-INT16 topBound;
+INT16 camera_top_bound;
 INT16 topTileEdge = BKG_HEIGHT;
 
-INT16 bottomBound;
+INT16 camera_bottom_bound;
 
 UINT8 cameraDelta = 128;
 
@@ -28,9 +28,9 @@ unsigned char * stored_scrl_dat_ptr = 0U;
 
 void init_game_camera()
 {
-	topBound = 0U;
-	rightBound = (CUR_MAP_WIDTH * TILE_SIZE) - SCREEN_WIDTH;
-	bottomBound = (CUR_MAP_HEIGHT * TILE_SIZE) - SCREEN_HEIGHT;
+	camera_top_bound = 0U;
+	camera_right_bound = (CUR_MAP_WIDTH * TILE_SIZE) - SCREEN_WIDTH;
+	camera_bottom_bound = (CUR_MAP_HEIGHT * TILE_SIZE) - SCREEN_HEIGHT;
 
 	cameraDelta = 128U;
 	scroll_x_temp = 0U;
@@ -49,17 +49,17 @@ void init_game_camera()
 	if(tempx < 0 )
 	{
 		tempx = 0;
-	} else if (tempx >= rightBound)
+	} else if (tempx >= camera_right_bound)
 	{
-		tempx = rightBound;
+		tempx = camera_right_bound;
 	}
 
 	if(tempy < 0)
 	{
 		tempy = 0;
-	} else if (tempy >= bottomBound)
+	} else if (tempy >= camera_bottom_bound)
 	{
-		tempy = bottomBound;
+		tempy = camera_bottom_bound;
 	}
 
 	camera_x = tempx;
@@ -71,7 +71,7 @@ void update_camera()
 	tempx = player_world_x - CAMERA_OFFSET_X;
 	tempy = player_world_y - CAMERA_OFFSET_Y;
 	
-	if(levels[CUR_LEVEL].MapType == MAP_HORIZONTAL)
+	if(level_datas[CUR_LEVEL_DATA_IDX].MapType == MAP_HORIZONTAL)
 	{
 		handle_scroll_horizontal();
 	}
@@ -90,17 +90,17 @@ void handle_scroll_horizontal()
 	if(tempx < 0 )
 	{
 		tempx = 0;
-	} else if (tempx >= rightBound)
+	} else if (tempx >= camera_right_bound)
 	{
-		tempx = rightBound;
+		tempx = camera_right_bound;
 	}
 
 	if(tempy < 0)
 	{
 		tempy = 0;
-	} else if (tempy >= CAMERA_BTM_BOUND)
+	} else if (tempy >= camera_bottom_bound)
 	{
-		tempy = CAMERA_BTM_BOUND;
+		tempy = camera_bottom_bound;
 	}
 
 	cameraDelta += (tempx - camera_x);
@@ -117,7 +117,7 @@ void handle_scroll_horizontal()
 
 			UINT16 scx = (tempx >> 3) + 24;
 			scroll_x_temp = (scx)%BKG_WIDTH;
-			scrl_data_ptr = levels[CUR_LEVEL].MapTileData;
+			scrl_data_ptr = level_datas[CUR_LEVEL_DATA_IDX].MapTileData;
 			scrl_data_ptr += (CUR_MAP_HEIGHT * scx);
 
 			stored_tile_load_command = 1U;
@@ -141,7 +141,7 @@ void handle_scroll_horizontal()
 
 			UINT16 scx = (tempx >> 3) - 4;
 			scroll_x_temp = (scx)%BKG_WIDTH;
-			scrl_data_ptr = levels[CUR_LEVEL].MapTileData;
+			scrl_data_ptr = level_datas[CUR_LEVEL_DATA_IDX].MapTileData;
 			scrl_data_ptr += (CUR_MAP_HEIGHT * scx);
 
 			stored_tile_load_command = 1U;
@@ -163,17 +163,17 @@ void handle_scroll_vertical()
 	if(tempx < 0 )
 	{
 		tempx = 0;
-	} else if (tempx >= CAMERA_RIGHT_BOUND)
+	} else if (tempx >= camera_right_bound)
 	{
-		tempx = CAMERA_RIGHT_BOUND;
+		tempx = camera_right_bound;
 	}
 
 	if(tempy < 0)
 	{
 		tempy = 0;
-	} else if (tempy >= bottomBound)
+	} else if (tempy >= camera_bottom_bound)
 	{
-		tempy = bottomBound;
+		tempy = camera_bottom_bound;
 	}
 
 	cameraDelta += (tempy - camera_y);
@@ -191,7 +191,7 @@ void handle_scroll_vertical()
 			UINT16 scy = (tempy >> 3) + 22;
 			scy = scy - 1; /* draw a strip of 2 incase we are high enough velocity to skip one */
 			scroll_y_temp = (scy)%BKG_HEIGHT;
-			scrl_data_ptr = levels[CUR_LEVEL].MapTileData;
+			scrl_data_ptr = level_datas[CUR_LEVEL_DATA_IDX].MapTileData;
 			scrl_data_ptr += (CUR_MAP_WIDTH * scy);
 
 			stored_tile_load_command = 1U;
@@ -214,7 +214,7 @@ void handle_scroll_vertical()
 			UINT16 scy = (tempy >> 3) - 4;			
 			scy = scy - 1; /* draw a strip of 2 incase we are high enough velocity to skip one */
 			scroll_y_temp = (scy)%BKG_HEIGHT;
-			scrl_data_ptr = levels[CUR_LEVEL].MapTileData;
+			scrl_data_ptr = level_datas[CUR_LEVEL_DATA_IDX].MapTileData;
 			scrl_data_ptr += (CUR_MAP_WIDTH * scy);
 
 			stored_tile_load_command = 1U;

@@ -30,6 +30,8 @@ UINT8 v_k = 0U;
 
 /* ---------------------LEVEL DATA-------------------------- */
 UINT8 CUR_LEVEL = 0U;
+UINT8 CUR_SUBLEVEL = 0U;
+UINT8 CUR_LEVEL_DATA_IDX = 0U;
 UINT8 CUR_LEVEL_BANK = BANK_MAPDATA_01;
 UINT8 CUR_MAP_WIDTH = 32;
 UINT8 CUR_MAP_HEIGHT = 32;
@@ -64,7 +66,7 @@ void DoGraphicsUpdate()
 	{
 		stored_tile_load_command = 0U;
 
-		SWITCH_ROM_MBC1(levels[CUR_LEVEL].RomBank);
+		SWITCH_ROM_MBC1(level_datas[CUR_LEVEL_DATA_IDX].RomBank);
 		set_bkg_tiles(stored_tile_load_bkg_x, 
 			stored_tile_load_bkg_y, 
 			stored_tile_load_bkg_w, 
@@ -140,6 +142,66 @@ void main()
   }
 }
 
+void CheckLevelCompletion_ExitTiles()
+{
+
+	UINT16 test_x = player_world_x - PLAYER_HALF_WIDTH;
+	/*one above player position, as grounded player position
+		is actually in the top pixel of the floor tile */
+	UINT16 test_y = (player_world_y)-2;
+	collision_grid_test_x = test_x;
+	collision_grid_test_y = test_y;
+
+	TestCollisionAtWorldPosition();
+
+	if (collision_grid_test_result == COL_LEVEL_COMPLETE)
+	{
+		/* we finished the level */
+		/* todo: take control away from the player, and
+			hook up some sort of animation */ 
+		GAME_FLOW_STATE = GAMEFLOW_LEVELCARD;
+		end_level();
+
+		CUR_LEVEL = CUR_LEVEL + 1;
+		set_current_level(CUR_LEVEL);
+		levelcard_init();
+	}
+}
+
+void CheckLevelCompletion_RightBounds() 
+{
+	/* check if we're one tile from the end of the level for now, because detecting the levels total data lenght in collision is a bit awkward */
+	if ((player_world_x + (TILE_SIZE*2)) >= (level_datas[CUR_LEVEL_DATA_IDX].Width * TILE_SIZE))
+	{
+		FadeToWhite(4U);
+		
+		wait_vbl_done();
+
+		end_level();
+
+		increment_sub_level_data();
+
+		load_current_level_graphics();
+		load_current_level_map();
+
+		FadeFromWhite(4U);
+
+		start_level();
+	}
+}
+
+void CheckLevelCompletion_SmoothToNextChunk() 
+{
+	/* top bound is always 0U */
+	if (camera_y == 0U)
+	{
+		increment_sub_level_data();
+		init_game_camera();
+
+		load_current_level_map();
+	}
+}
+
 void CheckLevelCompletion()
 {
 	player_lvl_complete_check_timer = player_lvl_complete_check_timer + 1;
@@ -150,27 +212,26 @@ void CheckLevelCompletion()
 	{
 		player_lvl_complete_check_timer = 0U;
 
-		UINT16 test_x = player_world_x - PLAYER_HALF_WIDTH;
-		/*one above player position, as grounded player position
-			is actually in the top pixel of the floor tile */
-		UINT16 test_y = (player_world_y)-2;
-		collision_grid_test_x = test_x;
-		collision_grid_test_y = test_y;
-
-		TestCollisionAtWorldPosition();
-
-		if(collision_grid_test_result == COL_LEVEL_COMPLETE)
+		switch (level_datas[CUR_LEVEL_DATA_IDX].ExitType)
 		{
-			/* we finished the level */
-			/* todo: take control away from the player, and
-				hook up some sort of animation */
-			GAME_FLOW_STATE = GAMEFLOW_LEVELCARD;
-			end_level();
+			case EXIT_EXIT_TILES_ONLY:
+				CheckLevelCompletion_ExitTiles();
+				break;
 
-			CUR_LEVEL = CUR_LEVEL + 1;
-			set_current_level(CUR_LEVEL);
-			levelcard_init();	
+			case EXIT_RIGHT_BOUNDS:
+				CheckLevelCompletion_RightBounds();
+				break;
+
+			case EXIT_SMOOTH_TO_NEXT_CHUNK:
+				CheckLevelCompletion_SmoothToNextChunk();
+				break;
+
+			default:
+				CheckLevelCompletion_ExitTiles();
+				break;
 		}
+
+		
 	}
 }
 
