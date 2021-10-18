@@ -144,12 +144,17 @@ void load_current_level_map()
 	/* currently assuming column-first map */
 	UINT8 i = 0;
 	unsigned char* dataPtr = level_datas[CUR_LEVEL_DATA_IDX].MapTileData;
-		
 	
 	/* draw left to right for a horizontal level */
 	if(level_datas[CUR_LEVEL_DATA_IDX].MapType == MAP_HORIZONTAL)
 	{
-		for(i = 0; i < 32; i++)
+		UINT8 width = 32;
+		if (CUR_MAP_WIDTH < 32)
+		{
+			width = CUR_MAP_WIDTH;
+		}
+
+		for(i = 0; i < width; i++)
 		{
 			set_bkg_tiles(i, 0, 1, CUR_MAP_HEIGHT, dataPtr);
 			dataPtr += CUR_MAP_HEIGHT;
@@ -158,13 +163,84 @@ void load_current_level_map()
 	/* and top to bottom for a vertical one */
 	else
 	{
-		for(i = 0; i < 32; i++)
+		UINT8 height = 32;
+		if (CUR_MAP_HEIGHT < 32)
+		{
+			height = CUR_MAP_HEIGHT;
+		}
+
+		for(i = 0; i < height; i++)
 		{
 			set_bkg_tiles(0, i, CUR_MAP_WIDTH, 1, dataPtr);
 			dataPtr += CUR_MAP_WIDTH;
 		}
 	}
 	
+	enable_interrupts();
+}
+
+INT8 chunk_h_offset = 0;
+INT8 chunk_v_offset = 0;
+
+void load_current_horizontal_level_map_chunk()
+{
+	wait_vbl_done();
+	disable_interrupts();
+
+	/* Initialize the title map data */
+	SWITCH_ROM_MBC1(level_datas[CUR_LEVEL_DATA_IDX].RomBank);
+
+	/* currently assuming column-first map */
+	UINT8 i = 0;
+
+	UINT8 width = 32;
+	if (CUR_MAP_WIDTH < 32)
+	{
+		width = CUR_MAP_WIDTH;
+	}
+	
+	unsigned char* dataPtr = level_datas[CUR_LEVEL_DATA_IDX].MapTileData;
+
+	for (i = 0; i < width; i++)
+	{
+		set_bkg_tiles(i + chunk_h_offset, 0 + chunk_v_offset, 1, CUR_MAP_HEIGHT, dataPtr);
+		dataPtr += CUR_MAP_HEIGHT;
+	}
+
+	enable_interrupts();
+}
+
+void load_current_vertical_level_map_chunk()
+{
+	wait_vbl_done();
+	disable_interrupts();
+
+	/* Initialize the title map data */
+	SWITCH_ROM_MBC1(level_datas[CUR_LEVEL_DATA_IDX].RomBank);
+
+	/* currently assuming column-first map */
+	UINT8 i = 0;
+	
+	UINT8 height = 32;
+	if (CUR_MAP_HEIGHT < 32)
+	{
+		height = CUR_MAP_HEIGHT;
+	}
+
+	unsigned char* dataPtr = level_datas[CUR_LEVEL_DATA_IDX].MapTileData;
+
+	if (level_datas[CUR_LEVEL_DATA_IDX].SpawnType == SPAWN_BOTTOM)
+	{
+		dataPtr += (level_datas[CUR_LEVEL_DATA_IDX].Width * level_datas[CUR_LEVEL_DATA_IDX].Height);
+		dataPtr -= CUR_MAP_WIDTH * height;
+	}
+	
+	for (i = 0; i < height; i++)
+	{
+		set_bkg_tiles(0 + chunk_h_offset, i + chunk_v_offset, CUR_MAP_WIDTH, 1, dataPtr);
+		dataPtr += CUR_MAP_WIDTH;
+	}
+
 	enable_interrupts();
 }
 

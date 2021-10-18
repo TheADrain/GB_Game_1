@@ -1,5 +1,5 @@
 /*
-    map_tower03_03.h
+    map_tower03_05.h
 
     Generated with GBImageConverter
 
@@ -9,12 +9,12 @@
 */
 
 // Tilemap Data Length
-#define map_tower03_03Length 1080
+#define map_tower03_05Length 1080
 // Tilemap Width and Height
-#define map_tower03_03Width 60
-#define map_tower03_03Height 18
+#define map_tower03_05Width 60
+#define map_tower03_05Height 18
 // Tile Plane Data 
-extern const unsigned char map_tower03_03_tilemap[1080];
+extern const unsigned char map_tower03_05_tilemap[1080];
 // Collision Plane Data 
-extern const unsigned char map_tower03_03_collision[1080];
+extern const unsigned char map_tower03_05_collision[1080];
     

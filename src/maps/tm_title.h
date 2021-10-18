@@ -13,6 +13,6 @@
 // Tilemap Width and Height
 #define tm_titleWidth 20
 #define tm_titleHeight 18
-// TileMap Data Array
+// Tile Plane Data 
 extern const unsigned char tm_title[360];
     

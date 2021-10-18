@@ -92,6 +92,7 @@ extern UINT8 player_lvl_complete_check_timer;
 /* init and update functions */
 
 void init_player_sprite();
+void put_player_at_spawn_point();
 void cleanup_player_sprite();
 void InitializePlayerActor(struct ACTOR* a);
 void UpdatePlayerActor(struct ACTOR* a);

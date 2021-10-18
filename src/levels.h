@@ -39,6 +39,7 @@
 
 #define SPAWN_LEFT 0U
 #define SPAWN_BOTTOM 1U
+#define SPAWN_TOP 2U
 
 #define EXIT_EXIT_TILES_ONLY 0U
 #define EXIT_RIGHT_BOUNDS 1U
@@ -88,7 +89,7 @@ typedef struct LEVEL_DATA {
 /* ---------------------   LEVELS    -------------------------- */
 
 /* no way to do this automatically huh? ok then :< */
-#define TOTAL_LEVEL_DATAS 7
+#define TOTAL_LEVEL_DATAS 9
 extern const struct LEVEL_DATA level_datas[TOTAL_LEVEL_DATAS];
 
 #endif

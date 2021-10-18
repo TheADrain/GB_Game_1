@@ -36,7 +36,7 @@
 
 #define FIRST_LVL 0U
 
-/*#define USE_TEST_SCENE*/
+#define USE_TEST_SCENE
 
 /* ---------------------MUSIC-------------------------- */
 #include "gbt_player.h"

@@ -13,6 +13,6 @@
 // Tilemap Width and Height
 #define splash_mapWidth 20
 #define splash_mapHeight 18
-// TileMap Data Array
+// Tile Plane Data 
 extern const unsigned char splash_map[360];
     

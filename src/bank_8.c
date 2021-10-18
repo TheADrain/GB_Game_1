@@ -3,3 +3,5 @@
 #include "maps/map_tower03_01.c"
 #include "maps/map_tower03_02.c"
 #include "maps/map_tower03_03.c"
+#include "maps/map_tower03_04.c"
+#include "maps/map_tower03_05.c"

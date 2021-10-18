@@ -119,7 +119,7 @@ void _init_test_scene()
 		fill_bkg_rect(4, 1, 1, 1, UI_NUM_0);
 	}
 
-	/*if(create_actor(ACTOR_ENEMY_1) == ACTOR_AVAILABLE)
+	if(create_actor(ACTOR_ENEMY_1) == ACTOR_AVAILABLE)
 	{
 		actor5 = created_actor_ptr;
 		test_actors[4U] = actor5;
@@ -204,23 +204,6 @@ void _init_test_scene()
 		fill_bkg_rect(9, 1, 1, 1, UI_NUM_0);
 	}
 
-	if(create_actor(ACTOR_ENEMY_1) == ACTOR_AVAILABLE)
-	{
-		actor10 = created_actor_ptr;
-		test_actors[9U] = actor10;
-
-		actor10->Initialize = &Initialize_TestActor1;
-		actor10->Update = &UpdateTestActor1;
-
-		actor10->Initialize(actor10);
-
-		fill_bkg_rect(10, 1, 1, 1, UI_NUM_1);
-	}
-	else
-	{
-		fill_bkg_rect(10, 1, 1, 1, UI_NUM_0);
-	}*/
-
 	actor1->PositionX = 50U;
 	actor1->PositionY = 110U;
 	actor1->AnimTimer = actor1->CurAnimFramePtr->FrameDuration;
@@ -237,7 +220,7 @@ void _init_test_scene()
 	actor4->PositionY = 60;
 	actor4->AnimTimer = actor4->CurAnimFramePtr->FrameDuration - 30;
 
-	/*actor5->PositionX = 50U;
+	actor5->PositionX = 50U;
 	actor5->PositionY = 80U;
 	
 	actor5->AnimTimer = actor5->CurAnimFramePtr->FrameDuration;
@@ -258,10 +241,6 @@ void _init_test_scene()
 	actor9->PositionY = 65U;
 	actor9->AnimTimer = actor9->CurAnimFramePtr->FrameDuration - 90;
 
-	actor10->PositionX = 90U;
-	actor10->PositionY = 65U;
-	actor10->AnimTimer = actor10->CurAnimFramePtr->FrameDuration - 15;
-	*/
 	/* ----------------*/
 
 	enable_interrupts();
@@ -346,6 +325,7 @@ void Initialize_TestActor1(struct ACTOR* a)
 		else
 		{
 			/* hide unused sprites */
+			set_sprite_tile(a->SpriteIndexes[_i], 0);
 			move_sprite(a->SpriteIndexes[_i], 0, 0);
 		}
 	}
@@ -372,13 +352,13 @@ void UpdateTestActor1(struct ACTOR* a)
 
 		for(_i = 0U; _i < sprites_allocated_count; _i = _i+1)
 		{
-			if(_i >= frame_spritecount)
+			if(_i < frame_spritecount)
 			{
-				move_sprite(a->SpriteIndexes[_i], 0, 0);
+				set_sprite_tile(a->SpriteIndexes[_i], VRAM_ACTORS + a->CurAnimFramePtr->AnimTiles[_i].Tile);
 			}
 			else
 			{
-				set_sprite_tile(a->SpriteIndexes[_i], VRAM_ACTORS + a->CurAnimFramePtr->AnimTiles[_i].Tile);
+				set_sprite_tile(a->SpriteIndexes[_i], 0);
 			}
 		}
 	}
@@ -388,6 +368,13 @@ void UpdateTestActor1(struct ACTOR* a)
 
 	for(_i = 0U; _i < sprites_allocated_count; _i = _i+1)
 	{
-		move_sprite(a->SpriteIndexes[_i], a->PositionX + a->CurAnimFramePtr->AnimTiles[_i].XOffset, a->PositionY + a->CurAnimFramePtr->AnimTiles[_i].YOffset);
+		if (_i < frame_spritecount)
+		{
+			move_sprite(a->SpriteIndexes[_i], a->PositionX + a->CurAnimFramePtr->AnimTiles[_i].XOffset, a->PositionY + a->CurAnimFramePtr->AnimTiles[_i].YOffset);
+		}
+		else
+		{
+			move_sprite(a->SpriteIndexes[_i], 0, 0);
+		}
 	}
 }

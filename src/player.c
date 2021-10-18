@@ -56,8 +56,7 @@ extern UINT8 player_lvl_complete_check_timer = 0U;
 
 void init_player_sprite()
 {
-	player_world_x = level_datas[CUR_LEVEL_DATA_IDX].PlayerSpawnX;
-	player_world_y = level_datas[CUR_LEVEL_DATA_IDX].PlayerSpawnY;
+	put_player_at_spawn_point();
 	
 	/* create the player sprite */
 	if(create_actor(ACTOR_PLAYER) == ACTOR_AVAILABLE)
@@ -70,6 +69,12 @@ void init_player_sprite()
 	}
 
 	player_state = PLAYER_STATE_IDLE;
+}
+
+void put_player_at_spawn_point()
+{
+	player_world_x = level_datas[CUR_LEVEL_DATA_IDX].PlayerSpawnX;
+	player_world_y = level_datas[CUR_LEVEL_DATA_IDX].PlayerSpawnY;
 }
 
 void cleanup_player_sprite()

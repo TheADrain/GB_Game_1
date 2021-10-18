@@ -173,32 +173,98 @@ void CheckLevelCompletion_RightBounds()
 	/* check if we're one tile from the end of the level for now, because detecting the levels total data lenght in collision is a bit awkward */
 	if ((player_world_x + (TILE_SIZE*2)) >= (level_datas[CUR_LEVEL_DATA_IDX].Width * TILE_SIZE))
 	{
+		HIDE_SPRITES;
 		FadeToWhite(4U);
 		
 		wait_vbl_done();
 
-		end_level();
-
 		increment_sub_level_data();
-
+		wait_vbl_done();
 		load_current_level_graphics();
-		load_current_level_map();
+		wait_vbl_done();
+		put_player_at_spawn_point();
+		init_game_camera();
+
+		chunk_v_offset = 0;
+		chunk_h_offset = 0;
+
+		if (level_datas[CUR_LEVEL_DATA_IDX].MapType == MAP_VERTICAL)
+		{
+			if (level_datas[CUR_LEVEL_DATA_IDX].SpawnType == SPAWN_BOTTOM)
+			{
+				chunk_v_offset = (level_datas[CUR_LEVEL_DATA_IDX].Height % 32);
+				load_current_vertical_level_map_chunk();
+			}
+			else
+			{
+				load_current_level_map();
+			}
+		}
+		else
+		{
+			load_current_level_map();
+		}
+		
 
 		FadeFromWhite(4U);
-
-		start_level();
+		SHOW_SPRITES;
 	}
 }
 
 void CheckLevelCompletion_SmoothToNextChunk() 
 {
-	/* top bound is always 0U */
-	if (camera_y == 0U)
+	if (level_datas[CUR_LEVEL_DATA_IDX].MapType == MAP_VERTICAL)
 	{
-		increment_sub_level_data();
-		init_game_camera();
+		if (level_datas[CUR_LEVEL_DATA_IDX].SpawnType == SPAWN_BOTTOM)
+		{
+			if (camera_y == 0U)
+			{
+				/* next chunk */
+				
+				increment_sub_level_data();
 
-		load_current_level_map();
+				chunk_v_offset = 0;
+				chunk_h_offset = 0;
+
+				load_current_horizontal_level_map_chunk();
+
+				init_game_camera();
+			}
+		}
+		else
+		{
+			if (camera_y >= camera_bottom_bound)
+			{
+				/* next chunk */
+				increment_sub_level_data();
+
+				chunk_v_offset = 0;
+				chunk_h_offset = 0;
+
+				load_current_horizontal_level_map_chunk();
+
+				init_game_camera();
+			}
+		}
+	}
+	else
+	{
+		if (camera_x >= camera_right_bound)
+		{
+			chunk_v_offset = 0;
+			chunk_h_offset = (level_datas[CUR_LEVEL_DATA_IDX].Width % 32);
+
+			increment_sub_level_data();
+
+			if (level_datas[CUR_LEVEL_DATA_IDX].SpawnType == SPAWN_BOTTOM)
+			{
+				chunk_v_offset = (level_datas[CUR_LEVEL_DATA_IDX].Height % 32);
+			}
+			
+			load_current_vertical_level_map_chunk();
+
+			//init_game_camera();
+		}
 	}
 }
 

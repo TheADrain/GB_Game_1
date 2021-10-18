@@ -25,7 +25,7 @@ const struct LEVEL_DEF levels[TOTAL_LEVELS] =
 
 	/* Tower 03 - 3 parts */
 	{
-		3U, /* num chunks */
+		5U, /* num chunks */
 		3U  /* first chunk */
 	},
 
@@ -33,7 +33,7 @@ const struct LEVEL_DEF levels[TOTAL_LEVELS] =
 	/* Debug Level - Last in the array */
 	{
 		1U, /* num chunks */
-		6U  /* first chunk */
+		8U  /* first chunk */
 	}
 };
 
@@ -106,7 +106,7 @@ const struct LEVEL_DATA level_datas[TOTAL_LEVEL_DATAS] =
 		BANK_MAPDATA_03,
 		SPAWN_BOTTOM,
 		EXIT_SMOOTH_TO_NEXT_CHUNK,
-		20, /* spawn x */
+		40, /* spawn x */
 		264, /* spawn y */
 		tset_towerLength,
 		(unsigned char*)&tset_tower,
@@ -119,13 +119,41 @@ const struct LEVEL_DATA level_datas[TOTAL_LEVEL_DATAS] =
 		map_tower03_03Height,
 		BANK_MAPDATA_03,
 		SPAWN_LEFT,
-		EXIT_EXIT_TILES_ONLY,
-		20, /* spawn x */
-		40, /* spawn y */
+		EXIT_SMOOTH_TO_NEXT_CHUNK,
+		0, /* spawn x */
+		0, /* spawn y */
 		tset_towerLength,
 		(unsigned char*)&tset_tower,
 		(unsigned char*)&map_tower03_03_tilemap,
 		(unsigned char*)&map_tower03_03_collision
+	},
+	{
+		MAP_VERTICAL,
+		map_tower03_04Width,
+		map_tower03_04Height,
+		BANK_MAPDATA_03,
+		SPAWN_TOP,
+		EXIT_EXIT_TILES_ONLY,
+		0, /* spawn x */
+		0, /* spawn y */
+		tset_towerLength,
+		(unsigned char*)&tset_tower,
+		(unsigned char*)&map_tower03_04_tilemap,
+		(unsigned char*)&map_tower03_04_collision
+	},
+	{
+		MAP_HORIZONTAL,
+		map_tower03_05Width,
+		map_tower03_05Height,
+		BANK_MAPDATA_03,
+		SPAWN_LEFT,
+		EXIT_RIGHT_BOUNDS,
+		0, /* spawn x */
+		0, /* spawn y */
+		tset_towerLength,
+		(unsigned char*)&tset_tower,
+		(unsigned char*)&map_tower03_05_tilemap,
+		(unsigned char*)&map_tower03_05_collision
 	},
 
 
